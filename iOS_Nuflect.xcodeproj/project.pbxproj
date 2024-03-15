@@ -29,6 +29,7 @@
 		09F75F5A2BA3FD0400F1440C /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F592BA3FD0400F1440C /* SnapKit-Dynamic */; };
 		09F75F5D2BA3FD1800F1440C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F5C2BA3FD1800F1440C /* Alamofire */; };
 		09F75F5F2BA3FD1800F1440C /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F5E2BA3FD1800F1440C /* AlamofireDynamic */; };
+		09F75F652BA40B3D00F1440C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F642BA40B3D00F1440C /* Color.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		09F75F422BA3FC2300F1440C /* ParagraphFeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParagraphFeedbackViewController.swift; sourceTree = "<group>"; };
 		09F75F432BA3FC2300F1440C /* ParagraphWritingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParagraphWritingViewController.swift; sourceTree = "<group>"; };
 		09F75F452BA3FC2300F1440C /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		09F75F642BA40B3D00F1440C /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 		09F75F3A2BA3FC2300F1440C /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				09F75F642BA40B3D00F1440C /* Color.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 			files = (
 				09F75F4B2BA3FC2300F1440C /* Complete.swift in Sources */,
 				09F75F072BA3FC0700F1440C /* ViewController.swift in Sources */,
+				09F75F652BA40B3D00F1440C /* Color.swift in Sources */,
 				09F75F4D2BA3FC2300F1440C /* ParagraphFeedbackViewController.swift in Sources */,
 				09F75F4E2BA3FC2300F1440C /* ParagraphWritingViewController.swift in Sources */,
 				09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */,
