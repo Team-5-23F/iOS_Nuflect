@@ -251,9 +251,33 @@
 		09F75F492BA3FC2300F1440C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				09F75F612BA3FE2D00F1440C /* Data */,
 				09F75F482BA3FC2300F1440C /* Presenter */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		09F75F612BA3FE2D00F1440C /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				09F75F632BA3FE4500F1440C /* Model */,
+				09F75F622BA3FE3D00F1440C /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		09F75F622BA3FE3D00F1440C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		09F75F632BA3FE4500F1440C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
