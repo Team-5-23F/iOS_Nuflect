@@ -270,14 +270,14 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = Network;
+			name = Network;
 			sourceTree = "<group>";
 		};
 		09F75F632BA3FE4500F1440C /* Model */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Model;
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
