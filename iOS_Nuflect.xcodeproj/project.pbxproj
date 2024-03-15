@@ -23,6 +23,12 @@
 		09F75F4D2BA3FC2300F1440C /* ParagraphFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F422BA3FC2300F1440C /* ParagraphFeedbackViewController.swift */; };
 		09F75F4E2BA3FC2300F1440C /* ParagraphWritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F432BA3FC2300F1440C /* ParagraphWritingViewController.swift */; };
 		09F75F4F2BA3FC2300F1440C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F452BA3FC2300F1440C /* MainViewController.swift */; };
+		09F75F522BA3FCDB00F1440C /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F512BA3FCDB00F1440C /* IQKeyboardManagerSwift */; };
+		09F75F552BA3FCF200F1440C /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F542BA3FCF200F1440C /* SwiftyJSON */; };
+		09F75F582BA3FD0400F1440C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F572BA3FD0400F1440C /* SnapKit */; };
+		09F75F5A2BA3FD0400F1440C /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F592BA3FD0400F1440C /* SnapKit-Dynamic */; };
+		09F75F5D2BA3FD1800F1440C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F5C2BA3FD1800F1440C /* Alamofire */; };
+		09F75F5F2BA3FD1800F1440C /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F5E2BA3FD1800F1440C /* AlamofireDynamic */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +76,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09F75F5D2BA3FD1800F1440C /* Alamofire in Frameworks */,
+				09F75F5F2BA3FD1800F1440C /* AlamofireDynamic in Frameworks */,
+				09F75F582BA3FD0400F1440C /* SnapKit in Frameworks */,
+				09F75F552BA3FCF200F1440C /* SwiftyJSON in Frameworks */,
+				09F75F522BA3FCDB00F1440C /* IQKeyboardManagerSwift in Frameworks */,
+				09F75F5A2BA3FD0400F1440C /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +296,14 @@
 			dependencies = (
 			);
 			name = iOS_Nuflect;
+			packageProductDependencies = (
+				09F75F512BA3FCDB00F1440C /* IQKeyboardManagerSwift */,
+				09F75F542BA3FCF200F1440C /* SwiftyJSON */,
+				09F75F572BA3FD0400F1440C /* SnapKit */,
+				09F75F592BA3FD0400F1440C /* SnapKit-Dynamic */,
+				09F75F5C2BA3FD1800F1440C /* Alamofire */,
+				09F75F5E2BA3FD1800F1440C /* AlamofireDynamic */,
+			);
 			productName = iOS_Nuflect;
 			productReference = 09F75EFF2BA3FC0700F1440C /* iOS_Nuflect.app */;
 			productType = "com.apple.product-type.application";
@@ -356,6 +376,12 @@
 				Base,
 			);
 			mainGroup = 09F75EF62BA3FC0700F1440C;
+			packageReferences = (
+				09F75F502BA3FCDB00F1440C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				09F75F532BA3FCF200F1440C /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				09F75F562BA3FD0400F1440C /* XCRemoteSwiftPackageReference "SnapKit" */,
+				09F75F5B2BA3FD1800F1440C /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 09F75F002BA3FC0700F1440C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -755,6 +781,74 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		09F75F502BA3FCDB00F1440C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.1;
+			};
+		};
+		09F75F532BA3FCF200F1440C /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+		09F75F562BA3FD0400F1440C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		09F75F5B2BA3FD1800F1440C /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		09F75F512BA3FCDB00F1440C /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09F75F502BA3FCDB00F1440C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+		09F75F542BA3FCF200F1440C /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09F75F532BA3FCF200F1440C /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		09F75F572BA3FD0400F1440C /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09F75F562BA3FD0400F1440C /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		09F75F592BA3FD0400F1440C /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09F75F562BA3FD0400F1440C /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
+		};
+		09F75F5C2BA3FD1800F1440C /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09F75F5B2BA3FD1800F1440C /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		09F75F5E2BA3FD1800F1440C /* AlamofireDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09F75F5B2BA3FD1800F1440C /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = AlamofireDynamic;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		09F75F0B2BA3FC0700F1440C /* iOS_Nuflect.xcdatamodeld */ = {
