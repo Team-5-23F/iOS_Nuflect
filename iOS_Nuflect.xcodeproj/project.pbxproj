@@ -155,29 +155,6 @@
 			path = iOS_NuflectUITests;
 			sourceTree = "<group>";
 		};
-		09F75F352BA3FC2300F1440C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		09F75F362BA3FC2300F1440C /* Network */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		09F75F372BA3FC2300F1440C /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				09F75F352BA3FC2300F1440C /* Model */,
-				09F75F362BA3FC2300F1440C /* Network */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
 		09F75F382BA3FC2300F1440C /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,7 +251,6 @@
 		09F75F492BA3FC2300F1440C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				09F75F372BA3FC2300F1440C /* Data */,
 				09F75F482BA3FC2300F1440C /* Presenter */,
 			);
 			path = Source;
