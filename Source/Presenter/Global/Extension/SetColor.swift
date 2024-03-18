@@ -5,7 +5,6 @@
 //  Created by Jiwoong's MacBook Air on 3/15/24.
 //
 
-import Foundation
 import UIKit
 
 extension UIColor {
@@ -16,6 +15,7 @@ extension UIColor {
         static let darkGray = UIColor(hexString: "#707070")
         static let lightGray = UIColor(hexString: "#D6D6D6")
         static let mainBlue = UIColor(hexString: "#007BFF")
+        static let subSky = UIColor(hexString: "#00BFFF")
         static let inputBlue = UIColor(hexString: "#E7F1FF")
         static let infoYellow = UIColor(hexString:"#FFFBEA")
         static let deleteTed = UIColor(hexString: "#FF3B30")

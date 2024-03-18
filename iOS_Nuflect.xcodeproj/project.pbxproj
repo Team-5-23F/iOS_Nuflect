@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D52BA83FE300CFA054 /* BaseVC.swift */; };
+		093535D82BA8404600CFA054 /* SetFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D72BA8404600CFA054 /* SetFont.swift */; };
+		093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D92BA8439300CFA054 /* BaseScrollVC.swift */; };
 		09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F022BA3FC0700F1440C /* AppDelegate.swift */; };
 		09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F042BA3FC0700F1440C /* SceneDelegate.swift */; };
 		09F75F072BA3FC0700F1440C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F062BA3FC0700F1440C /* ViewController.swift */; };
@@ -29,7 +32,7 @@
 		09F75F5A2BA3FD0400F1440C /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F592BA3FD0400F1440C /* SnapKit-Dynamic */; };
 		09F75F5D2BA3FD1800F1440C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F5C2BA3FD1800F1440C /* Alamofire */; };
 		09F75F5F2BA3FD1800F1440C /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F5E2BA3FD1800F1440C /* AlamofireDynamic */; };
-		09F75F652BA40B3D00F1440C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F642BA40B3D00F1440C /* Color.swift */; };
+		09F75F652BA40B3D00F1440C /* SetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F642BA40B3D00F1440C /* SetColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		093535D52BA83FE300CFA054 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
+		093535D72BA8404600CFA054 /* SetFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFont.swift; sourceTree = "<group>"; };
+		093535D92BA8439300CFA054 /* BaseScrollVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollVC.swift; sourceTree = "<group>"; };
 		09F75EFF2BA3FC0700F1440C /* iOS_Nuflect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Nuflect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F75F022BA3FC0700F1440C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09F75F042BA3FC0700F1440C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,7 +76,7 @@
 		09F75F422BA3FC2300F1440C /* ParagraphFeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParagraphFeedbackViewController.swift; sourceTree = "<group>"; };
 		09F75F432BA3FC2300F1440C /* ParagraphWritingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParagraphWritingViewController.swift; sourceTree = "<group>"; };
 		09F75F452BA3FC2300F1440C /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		09F75F642BA40B3D00F1440C /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		09F75F642BA40B3D00F1440C /* SetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +166,8 @@
 		09F75F382BA3FC2300F1440C /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				093535D52BA83FE300CFA054 /* BaseVC.swift */,
+				093535D92BA8439300CFA054 /* BaseScrollVC.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -174,7 +182,8 @@
 		09F75F3A2BA3FC2300F1440C /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				09F75F642BA40B3D00F1440C /* Color.swift */,
+				09F75F642BA40B3D00F1440C /* SetColor.swift */,
+				093535D72BA8404600CFA054 /* SetFont.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -430,12 +439,15 @@
 			files = (
 				09F75F4B2BA3FC2300F1440C /* Complete.swift in Sources */,
 				09F75F072BA3FC0700F1440C /* ViewController.swift in Sources */,
-				09F75F652BA40B3D00F1440C /* Color.swift in Sources */,
+				09F75F652BA40B3D00F1440C /* SetColor.swift in Sources */,
 				09F75F4D2BA3FC2300F1440C /* ParagraphFeedbackViewController.swift in Sources */,
 				09F75F4E2BA3FC2300F1440C /* ParagraphWritingViewController.swift in Sources */,
 				09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */,
 				09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */,
+				093535D82BA8404600CFA054 /* SetFont.swift in Sources */,
+				093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */,
 				09F75F4A2BA3FC2300F1440C /* LoginViewController.swift in Sources */,
+				093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */,
 				09F75F4C2BA3FC2300F1440C /* OutlineViewController.swift in Sources */,
 				09F75F0D2BA3FC0700F1440C /* iOS_Nuflect.xcdatamodeld in Sources */,
 				09F75F4F2BA3FC2300F1440C /* MainViewController.swift in Sources */,
