@@ -10,6 +10,7 @@
 		093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D52BA83FE300CFA054 /* BaseVC.swift */; };
 		093535D82BA8404600CFA054 /* SetFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D72BA8404600CFA054 /* SetFont.swift */; };
 		093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D92BA8439300CFA054 /* BaseScrollVC.swift */; };
+		093535DE2BA8469300CFA054 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535DD2BA8469300CFA054 /* LoginVC.swift */; };
 		09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F022BA3FC0700F1440C /* AppDelegate.swift */; };
 		09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F042BA3FC0700F1440C /* SceneDelegate.swift */; };
 		09F75F072BA3FC0700F1440C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F062BA3FC0700F1440C /* ViewController.swift */; };
@@ -20,12 +21,8 @@
 		09F75F1D2BA3FC0900F1440C /* iOS_NuflectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F1C2BA3FC0900F1440C /* iOS_NuflectTests.swift */; };
 		09F75F272BA3FC0900F1440C /* iOS_NuflectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F262BA3FC0900F1440C /* iOS_NuflectUITests.swift */; };
 		09F75F292BA3FC0900F1440C /* iOS_NuflectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F282BA3FC0900F1440C /* iOS_NuflectUITestsLaunchTests.swift */; };
-		09F75F4A2BA3FC2300F1440C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F3C2BA3FC2300F1440C /* LoginViewController.swift */; };
-		09F75F4B2BA3FC2300F1440C /* Complete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F3E2BA3FC2300F1440C /* Complete.swift */; };
-		09F75F4C2BA3FC2300F1440C /* OutlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F402BA3FC2300F1440C /* OutlineViewController.swift */; };
 		09F75F4D2BA3FC2300F1440C /* ParagraphFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F422BA3FC2300F1440C /* ParagraphFeedbackViewController.swift */; };
 		09F75F4E2BA3FC2300F1440C /* ParagraphWritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F432BA3FC2300F1440C /* ParagraphWritingViewController.swift */; };
-		09F75F4F2BA3FC2300F1440C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F452BA3FC2300F1440C /* MainViewController.swift */; };
 		09F75F522BA3FCDB00F1440C /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F512BA3FCDB00F1440C /* IQKeyboardManagerSwift */; };
 		09F75F552BA3FCF200F1440C /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F542BA3FCF200F1440C /* SwiftyJSON */; };
 		09F75F582BA3FD0400F1440C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F572BA3FD0400F1440C /* SnapKit */; };
@@ -56,6 +53,7 @@
 		093535D52BA83FE300CFA054 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		093535D72BA8404600CFA054 /* SetFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFont.swift; sourceTree = "<group>"; };
 		093535D92BA8439300CFA054 /* BaseScrollVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollVC.swift; sourceTree = "<group>"; };
+		093535DD2BA8469300CFA054 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		09F75EFF2BA3FC0700F1440C /* iOS_Nuflect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Nuflect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F75F022BA3FC0700F1440C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09F75F042BA3FC0700F1440C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,12 +68,8 @@
 		09F75F222BA3FC0900F1440C /* iOS_NuflectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOS_NuflectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F75F262BA3FC0900F1440C /* iOS_NuflectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_NuflectUITests.swift; sourceTree = "<group>"; };
 		09F75F282BA3FC0900F1440C /* iOS_NuflectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_NuflectUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		09F75F3C2BA3FC2300F1440C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		09F75F3E2BA3FC2300F1440C /* Complete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Complete.swift; sourceTree = "<group>"; };
-		09F75F402BA3FC2300F1440C /* OutlineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlineViewController.swift; sourceTree = "<group>"; };
 		09F75F422BA3FC2300F1440C /* ParagraphFeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParagraphFeedbackViewController.swift; sourceTree = "<group>"; };
 		09F75F432BA3FC2300F1440C /* ParagraphWritingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParagraphWritingViewController.swift; sourceTree = "<group>"; };
-		09F75F452BA3FC2300F1440C /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		09F75F642BA40B3D00F1440C /* SetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -201,7 +195,7 @@
 		09F75F3D2BA3FC2300F1440C /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				09F75F3C2BA3FC2300F1440C /* LoginViewController.swift */,
+				093535DD2BA8469300CFA054 /* LoginVC.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -209,7 +203,6 @@
 		09F75F3F2BA3FC2300F1440C /* Complete */ = {
 			isa = PBXGroup;
 			children = (
-				09F75F3E2BA3FC2300F1440C /* Complete.swift */,
 			);
 			path = Complete;
 			sourceTree = "<group>";
@@ -217,7 +210,6 @@
 		09F75F412BA3FC2300F1440C /* Outline */ = {
 			isa = PBXGroup;
 			children = (
-				09F75F402BA3FC2300F1440C /* OutlineViewController.swift */,
 			);
 			path = Outline;
 			sourceTree = "<group>";
@@ -237,7 +229,6 @@
 				09F75F3F2BA3FC2300F1440C /* Complete */,
 				09F75F412BA3FC2300F1440C /* Outline */,
 				09F75F442BA3FC2300F1440C /* Paragraph */,
-				09F75F452BA3FC2300F1440C /* MainViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -437,7 +428,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09F75F4B2BA3FC2300F1440C /* Complete.swift in Sources */,
+				093535DE2BA8469300CFA054 /* LoginVC.swift in Sources */,
 				09F75F072BA3FC0700F1440C /* ViewController.swift in Sources */,
 				09F75F652BA40B3D00F1440C /* SetColor.swift in Sources */,
 				09F75F4D2BA3FC2300F1440C /* ParagraphFeedbackViewController.swift in Sources */,
@@ -446,11 +437,8 @@
 				09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */,
 				093535D82BA8404600CFA054 /* SetFont.swift in Sources */,
 				093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */,
-				09F75F4A2BA3FC2300F1440C /* LoginViewController.swift in Sources */,
 				093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */,
-				09F75F4C2BA3FC2300F1440C /* OutlineViewController.swift in Sources */,
 				09F75F0D2BA3FC0700F1440C /* iOS_Nuflect.xcdatamodeld in Sources */,
-				09F75F4F2BA3FC2300F1440C /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
