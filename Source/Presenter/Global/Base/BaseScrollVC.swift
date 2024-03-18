@@ -72,8 +72,8 @@ class BaseScrollVC: UIViewController, UIScrollViewDelegate {
     
     //auto layout
     func setConstraint() {
-        let leading = 16
-        let top = 44
+//        let leading = 16
+//        let top = 44
         
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
