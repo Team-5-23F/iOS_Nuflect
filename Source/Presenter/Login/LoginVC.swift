@@ -45,6 +45,8 @@ class LoginVC: UIViewController {
     
     @objc func kakaoLoginButtonTapped(_ sender: UIButton) {
         print("kakao login button tapped")
+        let VC = MainVC()
+        navigationController?.pushViewController(VC, animated: true)
     }
     
     //MARK: - Properties
@@ -55,6 +57,8 @@ class LoginVC: UIViewController {
         [logoImageView, appNameLabel, kakaoLoginButton].forEach { view in
             self.view.addSubview(view)
         }
+        navigationController?.navigationBar.isHidden = true
+        self.view.backgroundColor = UIColor.Nuflect.white
     }
     
     func Constraint() {
