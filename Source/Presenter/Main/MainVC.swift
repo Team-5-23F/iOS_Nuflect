@@ -13,27 +13,31 @@ class MainVC: UIViewController {
     lazy var navigationBar = UINavigationBar()
     
     //introduction button
-    lazy var introductionView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 18
-        view.backgroundColor = UIColor.Nuflect.mainBlue
+    lazy var introductionButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.Nuflect.mainBlue
+        button.layer.cornerRadius = 18
+        button.addTarget(self, action: #selector(introductionButtonTapped), for: .touchUpInside)
         
-        return view
+        return button
     }()
     
     lazy var introductionTitle: UILabel = {
         let label = UILabel()
         label.text = "What is Nuflect?"
         label.font = UIFont.Nuflect.headtitlebold
+        label.textColor = UIColor.Nuflect.white
         
         return label
     }()
     
     lazy var introductionContent: UILabel = {
         let label = UILabel()
-        label.text = "번역으로 인해 발생하는\n뉘양스 차이를 찾아드릴게요"
+        label.text = "번역으로 인해 발생하는 뉘양스 차이를\nNuflect가 찾아서 교정해드려요"
         label.numberOfLines = 2
-        label.font = UIFont.Nuflect.subtitleRegular
+        label.textAlignment = .center
+        label.font = UIFont.Nuflect.subheadMedium
+        label.textColor = UIColor.Nuflect.white
         
         return label
     }()
@@ -41,7 +45,8 @@ class MainVC: UIViewController {
     lazy var introductionMore: UILabel = {
         let label = UILabel()
         label.text = "더 알아보기 >"
-        label.font = UIFont.Nuflect.tinyRegular
+        label.font = UIFont.Nuflect.smallRegular
+        label.textColor = UIColor.Nuflect.white
         
         return label
     }()
@@ -57,6 +62,20 @@ class MainVC: UIViewController {
     }()
     
     //perpose textView
+    lazy var perposeTextView: UITextView = {
+        let textView = UITextView()
+        textView.delegate = self
+        textView.text = placeholder
+        textView.font = UIFont.Nuflect.baseMedium
+        textView.textColor = UIColor.Nuflect.darkGray
+        textView.backgroundColor = UIColor.Nuflect.inputBlue
+        textView.layer.cornerRadius = 8
+        textView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
+        textView.textContainerInset = .init(top: 18, left: 23, bottom: 18, right: 23)
+        textView.scrollIndicatorInsets = .init(top: 18, left: 10, bottom: 18, right: 23)
+        
+        return textView
+    }()
     
     //start button
     lazy var startButton: UIButton = {
@@ -74,7 +93,7 @@ class MainVC: UIViewController {
         button.setTitleColor(UIColor.Nuflect.white, for: .highlighted)
         button.isEnabled = false
         
-//        button.addTarget(self, action: #selector(kakaoLoginButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -94,8 +113,16 @@ class MainVC: UIViewController {
         print("mypage tapped")
     }
     
-    //MARK: - Properties
+    @objc func introductionButtonTapped() {
+        print("introduction tapped")
+    }
     
+    @objc func startButtonTapped() {
+        print("start tapped")
+    }
+    
+    //MARK: - Properties
+    lazy var placeholder = "구체적으로 작성할 수록\n적절한 번역이 제공됩니다."
     
     //MARK: - Set Ui
     func setView() {
@@ -145,12 +172,12 @@ class MainVC: UIViewController {
     }
     
     func addsubview() {
-        [navigationBar, introductionView, perposeTitle, /*textView,*/ startButton].forEach { view in
+        [navigationBar, introductionButton, perposeTitle, perposeTextView, startButton].forEach { view in
             self.view.addSubview(view)
         }
         
         [introductionTitle, introductionContent, introductionMore].forEach { view in
-            self.introductionView.addSubview(view)
+            self.introductionButton.addSubview(view)
         }
     }
     
@@ -166,16 +193,39 @@ class MainVC: UIViewController {
             make.trailing.equalToSuperview().offset(-leading)
         }
         
-        introductionView.snp.makeConstraints { make in
+        introductionButton.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
-            make.height.equalTo(170)
+            make.height.equalTo(160)
         }
         
+        introductionTitle.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.centerX.equalToSuperview()
+        }
+        
+        introductionContent.snp.makeConstraints { make in
+            make.top.equalTo(introductionTitle.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+        }
+        
+        introductionMore.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-20)
+            make.trailing.equalToSuperview().offset(-20)
+        }
+        
+        
         perposeTitle.snp.makeConstraints { make in
-            make.top.equalTo(introductionView.snp.bottom).offset(top)
+            make.top.equalTo(introductionButton.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(titleLeading)
+        }
+        
+        perposeTextView.snp.makeConstraints { make in
+            make.top.equalTo(perposeTitle.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(leading)
+            make.trailing.equalToSuperview().offset(-leading)
+            make.height.equalTo(200)
         }
         
         startButton.snp.makeConstraints { make in
@@ -187,4 +237,35 @@ class MainVC: UIViewController {
     }
   
 
+}
+
+//MARK: - extension
+extension MainVC: UITextViewDelegate {
+    //TextView
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        ///placeholder
+        if textView.text == placeholder {
+            self.perposeTextView.textColor = .Nuflect.black
+            self.perposeTextView.text = nil
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        //set placeholder
+        if perposeTextView.text.isEmpty {
+            self.perposeTextView.textColor = UIColor.Nuflect.darkGray
+            self.perposeTextView.text = placeholder
+        }
+        
+        //get inputs in textview, activate the button
+        if perposeTextView.text.isEmpty || perposeTextView.text == placeholder {
+            startButton.backgroundColor = .Nuflect.lightGray
+            startButton.setTitleColor(.Nuflect.darkGray, for: .normal)
+            startButton.isEnabled = false
+        } else {
+            startButton.backgroundColor = .Nuflect.mainBlue
+            startButton.setTitleColor(.Nuflect.white, for: .normal)
+            startButton.isEnabled = true
+        }
+    }
 }
