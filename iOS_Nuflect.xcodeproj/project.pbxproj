@@ -12,6 +12,7 @@
 		093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D92BA8439300CFA054 /* BaseScrollVC.swift */; };
 		093535DE2BA8469300CFA054 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535DD2BA8469300CFA054 /* LoginVC.swift */; };
 		093535E12BA85DD600CFA054 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535E02BA85DD600CFA054 /* MainVC.swift */; };
+		093535E32BA9342200CFA054 /* ColorToImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535E22BA9342200CFA054 /* ColorToImage.swift */; };
 		09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F022BA3FC0700F1440C /* AppDelegate.swift */; };
 		09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F042BA3FC0700F1440C /* SceneDelegate.swift */; };
 		09F75F072BA3FC0700F1440C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F062BA3FC0700F1440C /* ViewController.swift */; };
@@ -56,6 +57,7 @@
 		093535D92BA8439300CFA054 /* BaseScrollVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollVC.swift; sourceTree = "<group>"; };
 		093535DD2BA8469300CFA054 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		093535E02BA85DD600CFA054 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		093535E22BA9342200CFA054 /* ColorToImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorToImage.swift; sourceTree = "<group>"; };
 		09F75EFF2BA3FC0700F1440C /* iOS_Nuflect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Nuflect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F75F022BA3FC0700F1440C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09F75F042BA3FC0700F1440C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			children = (
 				09F75F642BA40B3D00F1440C /* SetColor.swift */,
 				093535D72BA8404600CFA054 /* SetFont.swift */,
+				093535E22BA9342200CFA054 /* ColorToImage.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				093535D82BA8404600CFA054 /* SetFont.swift in Sources */,
 				093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */,
 				093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */,
+				093535E32BA9342200CFA054 /* ColorToImage.swift in Sources */,
 				09F75F0D2BA3FC0700F1440C /* iOS_Nuflect.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,6 +12,7 @@ extension UIFont {
     struct Nuflect {
         //Headline
         static let headtitlebold = UIFont.systemFont(ofSize: 26, weight: .bold)
+        static let headtitleSemiBold = UIFont.systemFont(ofSize: 26, weight: .semibold)
         
         //Subheadline
         static let subtitleBold = UIFont.systemFont(ofSize: 20, weight: .bold)
