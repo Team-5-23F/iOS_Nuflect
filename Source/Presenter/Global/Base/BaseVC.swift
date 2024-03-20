@@ -15,21 +15,22 @@ class BaseVC: UIViewController {
     //MARK: - Define Method
     override func viewDidLoad() {
         super.viewDidLoad()
-        SetView()
-        Constraint()
+        setView()
+        setConstraint()
     }
     
     //MARK: - Properties
     
     
     //MARK: - Set Ui
-    func SetView() {
+    func setView() {
         
     }
     
-    func Constraint() {
+    func setConstraint() {
         
     }
   
 
 }
+

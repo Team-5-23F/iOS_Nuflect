@@ -19,6 +19,7 @@
 		093535ED2BA9810B00CFA054 /* FeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535EC2BA9810B00CFA054 /* FeedbackVC.swift */; };
 		093535EF2BA9811A00CFA054 /* CompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535EE2BA9811A00CFA054 /* CompleteVC.swift */; };
 		093535F12BA9812B00CFA054 /* MypageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535F02BA9812B00CFA054 /* MypageVC.swift */; };
+		098ED6242BAAC476006A6628 /* OutlineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098ED6232BAAC476006A6628 /* OutlineCell.swift */; };
 		09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F022BA3FC0700F1440C /* AppDelegate.swift */; };
 		09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F042BA3FC0700F1440C /* SceneDelegate.swift */; };
 		09F75F072BA3FC0700F1440C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F062BA3FC0700F1440C /* ViewController.swift */; };
@@ -68,6 +69,7 @@
 		093535EC2BA9810B00CFA054 /* FeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackVC.swift; sourceTree = "<group>"; };
 		093535EE2BA9811A00CFA054 /* CompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteVC.swift; sourceTree = "<group>"; };
 		093535F02BA9812B00CFA054 /* MypageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageVC.swift; sourceTree = "<group>"; };
+		098ED6232BAAC476006A6628 /* OutlineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineCell.swift; sourceTree = "<group>"; };
 		09F75EFF2BA3FC0700F1440C /* iOS_Nuflect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Nuflect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F75F022BA3FC0700F1440C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09F75F042BA3FC0700F1440C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				093535E82BA97A4E00CFA054 /* OutlineVC.swift */,
+				098ED6232BAAC476006A6628 /* OutlineCell.swift */,
 			);
 			path = Outline;
 			sourceTree = "<group>";
@@ -460,6 +463,7 @@
 				093535D82BA8404600CFA054 /* SetFont.swift in Sources */,
 				093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */,
 				093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */,
+				098ED6242BAAC476006A6628 /* OutlineCell.swift in Sources */,
 				093535ED2BA9810B00CFA054 /* FeedbackVC.swift in Sources */,
 				093535E32BA9342200CFA054 /* ColorToImage.swift in Sources */,
 				09F75F0D2BA3FC0700F1440C /* iOS_Nuflect.xcdatamodeld in Sources */,

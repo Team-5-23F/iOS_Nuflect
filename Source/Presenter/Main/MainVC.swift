@@ -119,6 +119,8 @@ class MainVC: UIViewController {
     
     @objc func startButtonTapped() {
         print("start tapped")
+        let VC = OutlineVC()
+        navigationController?.pushViewController(VC, animated: true)
     }
     
     //MARK: - Properties
@@ -142,7 +144,7 @@ class MainVC: UIViewController {
 //        ]
         
         //logo (left)
-        let logo = UIImage(named: "Logo")
+        let logo = UIImage(named: "img_logo")
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 33, height: 33), false, 0.0)
         logo?.draw(in: CGRect(x: 0, y: 0, width: 33, height: 33))
         let resizedLogo = UIGraphicsGetImageFromCurrentImageContext()
