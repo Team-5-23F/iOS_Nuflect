@@ -9,12 +9,35 @@ import UIKit
 import SnapKit
 
 class OutlineVC: UIViewController {
+    //MARK: - Properties
+    //will get from API
+//    lazy var paragraphs : [String] = []
+    lazy var paragraphs : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
+    
+    //check each paragrapgh is written
+//    lazy var isWritten : [Bool] = []
+    lazy var isWritten : [Bool] = [false, false, false, false, false, false, false, false, false]
+    
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+//        layout.minimumLineSpacing = 8.0
+//        layout.minimumInteritemSpacing = 8.0
+//        layout.itemSize = CGSize(width: collectionView.frame.width, height: collectionView.frame.width * 0.25)
+//        let width = collectionView.frame.width
+//        let height: CGFloat = width * 0.25
+//        let size = CGSize(width: width, height: height)
+//        layout.itemSize = size
+        
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.isScrollEnabled = true
+        view.showsHorizontalScrollIndicator = false
+        view.showsVerticalScrollIndicator = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
         
         return view
     }()
@@ -29,7 +52,8 @@ class OutlineVC: UIViewController {
     //MARK: - Set Ui
     func setView() {
         setNavigationBar()
-        addsubview()
+        addSubView()
+        setCollectionView()
         self.view.backgroundColor = UIColor.Nuflect.white
     }
     
@@ -73,7 +97,7 @@ class OutlineVC: UIViewController {
         navigationBar.shadowImage = UIImage() // 테두리 없애기
     }
     
-    func addsubview() {
+    func addSubView() {
         [navigationBar, collectionView].forEach { view in
             self.view.addSubview(view)
         }
@@ -81,8 +105,7 @@ class OutlineVC: UIViewController {
     
     //auto layout
     func setConstraint() {
-        let leading = 16
-        let titleLeading = 35
+        let leading = 35
         let top = 40
         
         navigationBar.snp.makeConstraints { make in
@@ -92,16 +115,16 @@ class OutlineVC: UIViewController {
         }
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar.snp.bottom)
+            make.top.equalTo(navigationBar.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
-            make.height.equalTo(800)
+            make.bottom.equalToSuperview().offset(-40)
         }
     }
 }
 
 //set collectionView
-extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate {
+extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     //set collectionView
     func setCollectionView() {
         collectionView.backgroundColor = .Nuflect.white
@@ -112,10 +135,8 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func registerCells() {
         let cellIdentifiers = [
-            "CellIdentifier1": OutlineCell.self,
-            "CellIdentifier2": OutlineCell.self,
-            "CellIdentifier3": OutlineCell.self,
-            "CellIdentifier4": OutlineCell.self
+            "outlineCell": OutlineCell.self,
+            "addCell": AddCell.self,
         ]
 
         cellIdentifiers.forEach { identifier, cellClass in
@@ -124,53 +145,44 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        4
+        paragraphs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: UICollectionViewCell
         //각 인덱스에 대한 cell 등록
         switch indexPath.item {
-        case 0:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellIdentifier1", for: indexPath) as! OutlineCell
-            
+        case paragraphs.count - 1:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCell", for: indexPath) as! AddCell
             return cell
             
         default:
-            fatalError("Invalid cell index")
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "outlineCell", for: indexPath) as! OutlineCell
+            return cell
+//            fatalError("Invalid cell index")
         }
         
         
     }
     
+    //cell size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // 셀 크기
-        switch indexPath.item {
-            //1번 cell에 대한 크기 지정, 가로는 뷰 크기와 동일 세로는 임의 지정
-        case 0:
-            let width = collectionView.frame.width
-            let height: CGFloat = 68
-            return CGSize(width: width, height: height)
-            //2번 cell에 대한 크기 지정, 가로 세로 동일
-        case 1:
-            let width = collectionView.frame.width
-            let heightRatio: CGFloat = 256 / 852
-            let viewHeight = UIScreen.main.bounds.height
-            return CGSize(width: width, height: viewHeight * heightRatio)
-            //3번 cell에 대한 크기 지정, 뷰의 가로 값을 2로 나눈뒤 중간 여백을 뺀 값을 가로, 세로에 할당
-        default:
-            let width = (collectionView.frame.width / 2 - 5)
-            let height = width
-            return CGSize(width: width, height: height)
-        }
+        let width = collectionView.frame.width
+//        let width: CGFloat = 333
+        let height = collectionView.frame.width / 4
+        return CGSize(width: width, height: height)
     }
-
+    
+    
+    
+    //cell touch action
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.item {
-        // 셀 클릭에 대한 액션
-        case 0:
+        case paragraphs.count - 1:
+            print("Add")
             break
         default:
+            print(indexPath.item)
             break
         }
     }

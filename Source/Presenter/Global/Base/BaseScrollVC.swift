@@ -38,8 +38,8 @@ class BaseScrollVC: UIViewController, UIScrollViewDelegate {
     //MARK: - Set Ui
     func setView() {
         setNavigationBar()
-        addsubview()
-        setscrollview()
+        addSubView()
+        setScrollview()
     }
     
     func setNavigationBar() {
@@ -51,7 +51,7 @@ class BaseScrollVC: UIViewController, UIScrollViewDelegate {
         navigationBar.shadowImage = UIImage() // 테두리 없애기
     }
     
-    func addsubview() {
+    func addSubView() {
         [navigationBar, scrollview].forEach { view in
             self.view.addSubview(view)
         }
@@ -66,7 +66,7 @@ class BaseScrollVC: UIViewController, UIScrollViewDelegate {
     }
     
     //scroll view
-    func setscrollview() {
+    func setScrollview() {
         scrollview.delegate = self
     }
     

@@ -129,7 +129,7 @@ class MainVC: UIViewController {
     //MARK: - Set Ui
     func setView() {
         setNavigationBar()
-        addsubview()
+        addSubView()
         self.view.backgroundColor = UIColor.Nuflect.white
     }
     
@@ -173,7 +173,7 @@ class MainVC: UIViewController {
         navigationBar.shadowImage = UIImage() // 테두리 없애기
     }
     
-    func addsubview() {
+    func addSubView() {
         [navigationBar, introductionButton, perposeTitle, perposeTextView, startButton].forEach { view in
             self.view.addSubview(view)
         }

@@ -1,20 +1,20 @@
 //
-//  OutlineCell.swift
+//  AddCell.swift
 //  iOS_Nuflect
 //
-//  Created by Jiwoong's MacBook Air on 3/20/24.
+//  Created by Jiwoong's MacBook Air on 3/30/24.
 //
 
 import UIKit
 import SnapKit
 
-class OutlineCell: UICollectionViewCell {
+class AddCell: UICollectionViewCell {
     //MARK: - UI ProPerties
     lazy var paragraphTitle: UILabel = {
         let label = UILabel()
-        label.text = "Paragraph"
+        label.text = "Add Cell"
         label.font = UIFont.Nuflect.subtitleBold
-        label.textColor = UIColor.Nuflect.black
+        label.textColor = UIColor.Nuflect.mainBlue
         label.numberOfLines = 2
         
         return label
@@ -22,22 +22,20 @@ class OutlineCell: UICollectionViewCell {
     
     lazy var moreButton: UIButton = {
         let button = UIButton()
-        let more = UIImage(systemName: "ellipsis.circle")
-        
-        UIGraphicsBeginImageContextWithOptions(CGSize(width:24, height: 24), false, 0.0)
-        more?.draw(in: CGRect(x: 0, y: 0, width: 24, height: 24))
-        let resizedMore = UIGraphicsGetImageFromCurrentImageContext()
+        let more = UIImage(systemName: "ellipsis")
+        UIGraphicsBeginImageContextWithOptions(CGSize(width:45, height: 45), false, 0.0)
+        more?.draw(in: CGRect(x: 0, y: 0, width: 45, height: 45))
+        let resizedMypage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
-        button.tintColor = UIColor.Nuflect.black
-        button.setBackgroundImage(resizedMore, for: .normal)
         button.backgroundColor = UIColor.Nuflect.white
+        button.tintColor = UIColor.Nuflect.black
+        button.setBackgroundImage(more, for: .normal)
         button.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         
         let menu = PullDownMenu(frame: .zero) // Set frame later
-        menu.configure(with: ["단락 쓰기", "이름 변경", "순서 변경", "단락 삭제"])
-        menu.isHidden = true
-        addSubview(menu)
+          menu.configure(with: ["단락 쓰기", "이름 변경", "순서 변경", "단락 삭제"])
+          menu.isHidden = true
+          addSubview(menu)
         
         return button
     }()
@@ -63,9 +61,9 @@ class OutlineCell: UICollectionViewCell {
     //MARK: - Set Ui
     func setView(){
         self.layer.cornerRadius = 12
-        self.backgroundColor = .Nuflect.white
+        self.backgroundColor = .Nuflect.lightGray
         self.layer.borderWidth = 2
-        self.layer.borderColor = UIColor.Nuflect.mainBlue?.cgColor
+        self.layer.borderColor = UIColor.Nuflect.darkGray?.cgColor
         addsubview()
         
         
@@ -89,30 +87,5 @@ class OutlineCell: UICollectionViewCell {
             make.centerY.equalToSuperview()
         }
         
-    }
-}
-
-//pull down button
-class PullDownMenu: UIView {
-
-    private var buttons: [UIButton] = []
-
-    func configure(with items: [String]) {
-        buttons.removeAll()
-        for (index, item) in items.enumerated() {
-        let button = UIButton(type: .system)
-        button.setTitle(item, for: .normal)
-        button.tag = index // Set tag to identify button index
-        button.addTarget(self, action: #selector(menuItemTapped(_:)), for: .touchUpInside)
-        addSubview(button)
-        buttons.append(button)
-        // Layout the buttons here (e.g., using a stack view)
-    }
-}
-
-@objc func menuItemTapped(_ sender: UIButton) {
-        // Handle menu item tap here (e.g., dismiss menu, perform action)
-        print("Menu item \(sender.tag) tapped")
-        self.isHidden = true // Hide the menu
     }
 }
