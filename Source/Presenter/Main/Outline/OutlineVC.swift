@@ -24,13 +24,6 @@ class OutlineVC: UIViewController {
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-//        layout.minimumLineSpacing = 8.0
-//        layout.minimumInteritemSpacing = 8.0
-//        layout.itemSize = CGSize(width: collectionView.frame.width, height: collectionView.frame.width * 0.25)
-//        let width = collectionView.frame.width
-//        let height: CGFloat = width * 0.25
-//        let size = CGSize(width: width, height: height)
-//        layout.itemSize = size
         
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.isScrollEnabled = true
@@ -43,6 +36,14 @@ class OutlineVC: UIViewController {
     }()
     
     //MARK: - Define Method
+    @objc func backButtonTapped() {
+        print("back tapped")
+    }
+    
+    @objc func mypageButtonTapped() {
+        print("mypage tapped")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
@@ -60,36 +61,17 @@ class OutlineVC: UIViewController {
     func setNavigationBar() {
         let navigationItem = UINavigationItem()
         
-        //title (center)
-        navigationItem.title = "Nuflect"
-        navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor.black,
-            .font: UIFont.Nuflect.headtitleSemiBold
-        ]
-        
-//                //logo (left)
-//                let logo = UIImage(named: "img_logo")
-//                UIGraphicsBeginImageContextWithOptions(CGSize(width: 33, height: 33), false, 0.0)
-//                logo?.draw(in: CGRect(x: 0, y: 0, width: 33, height: 33))
-//                let resizedLogo = UIGraphicsGetImageFromCurrentImageContext()
-//                UIGraphicsEndImageContext()
-//                let logoImage = resizedLogo?.withRenderingMode(.alwaysOriginal)
-//        
-//                let leftButton = UIBarButtonItem(image: logoImage, style: .plain, target: self, action: #selector(logoButtonTapped))
-//        
-//                //mypage button (right)
-//                let mypage = UIImage(systemName: "person.circle")
-//                UIGraphicsBeginImageContextWithOptions(CGSize(width: 33, height: 33), false, 0.0)
-//                mypage?.draw(in: CGRect(x: 0, y: 0, width: 33, height: 33))
-//                let resizedMypage = UIGraphicsGetImageFromCurrentImageContext()
-//                UIGraphicsEndImageContext()
-//        
-//                let rightButton = UIBarButtonItem(image: resizedMypage, style: .plain, target: self, action: #selector(mypageButtonTapped))
-//                rightButton.tintColor = UIColor.Nuflect.black
-//        
-//        
-//                navigationItem.leftBarButtonItem = leftButton
-//                navigationItem.rightBarButtonItem = rightButton
+        //back (left)
+        let back = UIImage(systemName: "chevron.backward")
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 24, height: 24), false, 0.0)
+        back?.draw(in: CGRect(x: 0, y: 0, width: 24, height: 24))
+        let resizedBack = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        let backImage = resizedBack?.withRenderingMode(.alwaysOriginal)
+
+        let leftButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(backButtonTapped))
+
+        navigationItem.leftBarButtonItem = leftButton
         
         navigationBar.setItems([navigationItem], animated: false)
         navigationBar.barTintColor = .Nuflect.white // 배경색 변경
@@ -124,7 +106,7 @@ class OutlineVC: UIViewController {
 }
 
 //set collectionView
-extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, outlineCollectionViewCellDelegate {
     //set collectionView
     func setCollectionView() {
         collectionView.backgroundColor = .Nuflect.white
@@ -149,15 +131,18 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: UICollectionViewCell
-        //각 인덱스에 대한 cell 등록
         switch indexPath.item {
         case paragraphs.count - 1:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCell", for: indexPath) as! AddCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCell", for: indexPath) as! AddCell
+            
             return cell
             
         default:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "outlineCell", for: indexPath) as! OutlineCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "outlineCell", for: indexPath) as! OutlineCell
+            cell.delegate = self
+            cell.cellNum = indexPath.item + 1
+            cell.paragraphTitle.text = String(indexPath.item + 1) + ". " + paragraphs[indexPath.item]
+            
             return cell
 //            fatalError("Invalid cell index")
         }
@@ -185,5 +170,10 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
             print(indexPath.item)
             break
         }
+    }
+    
+    //More option button
+    func moreOptionTapped(cellNum: Int, selectedOption: String) {
+        print(String(cellNum) + " " + selectedOption)
     }
 }

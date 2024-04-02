@@ -14,7 +14,7 @@ class AddCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Add Cell"
         label.font = UIFont.Nuflect.subtitleBold
-        label.textColor = UIColor.Nuflect.mainBlue
+        label.textColor = UIColor.Nuflect.darkGray
         label.numberOfLines = 2
         
         return label
@@ -32,10 +32,10 @@ class AddCell: UICollectionViewCell {
         button.setBackgroundImage(more, for: .normal)
         button.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         
-        let menu = PullDownMenu(frame: .zero) // Set frame later
-          menu.configure(with: ["단락 쓰기", "이름 변경", "순서 변경", "단락 삭제"])
-          menu.isHidden = true
-          addSubview(menu)
+//        let menu = PullDownMenu(frame: .zero) // Set frame later
+//          menu.configure(with: ["단락 쓰기", "이름 변경", "순서 변경", "단락 삭제"])
+//          menu.isHidden = true
+//          addSubview(menu)
         
         return button
     }()
@@ -50,8 +50,8 @@ class AddCell: UICollectionViewCell {
     
     @objc func moreButtonTapped(_ sender: UIButton) {
         print("more tapped")
-        let menu = sender.superview?.subviews.compactMap { $0 as? PullDownMenu }.first
-          menu?.isHidden.toggle()
+//        let menu = sender.superview?.subviews.compactMap { $0 as? PullDownMenu }.first
+//          menu?.isHidden.toggle()
     }
     
     required init?(coder: NSCoder) {

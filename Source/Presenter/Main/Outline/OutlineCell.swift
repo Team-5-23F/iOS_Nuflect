@@ -9,6 +9,11 @@ import UIKit
 import SnapKit
 
 class OutlineCell: UICollectionViewCell {
+    //delegate for more button
+    weak var delegate: outlineCollectionViewCellDelegate?
+    
+    lazy var cellNum: Int = 0
+    
     //MARK: - UI ProPerties
     lazy var paragraphTitle: UILabel = {
         let label = UILabel()
@@ -32,12 +37,22 @@ class OutlineCell: UICollectionViewCell {
         button.tintColor = UIColor.Nuflect.black
         button.setBackgroundImage(resizedMore, for: .normal)
         button.backgroundColor = UIColor.Nuflect.white
-        button.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         
-        let menu = PullDownMenu(frame: .zero) // Set frame later
-        menu.configure(with: ["단락 쓰기", "이름 변경", "순서 변경", "단락 삭제"])
-        menu.isHidden = true
-        addSubview(menu)
+        let selectedMenu = {(action: UIAction) in
+            print(action.title)
+            //delegate func to OutlineVC
+            self.delegate?.moreOptionTapped(cellNum: self.cellNum, selectedOption: action.title)
+        }
+        
+        button.menu = UIMenu(children: [
+            UIAction(title: "단락 쓰기", state: .off, handler: selectedMenu),
+            UIAction(title: "이름 변경", state: .off, handler: selectedMenu),
+            UIAction(title: "순서 변경", state: .off, handler: selectedMenu),
+            UIAction(title: "단락 삭제", attributes: .destructive, state: .off, handler: selectedMenu),
+        ])
+        
+        button.showsMenuAsPrimaryAction = true
+        button.changesSelectionAsPrimaryAction = false
         
         return button
     }()
@@ -48,12 +63,6 @@ class OutlineCell: UICollectionViewCell {
         setView()
         setConstraint()
         print("cell made")
-    }
-    
-    @objc func moreButtonTapped(_ sender: UIButton) {
-        print("more tapped")
-        let menu = sender.superview?.subviews.compactMap { $0 as? PullDownMenu }.first
-          menu?.isHidden.toggle()
     }
     
     required init?(coder: NSCoder) {
@@ -92,27 +101,8 @@ class OutlineCell: UICollectionViewCell {
     }
 }
 
-//pull down button
-class PullDownMenu: UIView {
 
-    private var buttons: [UIButton] = []
-
-    func configure(with items: [String]) {
-        buttons.removeAll()
-        for (index, item) in items.enumerated() {
-        let button = UIButton(type: .system)
-        button.setTitle(item, for: .normal)
-        button.tag = index // Set tag to identify button index
-        button.addTarget(self, action: #selector(menuItemTapped(_:)), for: .touchUpInside)
-        addSubview(button)
-        buttons.append(button)
-        // Layout the buttons here (e.g., using a stack view)
-    }
+protocol outlineCollectionViewCellDelegate: AnyObject {
+    func moreOptionTapped(cellNum: Int, selectedOption: String)
 }
 
-@objc func menuItemTapped(_ sender: UIButton) {
-        // Handle menu item tap here (e.g., dismiss menu, perform action)
-        print("Menu item \(sender.tag) tapped")
-        self.isHidden = true // Hide the menu
-    }
-}

@@ -98,13 +98,12 @@ class MainVC: UIViewController {
         return button
     }()
     
-    //MARK: - Define Method
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setView()
-        setConstraint()
-    }
     
+    //MARK: - Properties
+    lazy var placeholder = "구체적으로 작성할 수록\n적절한 번역이 제공됩니다."
+    
+    
+    //MARK: - Define Method
     @objc func logoButtonTapped() {
         print("logo tapped")
     }
@@ -123,8 +122,11 @@ class MainVC: UIViewController {
         navigationController?.pushViewController(VC, animated: true)
     }
     
-    //MARK: - Properties
-    lazy var placeholder = "구체적으로 작성할 수록\n적절한 번역이 제공됩니다."
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setView()
+        setConstraint()
+    }
     
     //MARK: - Set Ui
     func setView() {
