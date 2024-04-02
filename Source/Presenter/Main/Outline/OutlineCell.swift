@@ -62,7 +62,6 @@ class OutlineCell: UICollectionViewCell {
         super.init(frame: frame)
         setView()
         setConstraint()
-        print("cell made")
     }
     
     required init?(coder: NSCoder) {

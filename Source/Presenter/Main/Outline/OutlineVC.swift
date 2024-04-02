@@ -21,18 +21,49 @@ class OutlineVC: UIViewController {
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
     
+    //outline title
+    lazy var outlineTitle: UILabel = {
+        let label = UILabel()
+        label.text = "추천받은 Outline을 기반으로\n단락별로 글을 작성해주세요"
+        label.numberOfLines = 2
+        label.font = UIFont.Nuflect.headtitlebold
+        
+        return label
+    }()
+    
+    //paragraphs collectionView
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.isScrollEnabled = true
-        view.showsHorizontalScrollIndicator = false
-        view.showsVerticalScrollIndicator = true
-        view.translatesAutoresizingMaskIntoConstraints = false
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.isScrollEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = true
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
+        return collectionView
+    }()
+    
+    //complete button
+    lazy var completeButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.Nuflect.lightGray
+        button.layer.cornerRadius = 11
         
-        return view
+        button.setTitle("작성 완료", for: .normal)
+        button.setTitleColor(UIColor.Nuflect.darkGray, for: .normal)
+        button.titleLabel?.font = UIFont.Nuflect.subheadMedium
+        
+        // Highlighted
+        let iamge = image(withColor: .Nuflect.mainBlue!)
+        button.setBackgroundImage(iamge, for: .highlighted)
+        button.setTitleColor(UIColor.Nuflect.white, for: .highlighted)
+        button.isEnabled = false
+        
+        button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
+        
+        return button
     }()
     
     //MARK: - Define Method
@@ -42,6 +73,13 @@ class OutlineVC: UIViewController {
     
     @objc func mypageButtonTapped() {
         print("mypage tapped")
+    }
+    
+    @objc func completeButtonTapped() {
+        print("complete tapped")
+        //To do
+//        let VC = CompleteVC()
+//        navigationController?.pushViewController(VC, animated: true)
     }
     
     override func viewDidLoad() {
@@ -63,8 +101,8 @@ class OutlineVC: UIViewController {
         
         //back (left)
         let back = UIImage(systemName: "chevron.backward")
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: 24, height: 24), false, 0.0)
-        back?.draw(in: CGRect(x: 0, y: 0, width: 24, height: 24))
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 20, height: 20), false, 0.0)
+        back?.draw(in: CGRect(x: 0, y: 0, width: 20, height: 20))
         let resizedBack = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         let backImage = resizedBack?.withRenderingMode(.alwaysOriginal)
@@ -80,7 +118,7 @@ class OutlineVC: UIViewController {
     }
     
     func addSubView() {
-        [navigationBar, collectionView].forEach { view in
+        [outlineTitle, navigationBar, collectionView, completeButton].forEach { view in
             self.view.addSubview(view)
         }
     }
@@ -96,11 +134,24 @@ class OutlineVC: UIViewController {
             make.trailing.equalToSuperview().offset(-leading)
         }
         
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar.snp.bottom).offset(top)
+        outlineTitle.snp.makeConstraints { make in
+            make.top.equalTo(navigationBar.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
-            make.bottom.equalToSuperview().offset(-40)
+        }
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(outlineTitle.snp.bottom).offset(top)
+            make.leading.equalToSuperview().offset(leading)
+            make.trailing.equalToSuperview().offset(-leading)
+            make.bottom.equalTo(completeButton.snp.top).offset(-top)
+        }
+        
+        completeButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.height.equalTo(53)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
     }
 }
@@ -165,9 +216,11 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         switch indexPath.item {
         case paragraphs.count - 1:
             print("Add")
+            //To do
             break
         default:
             print(indexPath.item)
+            //To do
             break
         }
     }
@@ -175,5 +228,6 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     //More option button
     func moreOptionTapped(cellNum: Int, selectedOption: String) {
         print(String(cellNum) + " " + selectedOption)
+        //To do
     }
 }
