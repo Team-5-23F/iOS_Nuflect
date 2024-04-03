@@ -11,6 +11,7 @@ import SnapKit
 class WritingVC: UIViewController {
     //MARK: - Properties
     //will get from OutlineVC
+    lazy var paragraphNum: Int = 1
     lazy var paragraphTitle : String = "ParagraphTitle"
     
     //MARK: - UI ProPerties
@@ -19,7 +20,7 @@ class WritingVC: UIViewController {
     //writing title
     lazy var writingTitle: UILabel = {
         let label = UILabel()
-        label.text = paragraphTitle + "\n단락의 내용을 작성해주세요"
+        label.text = String(paragraphNum) + ". " + paragraphTitle + "\n단락의 내용을 작성해주세요"
         label.numberOfLines = 2
         label.font = UIFont.Nuflect.headtitlebold
         
@@ -86,6 +87,7 @@ class WritingVC: UIViewController {
     //MARK: - Define Method
     @objc func backButtonTapped() {
         print("back tapped")
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func mypageButtonTapped() {

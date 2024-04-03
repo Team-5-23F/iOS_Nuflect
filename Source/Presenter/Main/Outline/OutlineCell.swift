@@ -12,7 +12,7 @@ class OutlineCell: UICollectionViewCell {
     //delegate for more button
     weak var delegate: outlineCollectionViewCellDelegate?
     
-    lazy var cellNum: Int = 0
+    lazy var paragraphNum: Int = 1
     
     //MARK: - UI ProPerties
     lazy var paragraphTitle: UILabel = {
@@ -41,11 +41,11 @@ class OutlineCell: UICollectionViewCell {
         let selectedMenu = {(action: UIAction) in
             print(action.title)
             //delegate func to OutlineVC
-            self.delegate?.moreOptionTapped(cellNum: self.cellNum, selectedOption: action.title)
+            self.delegate?.moreOptionTapped(paragraphNum: self.paragraphNum, selectedOption: action.title)
         }
         
         button.menu = UIMenu(children: [
-            UIAction(title: "단락 쓰기", state: .off, handler: selectedMenu),
+            UIAction(title: "단락 작성", state: .off, handler: selectedMenu),
             UIAction(title: "이름 변경", state: .off, handler: selectedMenu),
             UIAction(title: "순서 변경", state: .off, handler: selectedMenu),
             UIAction(title: "단락 삭제", attributes: .destructive, state: .off, handler: selectedMenu),
@@ -102,6 +102,6 @@ class OutlineCell: UICollectionViewCell {
 
 
 protocol outlineCollectionViewCellDelegate: AnyObject {
-    func moreOptionTapped(cellNum: Int, selectedOption: String)
+    func moreOptionTapped(paragraphNum: Int, selectedOption: String)
 }
 

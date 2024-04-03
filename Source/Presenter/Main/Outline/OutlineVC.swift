@@ -69,6 +69,7 @@ class OutlineVC: UIViewController {
     //MARK: - Define Method
     @objc func backButtonTapped() {
         print("back tapped")
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func mypageButtonTapped() {
@@ -191,7 +192,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "outlineCell", for: indexPath) as! OutlineCell
             cell.delegate = self
-            cell.cellNum = indexPath.item + 1
+            cell.paragraphNum = indexPath.item + 1
             cell.paragraphTitle.text = String(indexPath.item + 1) + ". " + paragraphs[indexPath.item]
             
             return cell
@@ -221,21 +222,25 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         default:
             print(indexPath.item)
             let VC = WritingVC()
-            VC.writingTitle.text = paragraphs[indexPath.item]
+            VC.paragraphNum = indexPath.item + 1
+            VC.paragraphTitle = paragraphs[indexPath.item]
             navigationController?.pushViewController(VC, animated: true)
             break
         }
     }
     
     //More option button
-    func moreOptionTapped(cellNum: Int, selectedOption: String) {
-        print(String(cellNum) + " " + selectedOption)
+    func moreOptionTapped(paragraphNum: Int, selectedOption: String) {
+        print(String(paragraphNum) + " " + selectedOption)
         switch selectedOption {
         case "단락 작성":
             let VC = WritingVC()
-            VC.writingTitle.text = paragraphs[cellNum - 1]
+            VC.paragraphNum = paragraphNum
+            VC.paragraphTitle = paragraphs[paragraphNum - 1]
             navigationController?.pushViewController(VC, animated: true)
             break
+        
+        //To do "이름 변경", "순서 변경", "단락 삭제"
             
         default:
             print("error")

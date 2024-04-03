@@ -86,6 +86,7 @@ class FeedbackVC: UIViewController {
     //MARK: - Define Method
     @objc func backButtonTapped() {
         print("back tapped")
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func mypageButtonTapped() {
@@ -93,9 +94,10 @@ class FeedbackVC: UIViewController {
     }
     
     @objc func requestButtonTapped() {
-        print("request tapped")
-        let VC = FeedbackVC()
-        navigationController?.pushViewController(VC, animated: true)
+        print("paragragh writing end tapped")
+        if let VC = navigationController?.viewControllers.first(where: {$0 is OutlineVC}) {
+            navigationController?.popToViewController(VC, animated: true)
+        }
     }
     
     override func viewDidLoad() {
@@ -211,3 +213,6 @@ extension FeedbackVC: UITextViewDelegate {
     }
 }
 
+protocol endWritingParagraghDelegate: AnyObject {
+    func endWritingParagraghButtonTapped(paragraghNum: Int)
+}
