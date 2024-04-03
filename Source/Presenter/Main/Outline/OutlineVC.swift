@@ -135,7 +135,7 @@ class OutlineVC: UIViewController {
         }
         
         outlineTitle.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar.snp.bottom).offset(20)
+            make.top.equalTo(navigationBar.snp.bottom).offset(top / 2)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
         }
@@ -220,7 +220,9 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
             break
         default:
             print(indexPath.item)
-            //To do
+            let VC = WritingVC()
+            VC.writingTitle.text = paragraphs[indexPath.item]
+            navigationController?.pushViewController(VC, animated: true)
             break
         }
     }
@@ -228,6 +230,15 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     //More option button
     func moreOptionTapped(cellNum: Int, selectedOption: String) {
         print(String(cellNum) + " " + selectedOption)
-        //To do
+        switch selectedOption {
+        case "단락 작성":
+            let VC = WritingVC()
+            VC.writingTitle.text = paragraphs[cellNum - 1]
+            navigationController?.pushViewController(VC, animated: true)
+            break
+            
+        default:
+            print("error")
+        }
     }
 }
