@@ -45,8 +45,8 @@ class LoginVC: UIViewController {
     
     @objc func kakaoLoginButtonTapped(_ sender: UIButton) {
         print("kakao login button tapped")
-        let VC = MainVC()
-//        let VC = OutlineVC()
+//        let VC = MainVC()
+        let VC = FeedbackVC()
         navigationController?.pushViewController(VC, animated: true)
     }
     

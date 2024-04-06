@@ -18,7 +18,7 @@ class OutlineCell: UICollectionViewCell {
     lazy var paragraphTitle: UILabel = {
         let label = UILabel()
         label.text = "Paragraph"
-        label.font = UIFont.Nuflect.subtitleBold
+        label.font = UIFont.Nuflect.subtitleSemiBold
         label.textColor = UIColor.Nuflect.black
         label.numberOfLines = 2
         

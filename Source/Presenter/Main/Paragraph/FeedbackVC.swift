@@ -10,39 +10,33 @@ import SnapKit
 
 class FeedbackVC: UIViewController {
     //MARK: - Properties
-    //will get from OutlineVC
-    lazy var paragraphTitle : String = "ParagraphTitle"
+    //will get from WritingVC
+    lazy var paragraphNum: Int = 1
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
     
-    //writing title
-    lazy var writingTitle: UILabel = {
+    //feedback title
+    lazy var feedbackTitle: UILabel = {
         let label = UILabel()
-        label.text = paragraphTitle + "\n단락의 내용을 작성해주세요"
+        label.text = "피드백을 참고하며\n번역된 단락을 완성하세요"
         label.numberOfLines = 2
         label.font = UIFont.Nuflect.headtitlebold
         
         return label
     }()
     
-    //writing introduction label
-    lazy var writingIntroductionLabel: UILabel = {
+    //translation subtitle
+    lazy var translationSubtitle: UILabel = {
         let label = UILabel()
-        label.text = "작성한 단락의 번역 초안과\n번역으로 인해 생기는 뉘양스 차이 및\n의미적 모호성을 해소할 피드백을 드릴게요."
-        label.numberOfLines = 3
-        label.font = UIFont.Nuflect.baseSemiBold
-        label.textColor = UIColor.Nuflect.black
-        label.backgroundColor = UIColor.Nuflect.infoYellow
-        label.textAlignment = .center
-        label.layer.masksToBounds = true
-        label.layer.cornerRadius = 12
+        label.text = "번역 초안"
+        label.font = UIFont.Nuflect.subtitleSemiBold
         
         return label
     }()
     
-    //writing textView
-    lazy var writingTextView: UITextView = {
+    //translation textView
+    lazy var translationTextView: UITextView = {
         let textView = UITextView()
         textView.delegate = self
         textView.text = placeholder
@@ -57,30 +51,27 @@ class FeedbackVC: UIViewController {
         return textView
     }()
     
-    //request button
-    lazy var requestButton: UIButton = {
+    //feedback subview
+    lazy var feedbackSubView = FeedbackView()
+    
+    //end writing paragraph button
+    lazy var endWritingParagraghButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor.Nuflect.lightGray
+        button.backgroundColor = UIColor.Nuflect.mainBlue
         button.layer.cornerRadius = 11
         
-        button.setTitle("번역 및 피드백 요청", for: .normal)
-        button.setTitleColor(UIColor.Nuflect.darkGray, for: .normal)
+        button.setTitle("단락 작성 완료", for: .normal)
+        button.setTitleColor(UIColor.Nuflect.white, for: .normal)
         button.titleLabel?.font = UIFont.Nuflect.subheadMedium
         
-        // Highlighted
-        let iamge = image(withColor: .Nuflect.mainBlue!)
-        button.setBackgroundImage(iamge, for: .highlighted)
-        button.setTitleColor(UIColor.Nuflect.white, for: .highlighted)
-        button.isEnabled = false
-        
-        button.addTarget(self, action: #selector(requestButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(endWritingParagraghButtonTapped), for: .touchUpInside)
         
         return button
     }()
     
     
     //MARK: - Properties
-    lazy var placeholder = paragraphTitle + " 단락의 내용을 작성해주세요"
+    lazy var placeholder = "번역 결과를 받아오는 중입니다.\n잠시만 기다려 주세요."
     
     
     //MARK: - Define Method
@@ -93,11 +84,25 @@ class FeedbackVC: UIViewController {
         print("mypage tapped")
     }
     
-    @objc func requestButtonTapped() {
-        print("paragragh writing end tapped")
+    @objc func feedbackRefreshButtonTapped() {
+        print("feedback refresh tapped")
+    }
+    
+    @objc func feedbackPrevButtonTapped() {
+        print("feedback prev tapped")
+    }
+    
+    @objc func feedbackNextButtonTapped() {
+        print("feedback next tapped")
+    }
+    
+    @objc func endWritingParagraghButtonTapped() {
+        print("end writing paragragh button tapped")
         if let VC = navigationController?.viewControllers.first(where: {$0 is OutlineVC}) {
             navigationController?.popToViewController(VC, animated: true)
         }
+        
+        
     }
     
     override func viewDidLoad() {
@@ -135,7 +140,7 @@ class FeedbackVC: UIViewController {
     }
     
     func addSubView() {
-        [navigationBar, writingTitle, writingIntroductionLabel, writingTextView, requestButton].forEach { view in
+        [navigationBar, feedbackTitle, translationSubtitle, translationTextView, feedbackSubView, endWritingParagraghButton].forEach { view in
             self.view.addSubview(view)
         }
     }
@@ -144,7 +149,8 @@ class FeedbackVC: UIViewController {
     func setConstraint() {
         let leading = 16
         let titleLeading = 35
-        let top = 40
+        let subtitleLeading = 22
+        let top = 20
         
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -152,30 +158,35 @@ class FeedbackVC: UIViewController {
             make.trailing.equalToSuperview().offset(-leading)
         }
         
-        writingTitle.snp.makeConstraints { make in
+        feedbackTitle.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom).offset(top / 2)
             make.leading.equalToSuperview().offset(titleLeading)
         }
         
-        writingIntroductionLabel.snp.makeConstraints { make in
-            make.top.equalTo(writingTitle.snp.bottom).offset(top)
-            make.leading.equalToSuperview().offset(leading)
-            make.trailing.equalToSuperview().offset(-leading)
-            make.height.equalTo(110)
+        translationSubtitle.snp.makeConstraints { make in
+            make.top.equalTo(feedbackTitle.snp.bottom).offset(top)
+            make.leading.equalToSuperview().offset(subtitleLeading)
         }
         
-        writingTextView.snp.makeConstraints { make in
-            make.top.equalTo(writingIntroductionLabel.snp.bottom).offset(top)
+        translationTextView.snp.makeConstraints { make in
+            make.top.equalTo(translationSubtitle.snp.bottom).offset(top / 2)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
-            make.bottom.equalTo(requestButton.snp.top).offset(-top)
+            make.height.equalTo(220)
         }
         
-        requestButton.snp.makeConstraints { make in
+        feedbackSubView.snp.makeConstraints { make in
+            make.top.equalTo(translationTextView.snp.bottom).offset(top)
+            make.leading.equalToSuperview().offset(leading)
+            make.trailing.equalToSuperview().offset(-leading)
+            make.bottom.equalTo(endWritingParagraghButton.snp.top).offset(-top)
+        }
+        
+        endWritingParagraghButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(53)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-top)
         }
     }
   
@@ -188,31 +199,31 @@ extension FeedbackVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         ///placeholder
         if textView.text == placeholder {
-            self.writingTextView.textColor = .Nuflect.black
-            self.writingTextView.text = nil
+            self.translationTextView.textColor = .Nuflect.black
+            self.translationTextView.text = nil
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         //set placeholder
-        if writingTextView.text.isEmpty {
-            self.writingTextView.textColor = UIColor.Nuflect.darkGray
-            self.writingTextView.text = placeholder
+        if translationTextView.text.isEmpty {
+            self.translationTextView.textColor = UIColor.Nuflect.darkGray
+            self.translationTextView.text = placeholder
         }
         
         //get inputs in textview, activate the button
-        if writingTextView.text.isEmpty || writingTextView.text == placeholder {
-            requestButton.backgroundColor = .Nuflect.lightGray
-            requestButton.setTitleColor(.Nuflect.darkGray, for: .normal)
-            requestButton.isEnabled = false
+        if translationTextView.text.isEmpty || translationTextView.text == placeholder {
+            endWritingParagraghButton.backgroundColor = .Nuflect.lightGray
+            endWritingParagraghButton.setTitleColor(.Nuflect.darkGray, for: .normal)
+            endWritingParagraghButton.isEnabled = false
         } else {
-            requestButton.backgroundColor = .Nuflect.mainBlue
-            requestButton.setTitleColor(.Nuflect.white, for: .normal)
-            requestButton.isEnabled = true
+            endWritingParagraghButton.backgroundColor = .Nuflect.mainBlue
+            endWritingParagraghButton.setTitleColor(.Nuflect.white, for: .normal)
+            endWritingParagraghButton.isEnabled = true
         }
     }
 }
 
-protocol endWritingParagraghDelegate: AnyObject {
-    func endWritingParagraghButtonTapped(paragraghNum: Int)
+protocol returnToOutlineVCDelegate: AnyObject {
+    func returnToOutlineVC(paragraghNum: Int, paragraphContents: String)
 }

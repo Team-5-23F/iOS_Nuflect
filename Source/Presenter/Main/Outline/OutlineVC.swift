@@ -127,7 +127,7 @@ class OutlineVC: UIViewController {
     //auto layout
     func setConstraint() {
         let leading = 35
-        let top = 40
+        let top = 20
         
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -136,7 +136,7 @@ class OutlineVC: UIViewController {
         }
         
         outlineTitle.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar.snp.bottom).offset(top / 2)
+            make.top.equalTo(navigationBar.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
         }
@@ -152,7 +152,7 @@ class OutlineVC: UIViewController {
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(53)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-top)
         }
     }
 }

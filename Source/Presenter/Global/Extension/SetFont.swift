@@ -15,7 +15,7 @@ extension UIFont {
         static let headtitleSemiBold = UIFont.systemFont(ofSize: 26, weight: .semibold)
         
         //Subheadline
-        static let subtitleBold = UIFont.systemFont(ofSize: 20, weight: .bold)
+        static let subtitleSemiBold = UIFont.systemFont(ofSize: 20, weight: .semibold)
         static let subtitleRegular = UIFont.systemFont(ofSize: 20, weight: .regular)
         static let subheadBold = UIFont.systemFont(ofSize: 18, weight: .bold)
         static let subheadMedium = UIFont.systemFont(ofSize: 18, weight: .medium)

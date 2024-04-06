@@ -97,6 +97,7 @@ class WritingVC: UIViewController {
     @objc func requestButtonTapped() {
         print("request tapped")
         let VC = FeedbackVC()
+        VC.paragraphNum = self.paragraphNum
         navigationController?.pushViewController(VC, animated: true)
     }
     
@@ -144,7 +145,7 @@ class WritingVC: UIViewController {
     func setConstraint() {
         let leading = 16
         let titleLeading = 35
-        let top = 40
+        let top = 20
         
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -153,7 +154,7 @@ class WritingVC: UIViewController {
         }
         
         writingTitle.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar.snp.bottom).offset(top / 2)
+            make.top.equalTo(navigationBar.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(titleLeading)
         }
         
@@ -175,7 +176,7 @@ class WritingVC: UIViewController {
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(53)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-top)
         }
     }
   
