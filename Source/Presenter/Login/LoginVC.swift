@@ -12,7 +12,7 @@ class LoginVC: UIViewController {
     //MARK: - UI ProPerties
     //logo
     lazy var logoImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "Logo"))
+        let imageView = UIImageView(image: UIImage(named: "img_logo"))
         
         return imageView
     }()
@@ -30,7 +30,7 @@ class LoginVC: UIViewController {
     //kakao login btn
     lazy var kakaoLoginButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "Btn_login_kakao"), for: .normal)
+        button.setImage(UIImage(named: "btn_login_kakao"), for: .normal)
         button.addTarget(self, action: #selector(kakaoLoginButtonTapped), for: .touchUpInside)
         
         return button
@@ -39,8 +39,8 @@ class LoginVC: UIViewController {
     //MARK: - Define Method
     override func viewDidLoad() {
         super.viewDidLoad()
-        SetView()
-        Constraint()
+        setView()
+        setConstraint()
     }
     
     @objc func kakaoLoginButtonTapped(_ sender: UIButton) {
@@ -49,11 +49,9 @@ class LoginVC: UIViewController {
         navigationController?.pushViewController(VC, animated: true)
     }
     
-    //MARK: - Properties
-    
     
     //MARK: - Set Ui
-    func SetView() {
+    func setView() {
         [logoImageView, appNameLabel, kakaoLoginButton].forEach { view in
             self.view.addSubview(view)
         }
@@ -61,7 +59,7 @@ class LoginVC: UIViewController {
         self.view.backgroundColor = UIColor.Nuflect.white
     }
     
-    func Constraint() {
+    func setConstraint() {
         let leading = 30
         
         logoImageView.snp.makeConstraints { make in

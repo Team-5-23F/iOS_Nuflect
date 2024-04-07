@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090B28DA2BB8039800493044 /* AddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090B28D92BB8039800493044 /* AddCell.swift */; };
 		093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D52BA83FE300CFA054 /* BaseVC.swift */; };
 		093535D82BA8404600CFA054 /* SetFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D72BA8404600CFA054 /* SetFont.swift */; };
 		093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D92BA8439300CFA054 /* BaseScrollVC.swift */; };
@@ -14,6 +15,14 @@
 		093535E12BA85DD600CFA054 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535E02BA85DD600CFA054 /* MainVC.swift */; };
 		093535E32BA9342200CFA054 /* ColorToImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535E22BA9342200CFA054 /* ColorToImage.swift */; };
 		093535E72BA9785600CFA054 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 093535E62BA9785600CFA054 /* .gitignore */; };
+		093535E92BA97A4E00CFA054 /* OutlineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535E82BA97A4E00CFA054 /* OutlineVC.swift */; };
+		093535EB2BA9810200CFA054 /* WritingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535EA2BA9810200CFA054 /* WritingVC.swift */; };
+		093535ED2BA9810B00CFA054 /* FeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535EC2BA9810B00CFA054 /* FeedbackVC.swift */; };
+		093535EF2BA9811A00CFA054 /* CompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535EE2BA9811A00CFA054 /* CompleteVC.swift */; };
+		093535F12BA9812B00CFA054 /* MypageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535F02BA9812B00CFA054 /* MypageVC.swift */; };
+		093F1F612BBD82C400760270 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093F1F602BBD82C400760270 /* FeedbackView.swift */; };
+		096A3CC62BC2587E005CF1A9 /* CompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096A3CC52BC2587E005CF1A9 /* CompleteCell.swift */; };
+		098ED6242BAAC476006A6628 /* OutlineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098ED6232BAAC476006A6628 /* OutlineCell.swift */; };
 		09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F022BA3FC0700F1440C /* AppDelegate.swift */; };
 		09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F042BA3FC0700F1440C /* SceneDelegate.swift */; };
 		09F75F072BA3FC0700F1440C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F062BA3FC0700F1440C /* ViewController.swift */; };
@@ -24,8 +33,6 @@
 		09F75F1D2BA3FC0900F1440C /* iOS_NuflectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F1C2BA3FC0900F1440C /* iOS_NuflectTests.swift */; };
 		09F75F272BA3FC0900F1440C /* iOS_NuflectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F262BA3FC0900F1440C /* iOS_NuflectUITests.swift */; };
 		09F75F292BA3FC0900F1440C /* iOS_NuflectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F282BA3FC0900F1440C /* iOS_NuflectUITestsLaunchTests.swift */; };
-		09F75F4D2BA3FC2300F1440C /* ParagraphFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F422BA3FC2300F1440C /* ParagraphFeedbackViewController.swift */; };
-		09F75F4E2BA3FC2300F1440C /* ParagraphWritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F432BA3FC2300F1440C /* ParagraphWritingViewController.swift */; };
 		09F75F522BA3FCDB00F1440C /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F512BA3FCDB00F1440C /* IQKeyboardManagerSwift */; };
 		09F75F552BA3FCF200F1440C /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F542BA3FCF200F1440C /* SwiftyJSON */; };
 		09F75F582BA3FD0400F1440C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F572BA3FD0400F1440C /* SnapKit */; };
@@ -53,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		090B28D92BB8039800493044 /* AddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCell.swift; sourceTree = "<group>"; };
 		093535D52BA83FE300CFA054 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		093535D72BA8404600CFA054 /* SetFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFont.swift; sourceTree = "<group>"; };
 		093535D92BA8439300CFA054 /* BaseScrollVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollVC.swift; sourceTree = "<group>"; };
@@ -60,6 +68,14 @@
 		093535E02BA85DD600CFA054 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		093535E22BA9342200CFA054 /* ColorToImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorToImage.swift; sourceTree = "<group>"; };
 		093535E62BA9785600CFA054 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		093535E82BA97A4E00CFA054 /* OutlineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineVC.swift; sourceTree = "<group>"; };
+		093535EA2BA9810200CFA054 /* WritingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingVC.swift; sourceTree = "<group>"; };
+		093535EC2BA9810B00CFA054 /* FeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackVC.swift; sourceTree = "<group>"; };
+		093535EE2BA9811A00CFA054 /* CompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteVC.swift; sourceTree = "<group>"; };
+		093535F02BA9812B00CFA054 /* MypageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageVC.swift; sourceTree = "<group>"; };
+		093F1F602BBD82C400760270 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
+		096A3CC52BC2587E005CF1A9 /* CompleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteCell.swift; sourceTree = "<group>"; };
+		098ED6232BAAC476006A6628 /* OutlineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineCell.swift; sourceTree = "<group>"; };
 		09F75EFF2BA3FC0700F1440C /* iOS_Nuflect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Nuflect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F75F022BA3FC0700F1440C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09F75F042BA3FC0700F1440C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,8 +90,6 @@
 		09F75F222BA3FC0900F1440C /* iOS_NuflectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOS_NuflectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F75F262BA3FC0900F1440C /* iOS_NuflectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_NuflectUITests.swift; sourceTree = "<group>"; };
 		09F75F282BA3FC0900F1440C /* iOS_NuflectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_NuflectUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		09F75F422BA3FC2300F1440C /* ParagraphFeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParagraphFeedbackViewController.swift; sourceTree = "<group>"; };
-		09F75F432BA3FC2300F1440C /* ParagraphWritingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParagraphWritingViewController.swift; sourceTree = "<group>"; };
 		09F75F642BA40B3D00F1440C /* SetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -211,6 +225,8 @@
 		09F75F3F2BA3FC2300F1440C /* Complete */ = {
 			isa = PBXGroup;
 			children = (
+				093535EE2BA9811A00CFA054 /* CompleteVC.swift */,
+				096A3CC52BC2587E005CF1A9 /* CompleteCell.swift */,
 			);
 			path = Complete;
 			sourceTree = "<group>";
@@ -218,6 +234,9 @@
 		09F75F412BA3FC2300F1440C /* Outline */ = {
 			isa = PBXGroup;
 			children = (
+				093535E82BA97A4E00CFA054 /* OutlineVC.swift */,
+				098ED6232BAAC476006A6628 /* OutlineCell.swift */,
+				090B28D92BB8039800493044 /* AddCell.swift */,
 			);
 			path = Outline;
 			sourceTree = "<group>";
@@ -225,8 +244,9 @@
 		09F75F442BA3FC2300F1440C /* Paragraph */ = {
 			isa = PBXGroup;
 			children = (
-				09F75F422BA3FC2300F1440C /* ParagraphFeedbackViewController.swift */,
-				09F75F432BA3FC2300F1440C /* ParagraphWritingViewController.swift */,
+				093535EA2BA9810200CFA054 /* WritingVC.swift */,
+				093535EC2BA9810B00CFA054 /* FeedbackVC.swift */,
+				093F1F602BBD82C400760270 /* FeedbackView.swift */,
 			);
 			path = Paragraph;
 			sourceTree = "<group>";
@@ -234,10 +254,10 @@
 		09F75F462BA3FC2300F1440C /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				09F75F3F2BA3FC2300F1440C /* Complete */,
+				093535E02BA85DD600CFA054 /* MainVC.swift */,
 				09F75F412BA3FC2300F1440C /* Outline */,
 				09F75F442BA3FC2300F1440C /* Paragraph */,
-				093535E02BA85DD600CFA054 /* MainVC.swift */,
+				09F75F3F2BA3FC2300F1440C /* Complete */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -245,6 +265,7 @@
 		09F75F472BA3FC2300F1440C /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				093535F02BA9812B00CFA054 /* MypageVC.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -438,18 +459,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				093535EB2BA9810200CFA054 /* WritingVC.swift in Sources */,
 				093535DE2BA8469300CFA054 /* LoginVC.swift in Sources */,
+				093535EF2BA9811A00CFA054 /* CompleteVC.swift in Sources */,
 				093535E12BA85DD600CFA054 /* MainVC.swift in Sources */,
 				09F75F072BA3FC0700F1440C /* ViewController.swift in Sources */,
+				093535F12BA9812B00CFA054 /* MypageVC.swift in Sources */,
+				093535E92BA97A4E00CFA054 /* OutlineVC.swift in Sources */,
 				09F75F652BA40B3D00F1440C /* SetColor.swift in Sources */,
-				09F75F4D2BA3FC2300F1440C /* ParagraphFeedbackViewController.swift in Sources */,
-				09F75F4E2BA3FC2300F1440C /* ParagraphWritingViewController.swift in Sources */,
 				09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */,
 				09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */,
 				093535D82BA8404600CFA054 /* SetFont.swift in Sources */,
 				093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */,
 				093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */,
+				098ED6242BAAC476006A6628 /* OutlineCell.swift in Sources */,
+				093F1F612BBD82C400760270 /* FeedbackView.swift in Sources */,
+				093535ED2BA9810B00CFA054 /* FeedbackVC.swift in Sources */,
+				090B28DA2BB8039800493044 /* AddCell.swift in Sources */,
 				093535E32BA9342200CFA054 /* ColorToImage.swift in Sources */,
+				096A3CC62BC2587E005CF1A9 /* CompleteCell.swift in Sources */,
 				09F75F0D2BA3FC0700F1440C /* iOS_Nuflect.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

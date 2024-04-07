@@ -9,6 +9,10 @@ import UIKit
 import SnapKit
 
 class MainVC: UIViewController {
+    //MARK: - Properties
+    lazy var placeholderFormat = "작성할 글의 형식을 입력해주세요."
+    lazy var placeholderPerpose = "작성할 글의 목적을 입력해주세요.\n구체적으로 작성할 수록\n더욱 적합한 글의 개요가 제공됩니다."
+    
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
     
@@ -61,11 +65,11 @@ class MainVC: UIViewController {
         return label
     }()
     
-    //perpose textView
-    lazy var perposeTextView: UITextView = {
+    //format textView
+    lazy var formatTextView: UITextView = {
         let textView = UITextView()
         textView.delegate = self
-        textView.text = placeholder
+        textView.text = placeholderFormat
         textView.font = UIFont.Nuflect.baseMedium
         textView.textColor = UIColor.Nuflect.darkGray
         textView.backgroundColor = UIColor.Nuflect.inputBlue
@@ -73,6 +77,38 @@ class MainVC: UIViewController {
         textView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         textView.textContainerInset = .init(top: 18, left: 23, bottom: 18, right: 23)
         textView.scrollIndicatorInsets = .init(top: 18, left: 10, bottom: 18, right: 23)
+        
+        //add Done button
+        let toolbar = UIToolbar()
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(formatDoneButtonTapped))
+        toolbar.items = [flexSpace, doneButton]
+        toolbar.sizeToFit()
+        textView.inputAccessoryView = toolbar
+        
+        return textView
+    }()
+    
+    //perpose textView
+    lazy var perposeTextView: UITextView = {
+        let textView = UITextView()
+        textView.delegate = self
+        textView.text = placeholderPerpose
+        textView.font = UIFont.Nuflect.baseMedium
+        textView.textColor = UIColor.Nuflect.darkGray
+        textView.backgroundColor = UIColor.Nuflect.inputBlue
+        textView.layer.cornerRadius = 8
+        textView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
+        textView.textContainerInset = .init(top: 18, left: 23, bottom: 18, right: 23)
+        textView.scrollIndicatorInsets = .init(top: 18, left: 10, bottom: 18, right: 23)
+        
+        //add Done button
+        let toolbar = UIToolbar()
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(perposeDoneButtonTapped))
+        toolbar.items = [flexSpace, doneButton]
+        toolbar.sizeToFit()
+        textView.inputAccessoryView = toolbar
         
         return textView
     }()
@@ -98,13 +134,16 @@ class MainVC: UIViewController {
         return button
     }()
     
+    
     //MARK: - Define Method
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setView()
-        setConstraint()
+    @objc func formatDoneButtonTapped() {
+        formatTextView.resignFirstResponder()
     }
     
+    @objc func perposeDoneButtonTapped() {
+        perposeTextView.resignFirstResponder()
+    }
+
     @objc func logoButtonTapped() {
         print("logo tapped")
     }
@@ -119,15 +158,22 @@ class MainVC: UIViewController {
     
     @objc func startButtonTapped() {
         print("start tapped")
+        let VC = OutlineVC()
+        VC.formatText = formatTextView.text
+        VC.perposeText = perposeTextView.text
+        navigationController?.pushViewController(VC, animated: true)
     }
     
-    //MARK: - Properties
-    lazy var placeholder = "구체적으로 작성할 수록\n적절한 번역이 제공됩니다."
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setView()
+        setConstraint()
+    }
     
     //MARK: - Set Ui
     func setView() {
         setNavigationBar()
-        addsubview()
+        addSubView()
         self.view.backgroundColor = UIColor.Nuflect.white
     }
     
@@ -142,7 +188,7 @@ class MainVC: UIViewController {
 //        ]
         
         //logo (left)
-        let logo = UIImage(named: "Logo")
+        let logo = UIImage(named: "img_logo")
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 33, height: 33), false, 0.0)
         logo?.draw(in: CGRect(x: 0, y: 0, width: 33, height: 33))
         let resizedLogo = UIGraphicsGetImageFromCurrentImageContext()
@@ -171,8 +217,8 @@ class MainVC: UIViewController {
         navigationBar.shadowImage = UIImage() // 테두리 없애기
     }
     
-    func addsubview() {
-        [navigationBar, introductionButton, perposeTitle, perposeTextView, startButton].forEach { view in
+    func addSubView() {
+        [navigationBar, introductionButton, perposeTitle, formatTextView, perposeTextView, startButton].forEach { view in
             self.view.addSubview(view)
         }
         
@@ -185,7 +231,7 @@ class MainVC: UIViewController {
     func setConstraint() {
         let leading = 16
         let titleLeading = 35
-        let top = 40
+        let top = 20
         
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -201,18 +247,18 @@ class MainVC: UIViewController {
         }
         
         introductionTitle.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(top)
             make.centerX.equalToSuperview()
         }
         
         introductionContent.snp.makeConstraints { make in
-            make.top.equalTo(introductionTitle.snp.bottom).offset(10)
+            make.top.equalTo(introductionTitle.snp.bottom).offset(top / 2)
             make.centerX.equalToSuperview()
         }
         
         introductionMore.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-20)
-            make.trailing.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-top)
+            make.trailing.equalToSuperview().offset(-top)
         }
         
         
@@ -221,18 +267,25 @@ class MainVC: UIViewController {
             make.leading.equalToSuperview().offset(titleLeading)
         }
         
-        perposeTextView.snp.makeConstraints { make in
-            make.top.equalTo(perposeTitle.snp.bottom).offset(20)
+        formatTextView.snp.makeConstraints { make in
+            make.top.equalTo(perposeTitle.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
-            make.height.equalTo(200)
+            make.height.equalTo(56)
+        }
+        
+        perposeTextView.snp.makeConstraints { make in
+            make.top.equalTo(formatTextView.snp.bottom).offset(top / 2)
+            make.leading.equalToSuperview().offset(leading)
+            make.trailing.equalToSuperview().offset(-leading)
+            make.bottom.equalTo(startButton.snp.top).offset(-top)
         }
         
         startButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(53)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-top)
         }
     }
   
@@ -243,8 +296,13 @@ class MainVC: UIViewController {
 extension MainVC: UITextViewDelegate {
     //TextView
     func textViewDidBeginEditing(_ textView: UITextView) {
-        ///placeholder
-        if textView.text == placeholder {
+        //placeholder
+        if textView.text == placeholderFormat {
+            self.formatTextView.textColor = .Nuflect.black
+            self.formatTextView.text = nil
+        }
+        
+        if textView.text == placeholderPerpose {
             self.perposeTextView.textColor = .Nuflect.black
             self.perposeTextView.text = nil
         }
@@ -252,13 +310,18 @@ extension MainVC: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         //set placeholder
+        if formatTextView.text.isEmpty {
+            self.formatTextView.textColor = UIColor.Nuflect.darkGray
+            self.formatTextView.text = placeholderFormat
+        }
+        
         if perposeTextView.text.isEmpty {
             self.perposeTextView.textColor = UIColor.Nuflect.darkGray
-            self.perposeTextView.text = placeholder
+            self.perposeTextView.text = placeholderPerpose
         }
         
         //get inputs in textview, activate the button
-        if perposeTextView.text.isEmpty || perposeTextView.text == placeholder {
+        if perposeTextView.text.isEmpty || textView.text == placeholderFormat || textView.text == placeholderPerpose {
             startButton.backgroundColor = .Nuflect.lightGray
             startButton.setTitleColor(.Nuflect.darkGray, for: .normal)
             startButton.isEnabled = false

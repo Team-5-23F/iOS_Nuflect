@@ -15,16 +15,15 @@ extension UIFont {
         static let headtitleSemiBold = UIFont.systemFont(ofSize: 26, weight: .semibold)
         
         //Subheadline
-        static let subtitleBold = UIFont.systemFont(ofSize: 20, weight: .bold)
+        static let subtitleSemiBold = UIFont.systemFont(ofSize: 20, weight: .semibold)
         static let subtitleRegular = UIFont.systemFont(ofSize: 20, weight: .regular)
         static let subheadBold = UIFont.systemFont(ofSize: 18, weight: .bold)
         static let subheadMedium = UIFont.systemFont(ofSize: 18, weight: .medium)
         static let subheadRegular = UIFont.systemFont(ofSize: 18, weight: .regular)
         
         //Body
-        static let baseBold = UIFont.systemFont(ofSize: 16, weight: .bold)
+        static let baseSemiBold = UIFont.systemFont(ofSize: 16, weight: .semibold)
         static let baseMedium = UIFont.systemFont(ofSize: 16, weight: .medium)
-        static let baseRegular = UIFont.systemFont(ofSize: 16, weight: .regular)
         static let smallBold = UIFont.systemFont(ofSize: 14, weight: .bold)
         static let smallMedium = UIFont.systemFont(ofSize: 14, weight: .medium)
         static let smallRegular = UIFont.systemFont(ofSize: 14, weight: .regular)
