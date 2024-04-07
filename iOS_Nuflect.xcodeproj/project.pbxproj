@@ -21,6 +21,7 @@
 		093535EF2BA9811A00CFA054 /* CompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535EE2BA9811A00CFA054 /* CompleteVC.swift */; };
 		093535F12BA9812B00CFA054 /* MypageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535F02BA9812B00CFA054 /* MypageVC.swift */; };
 		093F1F612BBD82C400760270 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093F1F602BBD82C400760270 /* FeedbackView.swift */; };
+		096A3CC62BC2587E005CF1A9 /* CompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096A3CC52BC2587E005CF1A9 /* CompleteCell.swift */; };
 		098ED6242BAAC476006A6628 /* OutlineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098ED6232BAAC476006A6628 /* OutlineCell.swift */; };
 		09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F022BA3FC0700F1440C /* AppDelegate.swift */; };
 		09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F042BA3FC0700F1440C /* SceneDelegate.swift */; };
@@ -73,6 +74,7 @@
 		093535EE2BA9811A00CFA054 /* CompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteVC.swift; sourceTree = "<group>"; };
 		093535F02BA9812B00CFA054 /* MypageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageVC.swift; sourceTree = "<group>"; };
 		093F1F602BBD82C400760270 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
+		096A3CC52BC2587E005CF1A9 /* CompleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteCell.swift; sourceTree = "<group>"; };
 		098ED6232BAAC476006A6628 /* OutlineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineCell.swift; sourceTree = "<group>"; };
 		09F75EFF2BA3FC0700F1440C /* iOS_Nuflect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Nuflect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F75F022BA3FC0700F1440C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				093535EE2BA9811A00CFA054 /* CompleteVC.swift */,
+				096A3CC52BC2587E005CF1A9 /* CompleteCell.swift */,
 			);
 			path = Complete;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				093535ED2BA9810B00CFA054 /* FeedbackVC.swift in Sources */,
 				090B28DA2BB8039800493044 /* AddCell.swift in Sources */,
 				093535E32BA9342200CFA054 /* ColorToImage.swift in Sources */,
+				096A3CC62BC2587E005CF1A9 /* CompleteCell.swift in Sources */,
 				09F75F0D2BA3FC0700F1440C /* iOS_Nuflect.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

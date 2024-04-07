@@ -32,7 +32,7 @@ class WritingVC: UIViewController {
     //writing introduction label
     lazy var writingIntroductionLabel: UILabel = {
         let label = UILabel()
-        label.text = "작성한 단락의 번역 초안과\n번역으로 인해 생기는 뉘양스 차이 및\n의미적 모호성을 해소할 피드백을 드릴게요."
+        label.text = "작성한 단락의 번역 초안과\n번역으로 인해 생기는 뉘양스 차이 및\n의미적 모호성을 해소할 피드백을 드릴게요"
         label.numberOfLines = 3
         label.font = UIFont.Nuflect.baseSemiBold
         label.textColor = UIColor.Nuflect.black
@@ -56,6 +56,15 @@ class WritingVC: UIViewController {
         textView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         textView.textContainerInset = .init(top: 18, left: 23, bottom: 18, right: 23)
         textView.scrollIndicatorInsets = .init(top: 18, left: 10, bottom: 18, right: 23)
+        textView.sizeToFit()
+        
+        //add Done button
+        let toolbar = UIToolbar()
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
+        toolbar.items = [flexSpace, doneButton]
+        toolbar.sizeToFit()
+        textView.inputAccessoryView = toolbar
         
         return textView
     }()
@@ -83,6 +92,10 @@ class WritingVC: UIViewController {
     
     
     //MARK: - Define Method
+    @objc func doneButtonTapped() {
+        writingTextView.resignFirstResponder()
+    }
+    
     @objc func backButtonTapped() {
         print("back tapped")
         navigationController?.popViewController(animated: true)

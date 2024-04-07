@@ -10,9 +10,16 @@ import SnapKit
 
 class FeedbackView: UIView, UIScrollViewDelegate {
     //MARK: - Properties
-    //will get from FeedbackVC
-    lazy var sentenceNum: Int = 0
-    lazy var isApplied: Bool = false
+    //will get from API
+    lazy var currentSentenceNum: Int = 0
+    lazy var feedbakcs: [[String]] = [["잠시만","ambiguity1ambiguity1ambiguity1ambiguity1ambiguity1ambiguity1ambiguity1ambiguity1","한참동안","nuance1nuance1nuance1nuance1nuance1nuance1nuance1nuance1"],["기다려","ambiguity1ambiguity1ambiguity1ambiguity1ambiguity1ambiguity1ambiguity1ambiguity2","견뎌","nuance1nuance1nuance1nuance1nuance1nuance1nuance1nuance2"]
+    ]
+    lazy var isReflected: [Bool] = [false, false]
+    
+    weak var delegate: feedbackViewDelegate?
+    
+    lazy var resizedreflect = UIImage()
+    lazy var resizedUndo = UIImage()
     
     //MARK: - UI ProPerties
     //feedback subtitle
@@ -28,7 +35,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     lazy var otherFeedbackButton: UIButton = {
         let button = UIButton()
         let other = UIImage(systemName: "ellipsis.bubble.fill")
-        let coloredOther = other?.withTintColor(UIColor.Nuflect.mainBlue ?? .black)
+        let coloredOther = other?.withTintColor(UIColor.Nuflect.mainBlue ?? .systemBlue)
         
         UIGraphicsBeginImageContextWithOptions(CGSize(width:24, height: 24), false, 0.0)
         coloredOther?.draw(in: CGRect(x: 0, y: 0, width: 24, height: 24))
@@ -47,26 +54,18 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         return button
     }()
     
-    //apply feedback button
-    lazy var applyFeedbackButton: UIButton = {
+    //reflect feedback button
+    lazy var reflectFeedbackButton: UIButton = {
         let button = UIButton()
-        let apply = UIImage(systemName: "checkmark.circle.fill")
-        let coloredApply = apply?.withTintColor(UIColor.Nuflect.mainBlue ?? .black)
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width:24, height: 24), false, 0.0)
-        coloredApply?.draw(in: CGRect(x: 0, y: 0, width: 24, height: 24))
-        let resizedApply = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        button.tintColor = UIColor.Nuflect.mainBlue
-        button.setImage(resizedApply, for: .normal)
+//        button.tintColor = UIColor.Nuflect.mainBlue
         button.backgroundColor = UIColor.Nuflect.white
         
-        button.setTitle(" 피드백 적용", for: .normal)
+//        button.setTitle(" 피드백 적용", for: .normal)
         button.titleLabel?.font = UIFont.Nuflect.subheadMedium
         button.setTitleColor(UIColor.Nuflect.black, for: .normal)
         
-        button.addTarget(self, action: #selector(applyFeedbackButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(reflectFeedbackButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -82,8 +81,6 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         
         return view
     }()
-    
-    
     
     //feedback prev button
     lazy var prevFeedbackButton: UIButton = {
@@ -140,6 +137,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         label.numberOfLines = 0
         label.font = UIFont.Nuflect.smallMedium
         label.textColor = UIColor.Nuflect.black
+        label.isUserInteractionEnabled = true
         
         return label
     }()
@@ -161,6 +159,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         label.numberOfLines = 0
         label.font = UIFont.Nuflect.smallMedium
         label.textColor = UIColor.Nuflect.black
+        label.isUserInteractionEnabled = true
         
         return label
     }()
@@ -182,6 +181,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         label.numberOfLines = 0
         label.font = UIFont.Nuflect.smallMedium
         label.textColor = UIColor.Nuflect.black
+        label.isUserInteractionEnabled = true
         
         return label
     }()
@@ -203,30 +203,74 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         label.numberOfLines = 0
         label.font = UIFont.Nuflect.smallMedium
         label.textColor = UIColor.Nuflect.black
+        label.isUserInteractionEnabled = true
         
         return label
     }()
     
-    //MARK: - Properties
-    lazy var placeholder = "번역 결과를 받아오는 중입니다.\n잠시만 기다려 주세요."
-    
     
     //MARK: - Define Method
+    func updateFeedback() {
+        print("update to " + String(currentSentenceNum))
+        originalTextLabel.text = feedbakcs[currentSentenceNum][0]
+        ambiguityTextLabel.text = feedbakcs[currentSentenceNum][1]
+        alternativeTextLabel.text = feedbakcs[currentSentenceNum][2]
+        nuanceTextLabel.text = feedbakcs[currentSentenceNum][3]
+        
+        //undo
+        if isReflected[currentSentenceNum] {
+            reflectFeedbackButton.tintColor = UIColor.Nuflect.black
+            reflectFeedbackButton.setImage(resizedUndo, for: .normal)
+            reflectFeedbackButton.setTitle(" 되돌리기", for: .normal)
+        }
+        //reflect
+        else {
+            reflectFeedbackButton.tintColor = UIColor.Nuflect.mainBlue
+            reflectFeedbackButton.setImage(resizedreflect, for: .normal)
+            reflectFeedbackButton.setTitle(" 반영하기", for: .normal)
+        }
+        
+        feedbackScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
+    
     @objc func otherFeedbackButtonTapped() {
         print("other feedback tapped")
     }
     
-    @objc func applyFeedbackButtonTapped() {
-        print("apply feedback tapped")
-//        arrow.clockwise.circle
+    @objc func reflectFeedbackButtonTapped() {
+        print("reflect feedback tapped")
+        //undo
+        if isReflected[currentSentenceNum] {
+            delegate?.replaceText(from: alternativeTextLabel.text ?? "", to: originalTextLabel.text ?? "")
+            isReflected[currentSentenceNum] = false
+        }
+        //reflect
+        else {
+            delegate?.replaceText(from: originalTextLabel.text ?? "", to: alternativeTextLabel.text ?? "")
+            isReflected[currentSentenceNum] = true
+        }
+        
+        updateFeedback()
     }
     
     @objc func prevFeedbackButtonTapped() {
         print("prev feedback tapped")
+        if currentSentenceNum == 0 {
+            print("1st sentence")
+            return
+        }
+        currentSentenceNum -= 1
+        updateFeedback()
     }
     
     @objc func nextFeedbackButtonTapped() {
         print("next feedback tapped")
+        if currentSentenceNum >= feedbakcs.count - 1 {
+            print("last sentence")
+            return
+        }
+        currentSentenceNum += 1
+        updateFeedback()
     }
     
     override init(frame: CGRect) {
@@ -245,12 +289,30 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     
     //MARK: - Set Ui
     func setView() {
+        //reflect button icon
+        let reflect = UIImage(systemName: "checkmark.circle.fill")
+        let coloredreflect = reflect?.withTintColor(UIColor.Nuflect.mainBlue ?? .systemBlue)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width:24, height: 24), false, 0.0)
+        coloredreflect?.draw(in: CGRect(x: 0, y: 0, width: 24, height: 24))
+        self.resizedreflect = UIGraphicsGetImageFromCurrentImageContext() ?? coloredreflect!
+        UIGraphicsEndImageContext()
+        
+        //undo button icon
+        let undo = UIImage(systemName: "arrow.uturn.backward.circle.fill")
+        let coloredUndo = undo?.withTintColor(UIColor.Nuflect.black ?? .black)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width:24, height: 24), false, 0.0)
+        coloredUndo?.draw(in: CGRect(x: 0, y: 0, width: 24, height: 24))
+        self.resizedUndo = UIGraphicsGetImageFromCurrentImageContext() ?? coloredUndo!
+        UIGraphicsEndImageContext()
+        
+        print(isReflected)
+        updateFeedback()
         addSubView()
         self.backgroundColor = UIColor.Nuflect.white
     }
     
     func addSubView() {
-        [feedbackSubtitle, otherFeedbackButton, applyFeedbackButton, feedbackScrollView, prevFeedbackButton, nextFeedbackButton].forEach { view in
+        [feedbackSubtitle, otherFeedbackButton, reflectFeedbackButton, feedbackScrollView, prevFeedbackButton, nextFeedbackButton].forEach { view in
             self.addSubview(view)
         }
         
@@ -277,22 +339,24 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         }
         
         otherFeedbackButton.snp.makeConstraints { make in
-            make.trailing.equalTo(applyFeedbackButton.snp.leading).offset(-16)
+            make.trailing.equalTo(reflectFeedbackButton.snp.leading).offset(-16)
             make.centerY.equalTo(feedbackSubtitle)
         }
         
-        applyFeedbackButton.snp.makeConstraints { make in
+        reflectFeedbackButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-offset)
             make.centerY.equalTo(feedbackSubtitle)
         }
         
         prevFeedbackButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
+            make.leading.equalToSuperview().offset(10)
+            make.width.equalTo(20)
             make.centerY.equalTo(feedbackScrollView)
         }
 
         nextFeedbackButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-16)
+            make.trailing.equalToSuperview().offset(-10)
+            make.width.equalTo(20)
             make.centerY.equalTo(feedbackScrollView)
         }
         
@@ -361,4 +425,9 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     }
   
 
+}
+
+
+protocol feedbackViewDelegate: AnyObject {
+    func replaceText(from: String, to: String)
 }

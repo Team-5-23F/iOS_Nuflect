@@ -15,6 +15,7 @@ class FeedbackVC: UIViewController {
     //MARK: - Properties
     //will get from WritingVC
     lazy var paragraphNum: Int = 1
+    lazy var translatedText: String = "번역 결과를 받아오는 중입니다.\n잠시만 기다려 주세요."
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -41,8 +42,7 @@ class FeedbackVC: UIViewController {
     //translation textView
     lazy var translationTextView: UITextView = {
         let textView = UITextView()
-        textView.delegate = self
-        textView.text = placeholder
+        textView.text = translatedText
         textView.font = UIFont.Nuflect.baseMedium
         textView.textColor = UIColor.Nuflect.darkGray
         textView.backgroundColor = UIColor.Nuflect.inputBlue
@@ -51,11 +51,26 @@ class FeedbackVC: UIViewController {
         textView.textContainerInset = .init(top: 18, left: 23, bottom: 18, right: 23)
         textView.scrollIndicatorInsets = .init(top: 18, left: 10, bottom: 18, right: 23)
         
+        //add Done button
+        let toolbar = UIToolbar()
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
+        toolbar.items = [flexSpace, doneButton]
+        toolbar.sizeToFit()
+        textView.inputAccessoryView = toolbar
+        
+//        textView.isEditable = false
+        
         return textView
     }()
     
     //feedback subview
-    lazy var feedbackSubView = FeedbackView()
+    lazy var feedbackSubView: FeedbackView = {
+        let feedbackView = FeedbackView()
+        feedbackView.delegate = self
+        
+        return feedbackView
+    }()
     
     //end writing paragraph button
     lazy var endWritingParagraghButton: UIButton = {
@@ -73,11 +88,11 @@ class FeedbackVC: UIViewController {
     }()
     
     
-    //MARK: - Properties
-    lazy var placeholder = "번역 결과를 받아오는 중입니다.\n잠시만 기다려 주세요."
-    
-    
     //MARK: - Define Method
+    @objc func doneButtonTapped() {
+        translationTextView.resignFirstResponder()
+    }
+    
     @objc func backButtonTapped() {
         print("back tapped")
         navigationController?.popViewController(animated: true)
@@ -85,18 +100,6 @@ class FeedbackVC: UIViewController {
     
     @objc func mypageButtonTapped() {
         print("mypage tapped")
-    }
-    
-    @objc func feedbackRefreshButtonTapped() {
-        print("feedback refresh tapped")
-    }
-    
-    @objc func feedbackPrevButtonTapped() {
-        print("feedback prev tapped")
-    }
-    
-    @objc func feedbackNextButtonTapped() {
-        print("feedback next tapped")
     }
     
     @objc func endWritingParagraghButtonTapped() {
@@ -113,6 +116,8 @@ class FeedbackVC: UIViewController {
         super.viewDidLoad()
         setView()
         setConstraint()
+        //Call API, change text, set color
+        translationTextView.textColor = UIColor.Nuflect.black
     }
     
     //MARK: - Set Ui
@@ -197,35 +202,22 @@ class FeedbackVC: UIViewController {
 
 }
 
-//MARK: - extension
-extension FeedbackVC: UITextViewDelegate {
-    //TextView
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        ///placeholder
-        if textView.text == placeholder {
-            self.translationTextView.textColor = .Nuflect.black
-            self.translationTextView.text = nil
+
+extension FeedbackVC: feedbackViewDelegate {
+    
+    func replaceText(from: String, to: String) {
+        print("apply feedback called")
+        
+        if let range = translatedText.range(of: from) {
+            let replacedString = translatedText.replacingCharacters(in: range, with: to)
+            print(replacedString)
+            translatedText = replacedString
+            translationTextView.text = translatedText
+        } else {
+            print("original not found in translated")
         }
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
-        //set placeholder
-        if translationTextView.text.isEmpty {
-            self.translationTextView.textColor = UIColor.Nuflect.darkGray
-            self.translationTextView.text = placeholder
-        }
-        
-        //get inputs in textview, activate the button
-        if translationTextView.text.isEmpty || translationTextView.text == placeholder {
-            endWritingParagraghButton.backgroundColor = .Nuflect.lightGray
-            endWritingParagraghButton.setTitleColor(.Nuflect.darkGray, for: .normal)
-            endWritingParagraghButton.isEnabled = false
-        } else {
-            endWritingParagraghButton.backgroundColor = .Nuflect.mainBlue
-            endWritingParagraghButton.setTitleColor(.Nuflect.white, for: .normal)
-            endWritingParagraghButton.isEnabled = true
-        }
-    }
 }
 
 protocol returnToOutlineVCDelegate: AnyObject {

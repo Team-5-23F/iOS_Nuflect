@@ -226,7 +226,6 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     //cell size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
-//        let width: CGFloat = 333
         let height = collectionView.frame.width / 4
         return CGSize(width: width, height: height)
     }

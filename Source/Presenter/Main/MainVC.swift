@@ -74,6 +74,14 @@ class MainVC: UIViewController {
         textView.textContainerInset = .init(top: 18, left: 23, bottom: 18, right: 23)
         textView.scrollIndicatorInsets = .init(top: 18, left: 10, bottom: 18, right: 23)
         
+        //add Done button
+        let toolbar = UIToolbar()
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
+        toolbar.items = [flexSpace, doneButton]
+        toolbar.sizeToFit()
+        textView.inputAccessoryView = toolbar
+        
         return textView
     }()
     
@@ -104,6 +112,10 @@ class MainVC: UIViewController {
     
     
     //MARK: - Define Method
+    @objc func doneButtonTapped() {
+        perposeTextView.resignFirstResponder()
+    }
+
     @objc func logoButtonTapped() {
         print("logo tapped")
     }
