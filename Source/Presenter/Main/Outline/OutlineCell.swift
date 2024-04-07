@@ -12,7 +12,7 @@ class OutlineCell: UICollectionViewCell {
     //delegate for more button
     weak var delegate: outlineCollectionViewCellDelegate?
     
-    lazy var paragraphNum: Int = 1
+    lazy var paragraphNum: Int = 0
     
     //MARK: - UI ProPerties
     lazy var paragraphTitle: UILabel = {
@@ -104,4 +104,3 @@ class OutlineCell: UICollectionViewCell {
 protocol outlineCollectionViewCellDelegate: AnyObject {
     func moreOptionTapped(paragraphNum: Int, selectedOption: String)
 }
-

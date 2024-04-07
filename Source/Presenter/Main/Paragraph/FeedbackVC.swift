@@ -9,6 +9,9 @@ import UIKit
 import SnapKit
 
 class FeedbackVC: UIViewController {
+    //delegate for end button
+    weak var delegate: returnToOutlineVCDelegate?
+    
     //MARK: - Properties
     //will get from WritingVC
     lazy var paragraphNum: Int = 1
@@ -98,11 +101,12 @@ class FeedbackVC: UIViewController {
     
     @objc func endWritingParagraghButtonTapped() {
         print("end writing paragragh button tapped")
+        
+        self.delegate?.returnToOutlineVC(paragraghNum: paragraphNum, paragraphContents: translationTextView.text)
+        
         if let VC = navigationController?.viewControllers.first(where: {$0 is OutlineVC}) {
             navigationController?.popToViewController(VC, animated: true)
         }
-        
-        
     }
     
     override func viewDidLoad() {

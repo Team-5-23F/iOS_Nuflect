@@ -10,13 +10,16 @@ import SnapKit
 
 class OutlineVC: UIViewController {
     //MARK: - Properties
+    lazy var perposeText : String = "perpose"
     //will get from API
-//    lazy var paragraphs : [String] = []
-    lazy var paragraphs : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
+//    lazy var paragraphsTitle : [String] = []
+    lazy var paragraphsTitle : [String] = ["Paragraph 1", "Paragraph 2"]//, "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
     
-    //check each paragrapgh is written
+    //is each paragrapgh written
 //    lazy var isWritten : [Bool] = []
-    lazy var isWritten : [Bool] = [false, false, false, false, false, false, false, false, false]
+    lazy var isWritten : [Bool] = [false, false]//, false, false, false, false, false, false, false]
+    
+    lazy var paragraphsText : [String] = ["",""]//, "","","","","","",""]
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -56,9 +59,9 @@ class OutlineVC: UIViewController {
         button.titleLabel?.font = UIFont.Nuflect.subheadMedium
         
         // Highlighted
-        let iamge = image(withColor: .Nuflect.mainBlue!)
-        button.setBackgroundImage(iamge, for: .highlighted)
-        button.setTitleColor(UIColor.Nuflect.white, for: .highlighted)
+//        let iamge = image(withColor: .Nuflect.mainBlue!)
+//        button.setBackgroundImage(iamge, for: .highlighted)
+//        button.setTitleColor(UIColor.Nuflect.white, for: .highlighted)
         button.isEnabled = false
         
         button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
@@ -79,14 +82,32 @@ class OutlineVC: UIViewController {
     @objc func completeButtonTapped() {
         print("complete tapped")
         //To do
-//        let VC = CompleteVC()
-//        navigationController?.pushViewController(VC, animated: true)
+        let VC = CompleteVC()
+        VC.perposeText = self.perposeText
+        VC.paragraphsTitle = self.paragraphsTitle
+        VC.paragraphsText = self.paragraphsText
+        navigationController?.pushViewController(VC, animated: true)
+    }
+    
+    func checkAllparagraphsIsWritten() {
+        print("check all")
+        for bool in isWritten {
+            if !bool {
+                print("false")
+                return
+            }
+        }
+        print("true")
+        completeButton.backgroundColor = .Nuflect.mainBlue
+        completeButton.setTitleColor(.Nuflect.white, for: .normal)
+        completeButton.isEnabled = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
         setConstraint()
+        print(self.perposeText)
     }
     
     //MARK: - Set Ui
@@ -157,8 +178,8 @@ class OutlineVC: UIViewController {
     }
 }
 
-//set collectionView
-extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, outlineCollectionViewCellDelegate {
+//set collectionView and delegates
+extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, outlineCollectionViewCellDelegate, returnToOutlineVCDelegate {
     //set collectionView
     func setCollectionView() {
         collectionView.backgroundColor = .Nuflect.white
@@ -179,12 +200,12 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        paragraphs.count
+        paragraphsTitle.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
-        case paragraphs.count - 1:
+        case paragraphsTitle.count:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCell", for: indexPath) as! AddCell
             
             return cell
@@ -192,8 +213,8 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "outlineCell", for: indexPath) as! OutlineCell
             cell.delegate = self
-            cell.paragraphNum = indexPath.item + 1
-            cell.paragraphTitle.text = String(indexPath.item + 1) + ". " + paragraphs[indexPath.item]
+            cell.paragraphNum = indexPath.item
+            cell.paragraphTitle.text = String(indexPath.item + 1) + ". " + paragraphsTitle[indexPath.item]
             
             return cell
 //            fatalError("Invalid cell index")
@@ -215,28 +236,29 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     //cell touch action
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.item {
-        case paragraphs.count - 1:
+        //last cell, add button
+        case paragraphsTitle.count:
             print("Add")
             //To do
             break
         default:
             print(indexPath.item)
             let VC = WritingVC()
-            VC.paragraphNum = indexPath.item + 1
-            VC.paragraphTitle = paragraphs[indexPath.item]
+            VC.paragraphNum = indexPath.item
+            VC.paragraphTitle = paragraphsTitle[indexPath.item]
             navigationController?.pushViewController(VC, animated: true)
             break
         }
     }
     
-    //More option button
+    //for more option button
     func moreOptionTapped(paragraphNum: Int, selectedOption: String) {
         print(String(paragraphNum) + " " + selectedOption)
         switch selectedOption {
         case "단락 작성":
             let VC = WritingVC()
             VC.paragraphNum = paragraphNum
-            VC.paragraphTitle = paragraphs[paragraphNum - 1]
+            VC.paragraphTitle = paragraphsTitle[paragraphNum]
             navigationController?.pushViewController(VC, animated: true)
             break
         
@@ -245,5 +267,17 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         default:
             print("error")
         }
+    }
+    
+    //for end writing a paragraph
+    func returnToOutlineVC(paragraghNum: Int, paragraphContents: String) {
+        print(String(paragraghNum))
+        print(paragraphContents)
+        
+        self.isWritten[paragraghNum] = true
+        self.paragraphsText[paragraghNum] = paragraphContents
+        //To do cell colored
+        
+        checkAllparagraphsIsWritten()
     }
 }

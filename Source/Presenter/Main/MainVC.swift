@@ -119,6 +119,7 @@ class MainVC: UIViewController {
     @objc func startButtonTapped() {
         print("start tapped")
         let VC = OutlineVC()
+        VC.perposeText = perposeTextView.text
         navigationController?.pushViewController(VC, animated: true)
     }
     
@@ -189,7 +190,7 @@ class MainVC: UIViewController {
     func setConstraint() {
         let leading = 16
         let titleLeading = 35
-        let top = 40
+        let top = 20
         
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -205,18 +206,18 @@ class MainVC: UIViewController {
         }
         
         introductionTitle.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(top)
             make.centerX.equalToSuperview()
         }
         
         introductionContent.snp.makeConstraints { make in
-            make.top.equalTo(introductionTitle.snp.bottom).offset(10)
+            make.top.equalTo(introductionTitle.snp.bottom).offset(top / 2)
             make.centerX.equalToSuperview()
         }
         
         introductionMore.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-20)
-            make.trailing.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-top)
+            make.trailing.equalToSuperview().offset(-top)
         }
         
         
@@ -226,7 +227,7 @@ class MainVC: UIViewController {
         }
         
         perposeTextView.snp.makeConstraints { make in
-            make.top.equalTo(perposeTitle.snp.bottom).offset(20)
+            make.top.equalTo(perposeTitle.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(200)
@@ -236,7 +237,7 @@ class MainVC: UIViewController {
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(53)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-top)
         }
     }
   

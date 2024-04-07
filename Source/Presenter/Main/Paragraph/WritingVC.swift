@@ -11,8 +11,10 @@ import SnapKit
 class WritingVC: UIViewController {
     //MARK: - Properties
     //will get from OutlineVC
-    lazy var paragraphNum: Int = 1
+    lazy var paragraphNum: Int = 0
     lazy var paragraphTitle : String = "ParagraphTitle"
+    
+    lazy var placeholder = paragraphTitle + " 단락의 내용을 작성해주세요"
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -20,7 +22,7 @@ class WritingVC: UIViewController {
     //writing title
     lazy var writingTitle: UILabel = {
         let label = UILabel()
-        label.text = String(paragraphNum) + ". " + paragraphTitle + "\n단락의 내용을 작성해주세요"
+        label.text = String(paragraphNum + 1) + ". " + paragraphTitle + "\n단락의 내용을 작성해주세요"
         label.numberOfLines = 2
         label.font = UIFont.Nuflect.headtitlebold
         
@@ -80,10 +82,6 @@ class WritingVC: UIViewController {
     }()
     
     
-    //MARK: - Properties
-    lazy var placeholder = paragraphTitle + " 단락의 내용을 작성해주세요"
-    
-    
     //MARK: - Define Method
     @objc func backButtonTapped() {
         print("back tapped")
@@ -98,6 +96,9 @@ class WritingVC: UIViewController {
         print("request tapped")
         let VC = FeedbackVC()
         VC.paragraphNum = self.paragraphNum
+        if let outlineVC = navigationController?.viewControllers.first(where: { $0 is OutlineVC }) as? OutlineVC {
+                VC.delegate = outlineVC
+            }
         navigationController?.pushViewController(VC, animated: true)
     }
     
