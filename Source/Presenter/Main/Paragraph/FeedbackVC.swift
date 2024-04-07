@@ -15,7 +15,9 @@ class FeedbackVC: UIViewController {
     //MARK: - Properties
     //will get from WritingVC
     lazy var paragraphNum: Int = 1
-    lazy var translatedText: String = "번역 결과를 받아오는 중입니다.\n잠시만 기다려 주세요."
+    lazy var translatedText = NSMutableAttributedString(string: "번역 결과를 받아오는 중입니다.\n잠시만 기다려 주세요.", attributes: [
+        .font: UIFont.Nuflect.baseMedium,
+        .foregroundColor: UIColor.Nuflect.black ?? .black])
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -42,7 +44,7 @@ class FeedbackVC: UIViewController {
     //translation textView
     lazy var translationTextView: UITextView = {
         let textView = UITextView()
-        textView.text = translatedText
+        textView.attributedText = translatedText
         textView.font = UIFont.Nuflect.baseMedium
         textView.textColor = UIColor.Nuflect.darkGray
         textView.backgroundColor = UIColor.Nuflect.inputBlue
@@ -205,17 +207,42 @@ class FeedbackVC: UIViewController {
 
 extension FeedbackVC: feedbackViewDelegate {
     
-    func replaceText(from: String, to: String) {
+    func reflecfFeedback(original: String, alternative: String) {
         print("apply feedback called")
         
-        if let range = translatedText.range(of: from) {
-            let replacedString = translatedText.replacingCharacters(in: range, with: to)
-            print(replacedString)
-            translatedText = replacedString
-            translationTextView.text = translatedText
-        } else {
-            print("original not found in translated")
-        }
+        let range = (translatedText.string as NSString).range(of: original)
+        
+        guard range.location != NSNotFound else {
+                print("Original string not found")
+                return
+            }
+        
+        translatedText.replaceCharacters(in: range, with: NSAttributedString(string: alternative, attributes: [
+            .font: UIFont.Nuflect.baseBold,
+            //.foregroundColor: UIColor.red
+                ]))
+        
+        translationTextView.attributedText = translatedText
+    
+    }
+    
+    func undoFeedback(alternative: String, original: String) {
+        print("undo feedback called")
+        
+        let range = (translatedText.string as NSString).range(of: alternative)
+        
+        guard range.location != NSNotFound else {
+                print("alternative string not found")
+                return
+            }
+        
+        translatedText.replaceCharacters(in: range, with: NSAttributedString(string: original, attributes: [
+            .font: UIFont.Nuflect.baseMedium,
+            //.foregroundColor: UIColor.red
+                ]))
+        
+        translationTextView.attributedText = translatedText
+    
     }
     
 }

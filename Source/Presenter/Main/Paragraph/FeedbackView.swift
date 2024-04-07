@@ -241,12 +241,12 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         print("reflect feedback tapped")
         //undo
         if isReflected[currentSentenceNum] {
-            delegate?.replaceText(from: alternativeTextLabel.text ?? "", to: originalTextLabel.text ?? "")
+            delegate?.undoFeedback(alternative: alternativeTextLabel.text ?? "", original: originalTextLabel.text ?? "")
             isReflected[currentSentenceNum] = false
         }
         //reflect
         else {
-            delegate?.replaceText(from: originalTextLabel.text ?? "", to: alternativeTextLabel.text ?? "")
+            delegate?.reflecfFeedback(original: originalTextLabel.text ?? "", alternative: alternativeTextLabel.text ?? "")
             isReflected[currentSentenceNum] = true
         }
         
@@ -429,5 +429,6 @@ class FeedbackView: UIView, UIScrollViewDelegate {
 
 
 protocol feedbackViewDelegate: AnyObject {
-    func replaceText(from: String, to: String)
+    func reflecfFeedback(original: String, alternative: String)
+    func undoFeedback(alternative: String, original: String)
 }

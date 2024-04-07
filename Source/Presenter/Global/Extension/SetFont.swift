@@ -22,6 +22,7 @@ extension UIFont {
         static let subheadRegular = UIFont.systemFont(ofSize: 18, weight: .regular)
         
         //Body
+        static let baseBold = UIFont.systemFont(ofSize: 16, weight: .bold)
         static let baseSemiBold = UIFont.systemFont(ofSize: 16, weight: .semibold)
         static let baseMedium = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let smallBold = UIFont.systemFont(ofSize: 14, weight: .bold)
