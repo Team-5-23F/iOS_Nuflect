@@ -15,7 +15,7 @@ class OutlineCell: UICollectionViewCell {
     lazy var paragraphNum: Int = 0
     
     //MARK: - UI ProPerties
-    lazy var paragraphTitle: UILabel = {
+    lazy var paragraphTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Paragraph"
         label.font = UIFont.Nuflect.subtitleSemiBold
@@ -80,13 +80,13 @@ class OutlineCell: UICollectionViewCell {
     }
     
     func addsubview() {
-        [paragraphTitle, moreButton].forEach { view in
+        [paragraphTitleLabel, moreButton].forEach { view in
             self.addSubview(view)
         }
     }
     
     func setConstraint(){
-        paragraphTitle.snp.makeConstraints { make in
+        paragraphTitleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)
             make.centerY.equalToSuperview()
             make.trailing.equalTo(moreButton).offset(-25)

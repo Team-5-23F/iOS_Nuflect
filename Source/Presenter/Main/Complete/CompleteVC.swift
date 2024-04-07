@@ -11,6 +11,7 @@ import SnapKit
 class CompleteVC: UIViewController {
     //MARK: - Properties
     //will get from OutlineVC
+    lazy var formatText : String = "format"
     lazy var perposeText : String = "perpose"
     lazy var paragraphsTitle : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
     lazy var paragraphsText : [String] = ["Paragraph 1\n\n\nParagraph 1Paragraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
@@ -60,6 +61,8 @@ class CompleteVC: UIViewController {
         
         return label
     }()
+    
+    //To do CV
     
     //save button
     lazy var saveButton: UIButton = {
@@ -135,7 +138,7 @@ class CompleteVC: UIViewController {
     }
     
     func addSubView() {
-        [navigationBar, perposeSubtitle, perposeLabel, saveButton].forEach { view in
+        [navigationBar, completeTitle, perposeSubtitle, perposeLabel, saveButton].forEach { view in
             self.view.addSubview(view)
         }
     }

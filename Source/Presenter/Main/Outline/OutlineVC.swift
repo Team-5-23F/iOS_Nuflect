@@ -10,6 +10,7 @@ import SnapKit
 
 class OutlineVC: UIViewController {
     //MARK: - Properties
+    lazy var formatText : String = "format"
     lazy var perposeText : String = "perpose"
     //will get from API
 //    lazy var paragraphsTitle : [String] = []
@@ -34,8 +35,8 @@ class OutlineVC: UIViewController {
         return label
     }()
     
-    //paragraphs collectionView
-    lazy var collectionView: UICollectionView = {
+    //outline collectionView
+    lazy var outlineCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
@@ -83,9 +84,10 @@ class OutlineVC: UIViewController {
         print("complete tapped")
         //To do
         let VC = CompleteVC()
-        VC.perposeText = self.perposeText
-        VC.paragraphsTitle = self.paragraphsTitle
-        VC.paragraphsText = self.paragraphsText
+        VC.formatText = formatText
+        VC.perposeText = perposeText
+        VC.paragraphsTitle = paragraphsTitle
+        VC.paragraphsText = paragraphsText
         navigationController?.pushViewController(VC, animated: true)
     }
     
@@ -140,7 +142,7 @@ class OutlineVC: UIViewController {
     }
     
     func addSubView() {
-        [outlineTitle, navigationBar, collectionView, completeButton].forEach { view in
+        [outlineTitle, navigationBar, outlineCollectionView, completeButton].forEach { view in
             self.view.addSubview(view)
         }
     }
@@ -162,7 +164,7 @@ class OutlineVC: UIViewController {
             make.trailing.equalToSuperview().offset(-leading)
         }
         
-        collectionView.snp.makeConstraints { make in
+        outlineCollectionView.snp.makeConstraints { make in
             make.top.equalTo(outlineTitle.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
@@ -182,9 +184,9 @@ class OutlineVC: UIViewController {
 extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, outlineCollectionViewCellDelegate, returnToOutlineVCDelegate {
     //set collectionView
     func setCollectionView() {
-        collectionView.backgroundColor = .Nuflect.white
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        outlineCollectionView.backgroundColor = .Nuflect.white
+        outlineCollectionView.dataSource = self
+        outlineCollectionView.delegate = self
         registerCells()
     }
     
@@ -195,7 +197,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         ]
 
         cellIdentifiers.forEach { identifier, cellClass in
-            collectionView.register(cellClass, forCellWithReuseIdentifier: identifier)
+            outlineCollectionView.register(cellClass, forCellWithReuseIdentifier: identifier)
         }
     }
     
@@ -214,7 +216,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "outlineCell", for: indexPath) as! OutlineCell
             cell.delegate = self
             cell.paragraphNum = indexPath.item
-            cell.paragraphTitle.text = String(indexPath.item + 1) + ". " + paragraphsTitle[indexPath.item]
+            cell.paragraphTitleLabel.text = String(indexPath.item + 1) + ". " + paragraphsTitle[indexPath.item]
             
             return cell
 //            fatalError("Invalid cell index")
@@ -275,7 +277,13 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         
         self.isWritten[paragraghNum] = true
         self.paragraphsText[paragraghNum] = paragraphContents
-        //To do cell colored
+        
+        //get cell, change color
+        guard let cell = outlineCollectionView.cellForItem(at: IndexPath(item: paragraghNum, section: 0)) as? OutlineCell else {
+            print("Failed to get cell at index \(String(paragraghNum))")
+                    return
+            }
+        cell.backgroundColor = UIColor.Nuflect.inputBlue
         
         checkAllparagraphsIsWritten()
     }
