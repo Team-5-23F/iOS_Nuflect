@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+// PostFormatPurpose
+struct PostFormat_Purpose: Codable {
+    let Format: String
+    let purpose: String
+}
+
+// PostRawText
+struct PostRawText: Codable {
+    let rawText: String
+}

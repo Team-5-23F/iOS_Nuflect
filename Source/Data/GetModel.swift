@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+// GetOutline
+struct GetOutline: Codable {
+    let paragrahps: [String]
+}
+
+// GetFeedback
+struct GetFeedback: Codable {
+    let translation: String
+    let feedbacks: [[String]]
+}

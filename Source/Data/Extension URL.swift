@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+extension URL {
+    static let baseURL = "192.168.0.1:8000"
+    
+    static func getEndpointString(_ endpoint:String) -> String {
+        return baseURL + endpoint
+    }
+}
