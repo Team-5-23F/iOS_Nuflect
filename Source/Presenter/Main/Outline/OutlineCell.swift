@@ -36,7 +36,7 @@ class OutlineCell: UICollectionViewCell {
         
         button.tintColor = UIColor.Nuflect.black
         button.setBackgroundImage(resizedMore, for: .normal)
-        button.backgroundColor = UIColor.Nuflect.white
+        button.backgroundColor = UIColor.clear
         
         let selectedMenu = {(action: UIAction) in
             print(action.title)

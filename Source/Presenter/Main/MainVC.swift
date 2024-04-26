@@ -11,7 +11,7 @@ import SnapKit
 class MainVC: UIViewController {
     //MARK: - Properties
     lazy var placeholderFormat = "작성할 글의 형식을 입력해주세요."
-    lazy var placeholderPerpose = "작성할 글의 목적을 입력해주세요.\n구체적으로 작성할 수록\n더욱 적합한 글의 개요가 제공됩니다."
+    lazy var placeholderpurpose = "작성할 글의 목적을 입력해주세요.\n구체적으로 작성할 수록\n더욱 적합한 글의 개요가 제공됩니다."
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -55,8 +55,8 @@ class MainVC: UIViewController {
         return label
     }()
     
-    //perpose title
-    lazy var perposeTitle: UILabel = {
+    //purpose title
+    lazy var purposeTitle: UILabel = {
         let label = UILabel()
         label.text = "글쓰기에 앞서\n글의 목적을 입력해주세요"
         label.numberOfLines = 2
@@ -89,11 +89,11 @@ class MainVC: UIViewController {
         return textView
     }()
     
-    //perpose textView
-    lazy var perposeTextView: UITextView = {
+    //purpose textView
+    lazy var purposeTextView: UITextView = {
         let textView = UITextView()
         textView.delegate = self
-        textView.text = placeholderPerpose
+        textView.text = placeholderpurpose
         textView.font = UIFont.Nuflect.baseMedium
         textView.textColor = UIColor.Nuflect.darkGray
         textView.backgroundColor = UIColor.Nuflect.inputBlue
@@ -105,7 +105,7 @@ class MainVC: UIViewController {
         //add Done button
         let toolbar = UIToolbar()
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(perposeDoneButtonTapped))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(purposeDoneButtonTapped))
         toolbar.items = [flexSpace, doneButton]
         toolbar.sizeToFit()
         textView.inputAccessoryView = toolbar
@@ -140,8 +140,8 @@ class MainVC: UIViewController {
         formatTextView.resignFirstResponder()
     }
     
-    @objc func perposeDoneButtonTapped() {
-        perposeTextView.resignFirstResponder()
+    @objc func purposeDoneButtonTapped() {
+        purposeTextView.resignFirstResponder()
     }
 
     @objc func logoButtonTapped() {
@@ -160,7 +160,7 @@ class MainVC: UIViewController {
         print("start tapped")
         let VC = OutlineVC()
         VC.formatText = formatTextView.text
-        VC.perposeText = perposeTextView.text
+        VC.purposeText = purposeTextView.text
         navigationController?.pushViewController(VC, animated: true)
     }
     
@@ -218,7 +218,7 @@ class MainVC: UIViewController {
     }
     
     func addSubView() {
-        [navigationBar, introductionButton, perposeTitle, formatTextView, perposeTextView, startButton].forEach { view in
+        [navigationBar, introductionButton, purposeTitle, formatTextView, purposeTextView, startButton].forEach { view in
             self.view.addSubview(view)
         }
         
@@ -262,19 +262,19 @@ class MainVC: UIViewController {
         }
         
         
-        perposeTitle.snp.makeConstraints { make in
+        purposeTitle.snp.makeConstraints { make in
             make.top.equalTo(introductionButton.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(titleLeading)
         }
         
         formatTextView.snp.makeConstraints { make in
-            make.top.equalTo(perposeTitle.snp.bottom).offset(top)
+            make.top.equalTo(purposeTitle.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(56)
         }
         
-        perposeTextView.snp.makeConstraints { make in
+        purposeTextView.snp.makeConstraints { make in
             make.top.equalTo(formatTextView.snp.bottom).offset(top / 2)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
@@ -302,9 +302,9 @@ extension MainVC: UITextViewDelegate {
             self.formatTextView.text = nil
         }
         
-        if textView.text == placeholderPerpose {
-            self.perposeTextView.textColor = .Nuflect.black
-            self.perposeTextView.text = nil
+        if textView.text == placeholderpurpose {
+            self.purposeTextView.textColor = .Nuflect.black
+            self.purposeTextView.text = nil
         }
     }
     
@@ -315,13 +315,13 @@ extension MainVC: UITextViewDelegate {
             self.formatTextView.text = placeholderFormat
         }
         
-        if perposeTextView.text.isEmpty {
-            self.perposeTextView.textColor = UIColor.Nuflect.darkGray
-            self.perposeTextView.text = placeholderPerpose
+        if purposeTextView.text.isEmpty {
+            self.purposeTextView.textColor = UIColor.Nuflect.darkGray
+            self.purposeTextView.text = placeholderpurpose
         }
         
         //get inputs in textview, activate the button
-        if perposeTextView.text.isEmpty || textView.text == placeholderFormat || textView.text == placeholderPerpose {
+        if purposeTextView.text.isEmpty || textView.text == placeholderFormat || textView.text == placeholderpurpose {
             startButton.backgroundColor = .Nuflect.lightGray
             startButton.setTitleColor(.Nuflect.darkGray, for: .normal)
             startButton.isEnabled = false

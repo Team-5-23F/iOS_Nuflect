@@ -15,7 +15,8 @@ class FeedbackVC: UIViewController {
     //MARK: - Properties
     //will get from WritingVC
     lazy var paragraphNum: Int = 1
-    lazy var translatedText = NSMutableAttributedString(string: "번역 결과를 받아오는 중입니다.\n잠시만 기다려 주세요.", attributes: [
+    lazy var translatedRawText: String = "번역 결과를 받아오는 중입니다.\n잠시만 기다려 주세요."
+    lazy var translatedText = NSMutableAttributedString(string: translatedRawText, attributes: [
         .font: UIFont.Nuflect.baseMedium,
         .foregroundColor: UIColor.Nuflect.black ?? .black])
     
@@ -118,7 +119,6 @@ class FeedbackVC: UIViewController {
         super.viewDidLoad()
         setView()
         setConstraint()
-        //Call API, change text, set color
         translationTextView.textColor = UIColor.Nuflect.black
     }
     

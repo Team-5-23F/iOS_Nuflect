@@ -10,17 +10,24 @@ import SnapKit
 
 class OutlineVC: UIViewController {
     //MARK: - Properties
-    lazy var formatText : String = "format"
-    lazy var perposeText : String = "perpose"
+    lazy var formatText : String = "에세이"
+    lazy var purposeText : String = "고객과의 관계에 관한 연구"
     //will get from API
 //    lazy var paragraphsTitle : [String] = []
-    lazy var paragraphsTitle : [String] = ["Paragraph 1", "Paragraph 2"]//, "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
+    lazy var paragraphsTitle : [String] = ["서론",
+                                           "연구 주제 소개",
+                                           "관련 선행 연구",
+                                           "연구 방법",
+                                           "연구 결과",
+                                           "결과 해석",
+                                           "결론"
+                                           ]
     
     //is each paragrapgh written
 //    lazy var isWritten : [Bool] = []
-    lazy var isWritten : [Bool] = [false, false]//, false, false, false, false, false, false, false]
+    lazy var isWritten : [Bool] = [false, false, false, false, false, false, false]
     
-    lazy var paragraphsText : [String] = ["",""]//, "","","","","","",""]
+    lazy var paragraphsText : [String] = ["","","","","","",""]
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -85,7 +92,7 @@ class OutlineVC: UIViewController {
         //To do
         let VC = CompleteVC()
         VC.formatText = formatText
-        VC.perposeText = perposeText
+        VC.purposeText = purposeText
         VC.paragraphsTitle = paragraphsTitle
         VC.paragraphsText = paragraphsText
         navigationController?.pushViewController(VC, animated: true)
@@ -109,7 +116,7 @@ class OutlineVC: UIViewController {
         super.viewDidLoad()
         setView()
         setConstraint()
-        print(self.perposeText)
+        print(self.purposeText)
     }
     
     //MARK: - Set Ui

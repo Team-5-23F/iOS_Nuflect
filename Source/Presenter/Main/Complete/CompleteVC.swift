@@ -12,7 +12,7 @@ class CompleteVC: UIViewController {
     //MARK: - Properties
     //will get from OutlineVC
     lazy var formatText : String = "format"
-    lazy var perposeText : String = "perpose"
+    lazy var purposeText : String = "purpose"
     lazy var paragraphsTitle : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
     lazy var paragraphsText : [String] = ["Paragraph 1\n\n\nParagraph 1Paragraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
     
@@ -29,8 +29,8 @@ class CompleteVC: UIViewController {
         return label
     }()
     
-    //perpose subtitle
-    lazy var perposeSubtitle: UILabel = {
+    //purpose subtitle
+    lazy var purposeSubtitle: UILabel = {
         let label = UILabel()
         label.text = "글의 형식 및 목적"
         label.font = UIFont.Nuflect.subtitleSemiBold
@@ -38,10 +38,10 @@ class CompleteVC: UIViewController {
         return label
     }()
     
-    //perpose label
-    lazy var perposeLabel: UILabel = {
+    //purpose label
+    lazy var purposeLabel: UILabel = {
         let label = UILabel()
-        label.text = perposeText
+        label.text = purposeText
         label.numberOfLines = 3
         label.font = UIFont.Nuflect.baseSemiBold
         label.textColor = UIColor.Nuflect.black
@@ -138,7 +138,7 @@ class CompleteVC: UIViewController {
     }
     
     func addSubView() {
-        [navigationBar, completeTitle, perposeSubtitle, perposeLabel, saveButton].forEach { view in
+        [navigationBar, completeTitle, purposeSubtitle, purposeLabel, saveButton].forEach { view in
             self.view.addSubview(view)
         }
     }
@@ -161,13 +161,13 @@ class CompleteVC: UIViewController {
             make.leading.equalToSuperview().offset(titleLeading)
         }
         
-        perposeSubtitle.snp.makeConstraints { make in
+        purposeSubtitle.snp.makeConstraints { make in
             make.top.equalTo(completeTitle.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(subtitleLeading)
         }
         
-        perposeLabel.snp.makeConstraints { make in
-            make.top.equalTo(perposeSubtitle.snp.bottom).offset(top)
+        purposeLabel.snp.makeConstraints { make in
+            make.top.equalTo(purposeSubtitle.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
 //            make.height.equalTo(110)
