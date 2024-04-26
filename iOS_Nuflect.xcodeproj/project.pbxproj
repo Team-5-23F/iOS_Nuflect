@@ -23,6 +23,11 @@
 		093F1F612BBD82C400760270 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093F1F602BBD82C400760270 /* FeedbackView.swift */; };
 		096A3CC62BC2587E005CF1A9 /* CompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096A3CC52BC2587E005CF1A9 /* CompleteCell.swift */; };
 		098ED6242BAAC476006A6628 /* OutlineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098ED6232BAAC476006A6628 /* OutlineCell.swift */; };
+		09EADC242BDB94E200A75F61 /* Extension URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC232BDB94E200A75F61 /* Extension URL.swift */; };
+		09EADC262BDB954E00A75F61 /* BaseEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC252BDB954E00A75F61 /* BaseEndpoint.swift */; };
+		09EADC282BDB965C00A75F61 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC272BDB965C00A75F61 /* APIManager.swift */; };
+		09EADC2A2BDB96A900A75F61 /* GetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC292BDB96A900A75F61 /* GetModel.swift */; };
+		09EADC2C2BDB96B000A75F61 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC2B2BDB96B000A75F61 /* PostModel.swift */; };
 		09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F022BA3FC0700F1440C /* AppDelegate.swift */; };
 		09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F042BA3FC0700F1440C /* SceneDelegate.swift */; };
 		09F75F072BA3FC0700F1440C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F062BA3FC0700F1440C /* ViewController.swift */; };
@@ -76,6 +81,11 @@
 		093F1F602BBD82C400760270 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		096A3CC52BC2587E005CF1A9 /* CompleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteCell.swift; sourceTree = "<group>"; };
 		098ED6232BAAC476006A6628 /* OutlineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineCell.swift; sourceTree = "<group>"; };
+		09EADC232BDB94E200A75F61 /* Extension URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension URL.swift"; sourceTree = "<group>"; };
+		09EADC252BDB954E00A75F61 /* BaseEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEndpoint.swift; sourceTree = "<group>"; };
+		09EADC272BDB965C00A75F61 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		09EADC292BDB96A900A75F61 /* GetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetModel.swift; sourceTree = "<group>"; };
+		09EADC2B2BDB96B000A75F61 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		09F75EFF2BA3FC0700F1440C /* iOS_Nuflect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Nuflect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F75F022BA3FC0700F1440C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09F75F042BA3FC0700F1440C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -302,6 +312,9 @@
 		09F75F622BA3FE3D00F1440C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				09EADC232BDB94E200A75F61 /* Extension URL.swift */,
+				09EADC252BDB954E00A75F61 /* BaseEndpoint.swift */,
+				09EADC272BDB965C00A75F61 /* APIManager.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -309,6 +322,8 @@
 		09F75F632BA3FE4500F1440C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				09EADC292BDB96A900A75F61 /* GetModel.swift */,
+				09EADC2B2BDB96B000A75F61 /* PostModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -466,17 +481,22 @@
 				09F75F072BA3FC0700F1440C /* ViewController.swift in Sources */,
 				093535F12BA9812B00CFA054 /* MypageVC.swift in Sources */,
 				093535E92BA97A4E00CFA054 /* OutlineVC.swift in Sources */,
+				09EADC262BDB954E00A75F61 /* BaseEndpoint.swift in Sources */,
 				09F75F652BA40B3D00F1440C /* SetColor.swift in Sources */,
 				09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */,
+				09EADC2A2BDB96A900A75F61 /* GetModel.swift in Sources */,
 				09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */,
 				093535D82BA8404600CFA054 /* SetFont.swift in Sources */,
 				093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */,
+				09EADC242BDB94E200A75F61 /* Extension URL.swift in Sources */,
 				093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */,
 				098ED6242BAAC476006A6628 /* OutlineCell.swift in Sources */,
 				093F1F612BBD82C400760270 /* FeedbackView.swift in Sources */,
 				093535ED2BA9810B00CFA054 /* FeedbackVC.swift in Sources */,
 				090B28DA2BB8039800493044 /* AddCell.swift in Sources */,
 				093535E32BA9342200CFA054 /* ColorToImage.swift in Sources */,
+				09EADC2C2BDB96B000A75F61 /* PostModel.swift in Sources */,
+				09EADC282BDB965C00A75F61 /* APIManager.swift in Sources */,
 				096A3CC62BC2587E005CF1A9 /* CompleteCell.swift in Sources */,
 				09F75F0D2BA3FC0700F1440C /* iOS_Nuflect.xcdatamodeld in Sources */,
 			);
