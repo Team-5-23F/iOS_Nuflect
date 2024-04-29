@@ -7,8 +7,11 @@
 
 import UIKit
 import SnapKit
+import KakaoSDKUser
 
 class LoginVC: UIViewController {
+    lazy var kakaoAuthVM = KakaoAuthVM()
+    
     //MARK: - UI ProPerties
     //logo
     lazy var logoImageView: UIImageView = {
@@ -45,8 +48,41 @@ class LoginVC: UIViewController {
     
     @objc func kakaoLoginButtonTapped(_ sender: UIButton) {
         print("kakao login button tapped")
-        let VC = MainVC()
-        navigationController?.pushViewController(VC, animated: true)
+        Task { [weak self] in
+            if await kakaoAuthVM.KakaoLogin() {
+                DispatchQueue.main.async {
+                    UserApi.shared.me() { (user, error) in
+                        if let error = error {
+                            print(error)
+                        }
+                        
+                        print("카카오로그인 성공")
+                        
+                        let userID = user?.kakaoAccount?.ci
+                        print(userID)
+
+                        let body = [
+                            "social_id": userID
+                        ]// as [String: Any]
+                        
+                        APIManger.shared.callPostRequest(baseEndPoint: .login, addPath: "", parameters: body) { JSON in
+//                            let outline = JSON["Index"].arrayObject as [String]
+//                            print(outline)
+                            print(JSON)
+                            
+                            let VC = MainVC()
+                            self?.navigationController?.pushViewController(VC, animated: true)
+                        }
+                        
+//                        let VC = MainVC()
+//                        self?.navigationController?.pushViewController(VC, animated: true)
+                        
+                    }
+                }
+            } else {
+                print("Login failed.")
+            }
+        }
     }
     
     

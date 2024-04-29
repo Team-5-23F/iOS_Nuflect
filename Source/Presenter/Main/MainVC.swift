@@ -158,10 +158,33 @@ class MainVC: UIViewController {
     
     @objc func startButtonTapped() {
         print("start tapped")
-        let VC = OutlineVC()
-        VC.formatText = formatTextView.text
-        VC.purposeText = purposeTextView.text
-        navigationController?.pushViewController(VC, animated: true)
+        callAPI()
+//        let VC = OutlineVC()
+//        VC.formatText = formatTextView.text
+//        VC.purposeText = purposeTextView.text
+//        navigationController?.pushViewController(VC, animated: true)
+    }
+    
+    func callAPI() {
+        let postOutline = PostOutline(Task: self.formatTextView.text, Context: self.purposeTextView.text)
+        print(postOutline)
+        
+        let body = [
+            "Task": postOutline.Task,
+            "Context": postOutline.Context
+        ]// as [String: Any]
+        
+        APIManger.shared.callPostRequest(baseEndPoint: .outline, addPath: "", parameters: body) { JSON in
+            let outline = JSON["Index"].arrayObject as! [String]
+            print(outline)
+            
+            let VC = OutlineVC()
+            VC.formatText = self.formatTextView.text
+            VC.purposeText = self.purposeTextView.text
+            VC.paragraphsTitle = outline
+            self.navigationController?.pushViewController(VC, animated: true)
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -321,7 +344,7 @@ extension MainVC: UITextViewDelegate {
         }
         
         //get inputs in textview, activate the button
-        if purposeTextView.text.isEmpty || textView.text == placeholderFormat || textView.text == placeholderpurpose {
+        if textView.text == placeholderFormat || textView.text == placeholderpurpose {
             startButton.backgroundColor = .Nuflect.lightGray
             startButton.setTitleColor(.Nuflect.darkGray, for: .normal)
             startButton.isEnabled = false

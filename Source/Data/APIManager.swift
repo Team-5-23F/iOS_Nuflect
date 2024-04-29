@@ -76,8 +76,9 @@ class APIManger {
 
             case .failure(let error):
                 print(error)
-                let json = JSON(error)
-                completionHnadler(json)
+                print(error.responseCode)
+//                let json = JSON(error)
+//                completionHnadler(json)
                 print("post 요청 실패")
             }
 

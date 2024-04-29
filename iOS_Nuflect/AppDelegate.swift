@@ -8,8 +8,8 @@
 import UIKit
 import CoreData
 import IQKeyboardManagerSwift
-//import KakaoSDKCommon
-//import KakaoSDKAuth
+import KakaoSDKCommon
+import KakaoSDKAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,10 +26,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let nativeAppKey = Bundle.main.infoDictionary?["KAKAO_NATIVE_APP_KEY"] ?? ""
         
 //        KakaoSDK.initSDK(appKey: nativeAppKey as! String)
+        KakaoSDK.initSDK(appKey: "2c5e756998e6d35dbc109febb024501a")
         
         
         return true
     }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                return AuthController.handleOpenUrl(url: url)
+            }
+
+            return false
+        }
 
     // MARK: UISceneSession Lifecycle
 
