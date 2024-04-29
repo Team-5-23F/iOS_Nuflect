@@ -8,9 +8,6 @@
 import Foundation
 
 enum BaseEndpoint {
-    
-//    case login
-//    case loginCallback
     case login
     case userInfo
     case outline
@@ -21,8 +18,6 @@ enum BaseEndpoint {
 
     var requestURL:String {
         switch self {
-//        case.login: return URL.getEndpointString("/oauth/kakao/login/")
-//        case.loginCallback: return URL.getEndpointString("/oauth/kakao/login/callback/")
         case.login: return URL.getEndpointString("/oauth/login/")
         case.userInfo: return URL.getEndpointString("/users/info/")
         case.outline: return URL.getEndpointString("/apis/gpt/outline/")

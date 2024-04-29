@@ -12,50 +12,28 @@ class CompleteCell: UICollectionViewCell {
     lazy var paragraphTitle: UILabel = {
         let label = UILabel()
         label.text = "Paragraph"
-        label.font = UIFont.Nuflect.subtitleSemiBold
+        label.font = UIFont.Nuflect.baseSemiBold
         label.textColor = UIColor.Nuflect.black
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         
         return label
     }()
     
-    lazy var moreButton: UIButton = {
-        let button = UIButton()
-        let more = UIImage(systemName: "ellipsis.circle")
+    lazy var paragraphContent: UILabel = {
+        let label = UILabel()
+        label.text = "content\n\ncontent"
+        label.font = UIFont.Nuflect.baseMedium
+        label.textColor = UIColor.Nuflect.black
+        label.numberOfLines = 0
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width:24, height: 24), false, 0.0)
-        more?.draw(in: CGRect(x: 0, y: 0, width: 24, height: 24))
-        let resizedMore = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        button.tintColor = UIColor.Nuflect.black
-        button.setBackgroundImage(resizedMore, for: .normal)
-        button.backgroundColor = UIColor.Nuflect.white
-        
-        let selectedMenu = {(action: UIAction) in
-            print(action.title)
-            //delegate func to CompleteVC
-//            self.delegate?.moreOptionTapped(paragraphNum: self.paragraphNum, selectedOption: action.title)
-        }
-        
-        button.menu = UIMenu(children: [
-            UIAction(title: "단락 작성", state: .off, handler: selectedMenu),
-            UIAction(title: "이름 변경", state: .off, handler: selectedMenu),
-            UIAction(title: "순서 변경", state: .off, handler: selectedMenu),
-            UIAction(title: "단락 삭제", attributes: .destructive, state: .off, handler: selectedMenu),
-        ])
-        
-        button.showsMenuAsPrimaryAction = true
-        button.changesSelectionAsPrimaryAction = false
-        
-        return button
+        return label
     }()
     
     //MARK: - Define Method
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()
-        setConstraint()
+//        setConstraint()
     }
     
     required init?(coder: NSCoder) {
@@ -65,30 +43,26 @@ class CompleteCell: UICollectionViewCell {
     //MARK: - Set Ui
     func setView(){
         self.layer.cornerRadius = 12
-        self.backgroundColor = .Nuflect.white
-        self.layer.borderWidth = 2
-        self.layer.borderColor = UIColor.Nuflect.mainBlue?.cgColor
-        addsubview()
-        
-        
+        self.backgroundColor = .Nuflect.inputBlue
     }
     
     func addsubview() {
-        [paragraphTitle, moreButton].forEach { view in
+        [paragraphTitle, paragraphContent].forEach { view in
             self.addSubview(view)
         }
     }
     
     func setConstraint(){
         paragraphTitle.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(25)
-            make.centerY.equalToSuperview()
-            make.trailing.equalTo(moreButton).offset(-25)
+            make.top.equalToSuperview().offset(18)
+            make.leading.equalToSuperview().offset(23)
+            make.trailing.equalToSuperview().offset(-23)
         }
         
-        moreButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-25)
-            make.centerY.equalToSuperview()
+        paragraphContent.snp.makeConstraints { make in
+            make.top.equalTo(paragraphTitle.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(23)
+            make.trailing.equalToSuperview().offset(-23)
         }
         
     }

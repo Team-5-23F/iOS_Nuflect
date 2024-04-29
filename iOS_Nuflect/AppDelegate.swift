@@ -23,9 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enableAutoToolbar = false
         IQKeyboardManager.shared.resignOnTouchOutside = true
         
-//        let nativeAppKey = Bundle.main.infoDictionary?["KAKAO_NATIVE_APP_KEY"] ?? ""
-        
-//        KakaoSDK.initSDK(appKey: nativeAppKey as! String)
         KakaoSDK.initSDK(appKey: "2c5e756998e6d35dbc109febb024501a")
         
         

@@ -226,7 +226,6 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
             cell.paragraphTitleLabel.text = String(indexPath.item + 1) + ". " + paragraphsTitle[indexPath.item]
             
             return cell
-//            fatalError("Invalid cell index")
         }
         
         
