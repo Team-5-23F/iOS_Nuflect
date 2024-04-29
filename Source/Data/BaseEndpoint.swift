@@ -18,7 +18,7 @@ enum BaseEndpoint {
 
     var requestURL:String {
         switch self {
-        case.login: return URL.getEndpointString("/oauth/login/")
+        case.login: return URL.getEndpointString("/users/login/")
         case.userInfo: return URL.getEndpointString("/users/info/")
         case.outline: return URL.getEndpointString("/apis/gpt/outline/")
         case.translate: return URL.getEndpointString("/apis/gpt/translate/")

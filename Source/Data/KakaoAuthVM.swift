@@ -54,7 +54,8 @@ class KakaoAuthVM: ObservableObject {
                     print("loginWithKakaoAccount() success.")
                     
                     //do something
-                    _ = oauthToken
+                    print(oauthToken)
+//                    _ = oauthToken
                     continuation.resume(returning: true)
                 }
             }

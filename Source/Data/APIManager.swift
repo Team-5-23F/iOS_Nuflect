@@ -24,7 +24,7 @@ class APIManger {
         
         let headers: HTTPHeaders = [
             "accept": "application/json",
-            "Authorization": "Bearer \(jwtToken)"
+            "Authorization": jwtToken,
         ]
 
         guard let addPath = addPath else { return }
@@ -56,7 +56,7 @@ class APIManger {
 
         let headers: HTTPHeaders = [
             "accept": "application/json",
-            "Authorization": "Bearer \(jwtToken)",
+            "Authorization": jwtToken,
             "Content-Type": "application/json"
         ]
 
@@ -87,7 +87,7 @@ class APIManger {
     }
     
     //로그인 Post요청
-    func callLoginPostRequest(baseEndPoint:BaseEndpoint, addPath:String?, parameters: [String: String], completionHnadler: @escaping(JSON) -> ()) {
+    func callLoginPostRequest(baseEndPoint:BaseEndpoint, addPath:String?, parameters: [String: Any], completionHnadler: @escaping(JSON) -> ()) {
 
         let headers: HTTPHeaders = [
             "accept": "application/json",
@@ -125,7 +125,7 @@ class APIManger {
 
         let headers: HTTPHeaders = [
             "accept": "application/json",
-            "Authorization": "Bearer \(jwtToken)"
+            "Authorization": jwtToken,
         ]
 
         guard let addPath = addPath else { return }

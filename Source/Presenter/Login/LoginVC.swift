@@ -48,6 +48,9 @@ class LoginVC: UIViewController {
     
     @objc func kakaoLoginButtonTapped(_ sender: UIButton) {
         print("kakao login button tapped")
+//        let VC = CompleteVC()
+//        self.navigationController?.pushViewController(VC, animated: true)
+        
         Task { [weak self] in
             if await kakaoAuthVM.KakaoLogin() {
                 DispatchQueue.main.async {
@@ -58,25 +61,43 @@ class LoginVC: UIViewController {
                         
                         print("카카오로그인 성공")
                         
-                        let userID = user?.kakaoAccount?.ci
-                        print(userID)
-
-                        let body = [
-                            "social_id": userID
-                        ]// as [String: Any]
+                        guard let userID = user?.id!
+                        else {
+                            print("ID error")
+                            return
+                        }
                         
-                        APIManger.shared.callPostRequest(baseEndPoint: .login, addPath: "", parameters: body) { JSON in
-//                            let outline = JSON["Index"].arrayObject as [String]
-//                            print(outline)
-                            print(JSON)
+                        print(userID)
+                        
+                        let body = [
+                            "social_id": "kakao_" + String(userID)
+                        ] as [String: Any]
+                        
+                        print(body)
+                        APIManger.shared.callLoginPostRequest(baseEndPoint: .login, addPath: "", parameters: body) { JSON in
+                            
+                            if JSON.isEmpty {
+                                print("server error")
+                                return
+                            }
+                            
+                            let accessToken = JSON["access_token"].stringValue
+                            let refreshToken = JSON["refresh_token"].stringValue
+                            
+                            if accessToken.isEmpty {
+                                print("token error")
+                                return
+                            }
+                            
+                            print(accessToken)
+                            print(refreshToken)
+                            
+                            APIManger.shared.jwtToken = accessToken
+                            print(APIManger.shared.jwtToken)
                             
                             let VC = MainVC()
                             self?.navigationController?.pushViewController(VC, animated: true)
-                        }
-                        
-//                        let VC = MainVC()
-//                        self?.navigationController?.pushViewController(VC, animated: true)
-                        
+                        }                        
                     }
                 }
             } else {
