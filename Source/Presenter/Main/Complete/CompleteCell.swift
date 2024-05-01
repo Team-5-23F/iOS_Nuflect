@@ -9,7 +9,7 @@ import SnapKit
 
 class CompleteCell: UICollectionViewCell {
     //MARK: - UI ProPerties
-    lazy var paragraphTitle: UILabel = {
+    lazy var paragraphTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Paragraph"
         label.font = UIFont.Nuflect.baseSemiBold
@@ -19,7 +19,7 @@ class CompleteCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var paragraphContent: UILabel = {
+    lazy var paragraphTextLabel: UILabel = {
         let label = UILabel()
         label.text = "content\n\ncontent"
         label.font = UIFont.Nuflect.baseMedium
@@ -33,7 +33,8 @@ class CompleteCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()
-//        setConstraint()
+        addsubview()
+        setConstraint()
     }
     
     required init?(coder: NSCoder) {
@@ -47,22 +48,26 @@ class CompleteCell: UICollectionViewCell {
     }
     
     func addsubview() {
-        [paragraphTitle, paragraphContent].forEach { view in
+        [paragraphTitleLabel, paragraphTextLabel].forEach { view in
             self.addSubview(view)
         }
     }
     
     func setConstraint(){
-        paragraphTitle.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(18)
-            make.leading.equalToSuperview().offset(23)
-            make.trailing.equalToSuperview().offset(-23)
+        let top = 18
+        let leading = 23
+        
+        paragraphTitleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(top)
+            make.leading.equalToSuperview().offset(leading)
+            make.trailing.equalToSuperview().offset(-leading)
         }
         
-        paragraphContent.snp.makeConstraints { make in
-            make.top.equalTo(paragraphTitle.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(23)
-            make.trailing.equalToSuperview().offset(-23)
+        paragraphTextLabel.snp.makeConstraints { make in
+            make.top.equalTo(paragraphTitleLabel.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(leading)
+            make.trailing.equalToSuperview().offset(-leading)
+            make.bottom.equalToSuperview().offset(-top)
         }
         
     }

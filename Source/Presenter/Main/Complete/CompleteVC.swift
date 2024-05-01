@@ -14,13 +14,16 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     lazy var formatText : String = "format\nformat"
     lazy var purposeText : String = "purpose\n\npurpose"
     lazy var paragraphsTitle : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
-    lazy var paragraphsText : [String] = ["Paragraph 1\n\n\nParagraph 1Paragraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
+    lazy var paragraphsText : [String] = ["Paragraph 1\n\n\n\nParagraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
+    
+    
+//    lazy var collectionViewHeight: CGFloat = 0
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
     
     //scroll view
-    lazy var scrollview:UIScrollView = {
+    lazy var scrollView:UIScrollView = {
         let view = UIScrollView()
         
         return view
@@ -108,7 +111,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.isScrollEnabled = false
         
-        collectionView.backgroundColor = .Nuflect.lightGray
+        collectionView.backgroundColor = .Nuflect.white
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(CompleteCell.self, forCellWithReuseIdentifier: "completeCell")
@@ -155,9 +158,16 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         setConstraint()
     }
     
+    //Set scrollview size to fit contentView
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        scrollview.contentSize = contentView.frame.size
+        contentView.snp.makeConstraints { make in
+            make.width.equalTo(view.snp.width)
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.height.equalTo(calculateContentViewHeight())
+        }
+        scrollView.contentSize = contentView.frame.size
     }
     
     //MARK: - Set Ui
@@ -190,12 +200,12 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     }
     
     func addSubView() {
-        [navigationBar, scrollview].forEach { view in
+        [navigationBar, scrollView].forEach { view in
             self.view.addSubview(view)
         }
         
         [contentView].forEach { view in
-            scrollview.addSubview(view)
+            scrollView.addSubview(view)
         }
 
         [completeTitle, formatSubtitle, formatLabel, purposeSubtitle, purposeLabel, completeWritingSubtitle, completeWritingCollectionView, saveButton].forEach { view in
@@ -205,9 +215,9 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     
     //scroll view
     func setScrollview() {
-        scrollview.delegate = self
-        scrollview.backgroundColor = UIColor.Nuflect.white
-        scrollview.isScrollEnabled = true
+        scrollView.delegate = self
+        scrollView.backgroundColor = UIColor.Nuflect.white
+        scrollView.isScrollEnabled = true
     }
     
     //auto layout
@@ -223,18 +233,18 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
             make.top.equalTo(self.view.safeAreaLayoutGuide)
         }
         
-        scrollview.snp.makeConstraints { make in
+        scrollView.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom)
             make.width.equalTo(view.snp.width)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
         
-        contentView.snp.makeConstraints { make in
-            make.width.equalTo(view.snp.width)
-            make.top.equalToSuperview()
-            make.bottom.equalTo(saveButton.snp.bottom).offset(20)
-            make.height.equalTo(calculateContentViewHeight())
-        }
+//        contentView.snp.makeConstraints { make in
+//            make.width.equalTo(view.snp.width)
+//            make.top.equalToSuperview()
+//            make.bottom.equalToSuperview()
+//            make.height.equalTo(calculateContentViewHeight())
+//        }
         
         completeTitle.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(top)
@@ -272,6 +282,8 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
             make.top.equalTo(completeWritingSubtitle.snp.bottom).offset(top / 2)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
+            make.height.equalTo(calculateCollectionViewHeight())
+//            make.height.equalTo(150)
 //            make.bottom.equalTo(saveButton.snp.top).offset(-top)
         }
         
@@ -279,9 +291,9 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(53)
-//            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-top)
-//            make.bottom.equalToSuperview().offset(-top)
-            make.top.equalTo(completeWritingCollectionView.snp.bottom).offset(top)
+//            make.top.equalTo(completeWritingCollectionView.snp.bottom).offset(top)
+            make.bottom.equalToSuperview().offset(-top)
+//            make.top.equalTo(completeWritingCollectionView.snp.bottom).offset(top)
         }
     }
   
@@ -298,15 +310,20 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "completeCell", for: indexPath) as! CompleteCell
         
-        cell.paragraphTitle.text = paragraphsTitle[indexPath.item]
-        cell.paragraphContent.text = paragraphsText[indexPath.item]
+        cell.paragraphTitleLabel.text = paragraphsTitle[indexPath.item]
+        cell.paragraphTextLabel.text = paragraphsText[indexPath.item]
         
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width // 좌우 여백
-        let height = heightForText(paragraphsText[indexPath.item], width: width) + 40 // 내용에 맞게 높이 설정
+        let width = collectionView.frame.width
+        let height = heightForText(paragraphsTitle[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
+        
+//        self.collectionViewHeight += height + 16
+        print(height)
+        print("CV")
+        
         return CGSize(width: width, height: height)
     }
     
@@ -314,7 +331,7 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        label.font = UIFont.Nuflect.baseMedium
+        label.font = UIFont.Nuflect.baseSemiBold
         label.text = text
         label.sizeToFit()
         return label.frame.height
@@ -322,17 +339,22 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     
     private func calculateContentViewHeight() -> CGFloat {
         var totalHeight: CGFloat = 0
-        totalHeight += CGFloat(20) // Top margin
-
         // Add heights of all UI elements in contentView
-        totalHeight += completeTitle.frame.height + formatSubtitle.frame.height + formatLabel.frame.height + purposeSubtitle.frame.height + purposeLabel.frame.height + completeWritingSubtitle.frame.height
-
-        // Add heights of paragraphs in collectionView
-        for text in paragraphsText {
-            let paragraphHeight = heightForText(text, width: view.frame.width - 32) + 40
-            totalHeight += paragraphHeight
-        }
-
+        totalHeight += completeTitle.frame.height + formatSubtitle.frame.height + formatLabel.frame.height + purposeSubtitle.frame.height + purposeLabel.frame.height + completeWritingSubtitle.frame.height + saveButton.frame.height + 110 + calculateCollectionViewHeight()
+        
         return totalHeight
+    }
+    
+    private func calculateCollectionViewHeight() -> CGFloat {
+        var collectionViewHeight: CGFloat = 0
+        
+        for i in 0 ..< paragraphsText.count {
+            let indexPath = IndexPath(row: i, section: 0)
+            let width = completeWritingCollectionView.frame.width
+            let cellHeight = heightForText(paragraphsTitle[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
+            
+            collectionViewHeight += cellHeight + 16
+        }
+        return collectionViewHeight
     }
 }
