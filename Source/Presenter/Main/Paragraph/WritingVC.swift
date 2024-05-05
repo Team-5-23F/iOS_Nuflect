@@ -107,13 +107,30 @@ class WritingVC: UIViewController {
     
     @objc func requestButtonTapped() {
         print("request tapped")
-        let VC = FeedbackVC()
-        VC.paragraphNum = self.paragraphNum
-        VC.translatedRawText = "If you can prioritize responses, you can deepen connections with individual customers, whether through one-off interactions or through more meaningful connections. Especially in cases where customers have posted favorable comments about a brand, product, or service. Think about how you would feel if your comment was personally acknowledged. And imagine how it would feel to be acknowledged by a brand manager. Generally, people post comments because they want their words to be acknowledged. Particularly when people post positive comments, it is an expression of gratitude. On the other hand, it is a sad fact that most brand compliments go unanswered. In such cases, missing the opportunity to understand the motivation behind the praise may lead to generating dissatisfaction, ultimately missing the chance to create loyal fans."
-        if let outlineVC = navigationController?.viewControllers.first(where: { $0 is OutlineVC }) as? OutlineVC {
-                VC.delegate = outlineVC
-            }
-        navigationController?.pushViewController(VC, animated: true)
+        callAPI()
+    }
+    
+    func callAPI() {
+        let postTranslate = PostTranslate(Text: self.writingTextView.text)
+        print(postTranslate)
+        
+        let body = [
+            "Text": postTranslate.Text as Any
+        ] as [String: Any]
+        
+        APIManger.shared.callPostRequest(baseEndPoint: .translate, addPath: "", parameters: body) { JSON in
+            let translation = JSON["Translation"].stringValue
+            print(translation)
+            
+            let VC = FeedbackVC()
+            VC.paragraphNum = self.paragraphNum
+            VC.translatedRawText = translation
+            if let outlineVC = self.navigationController?.viewControllers.first(where: { $0 is OutlineVC }) as? OutlineVC {
+                    VC.delegate = outlineVC
+                }
+            self.navigationController?.pushViewController(VC, animated: true)
+        }
+        
     }
     
     override func viewDidLoad() {

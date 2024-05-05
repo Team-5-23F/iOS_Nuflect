@@ -159,10 +159,6 @@ class MainVC: UIViewController {
     @objc func startButtonTapped() {
         print("start tapped")
         callAPI()
-//        let VC = OutlineVC()
-//        VC.formatText = formatTextView.text
-//        VC.purposeText = purposeTextView.text
-//        navigationController?.pushViewController(VC, animated: true)
     }
     
     func callAPI() {
@@ -173,9 +169,17 @@ class MainVC: UIViewController {
             "Task": postOutline.Task,
             "Context": postOutline.Context
         ] as [String: Any]
-        
+            
         APIManger.shared.callPostRequest(baseEndPoint: .outline, addPath: "", parameters: body) { JSON in
-            let outline = JSON["Index"].arrayObject as! [String]
+            let numOfIndex = JSON["NumOfIndex"].intValue
+            print(numOfIndex)
+            var outline: [String] = []
+            for i in 1 ... numOfIndex {
+                let index = JSON["Index"]["para\(i)"].stringValue
+                print(i)
+                print(index)
+                outline.append(index)
+            }
             print(outline)
             
             let VC = OutlineVC()

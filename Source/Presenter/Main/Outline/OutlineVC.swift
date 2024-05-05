@@ -10,24 +10,15 @@ import SnapKit
 
 class OutlineVC: UIViewController {
     //MARK: - Properties
-    lazy var formatText : String = "에세이"
-    lazy var purposeText : String = "고객과의 관계에 관한 연구"
+    lazy var formatText : String = ""
+    lazy var purposeText : String = ""
     //will get from API
-//    lazy var paragraphsTitle : [String] = []
-    lazy var paragraphsTitle : [String] = ["서론",
-                                           "연구 주제 소개",
-                                           "관련 선행 연구",
-                                           "연구 방법",
-                                           "연구 결과",
-                                           "결과 해석",
-                                           "결론"
-                                           ]
-    
+    lazy var paragraphsTitle : [String] = []
     //is each paragrapgh written
-//    lazy var isWritten : [Bool] = []
-    lazy var isWritten : [Bool] = [false, false, false, false, false, false, false]
+    lazy var isWritten : [Bool] = []
     
-    lazy var paragraphsText : [String] = ["","","","","","",""]
+    //will save written paragraph's text
+    lazy var writtenParagraphsText : [String] = []
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -66,10 +57,6 @@ class OutlineVC: UIViewController {
         button.setTitleColor(UIColor.Nuflect.darkGray, for: .normal)
         button.titleLabel?.font = UIFont.Nuflect.subheadMedium
         
-        // Highlighted
-//        let iamge = image(withColor: .Nuflect.mainBlue!)
-//        button.setBackgroundImage(iamge, for: .highlighted)
-//        button.setTitleColor(UIColor.Nuflect.white, for: .highlighted)
         button.isEnabled = false
         
         button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
@@ -94,7 +81,7 @@ class OutlineVC: UIViewController {
         VC.formatText = formatText
         VC.purposeText = purposeText
         VC.paragraphsTitle = paragraphsTitle
-        VC.paragraphsText = paragraphsText
+        VC.paragraphsText = writtenParagraphsText
         navigationController?.pushViewController(VC, animated: true)
     }
     
@@ -116,7 +103,10 @@ class OutlineVC: UIViewController {
         super.viewDidLoad()
         setView()
         setConstraint()
-        print(self.purposeText)
+        for _ in 0 ..< paragraphsTitle.count {
+            self.isWritten.append(false)
+            self.writtenParagraphsText.append("")
+        }
     }
     
     //MARK: - Set Ui
@@ -266,6 +256,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
             let VC = WritingVC()
             VC.paragraphNum = paragraphNum
             VC.paragraphTitle = paragraphsTitle[paragraphNum]
+            VC.writingTextView.text = writtenParagraphsText[paragraphNum]
             navigationController?.pushViewController(VC, animated: true)
             break
         
@@ -282,7 +273,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         print(paragraphContents)
         
         self.isWritten[paragraghNum] = true
-        self.paragraphsText[paragraghNum] = paragraphContents
+        self.writtenParagraphsText[paragraghNum] = paragraphContents
         
         //get cell, change color
         guard let cell = outlineCollectionView.cellForItem(at: IndexPath(item: paragraghNum, section: 0)) as? OutlineCell else {

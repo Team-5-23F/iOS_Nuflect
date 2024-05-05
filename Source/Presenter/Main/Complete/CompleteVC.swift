@@ -11,13 +11,14 @@ import SnapKit
 class CompleteVC: UIViewController, UIScrollViewDelegate {
     //MARK: - Properties
     //will get from OutlineVC
-    lazy var formatText : String = "format\nformat"
-    lazy var purposeText : String = "purpose\n\npurpose"
-    lazy var paragraphsTitle : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
-    lazy var paragraphsText : [String] = ["Paragraph 1\n\n\n\nParagraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
-    
-    
-//    lazy var collectionViewHeight: CGFloat = 0
+    lazy var formatText : String = ""
+    lazy var purposeText : String = ""
+    lazy var paragraphsTitle : [String] = []
+    lazy var paragraphsText : [String] = []
+//    lazy var formatText : String = "format\nformat"
+//    lazy var purposeText : String = "purpose\n\npurpose"
+//    lazy var paragraphsTitle : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
+//    lazy var paragraphsText : [String] = ["Paragraph 1\n\n\n\nParagraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -283,17 +284,13 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(calculateCollectionViewHeight())
-//            make.height.equalTo(150)
-//            make.bottom.equalTo(saveButton.snp.top).offset(-top)
         }
         
         saveButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(53)
-//            make.top.equalTo(completeWritingCollectionView.snp.bottom).offset(top)
             make.bottom.equalToSuperview().offset(-top)
-//            make.top.equalTo(completeWritingCollectionView.snp.bottom).offset(top)
         }
     }
   
@@ -319,10 +316,6 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
         let height = heightForText(paragraphsTitle[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
-        
-//        self.collectionViewHeight += height + 16
-        print(height)
-        print("CV")
         
         return CGSize(width: width, height: height)
     }
