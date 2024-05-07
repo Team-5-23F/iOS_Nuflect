@@ -223,7 +223,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //MARK: - Define Method
     func updateFeedback() {
         print("update to " + String(currentSentenceNum))
-        originalTextLabel.text = feedbacks[currentSentenceNum]["Sentence\(currentSentenceNum + 1)"]
+        originalTextLabel.text = feedbacks[currentSentenceNum]["Sentence"]
         ambiguityTextLabel.text = feedbacks[currentSentenceNum]["Task1"]
         alternativeTextLabel.text = feedbacks[currentSentenceNum]["Task2"]
         nuanceTextLabel.text = feedbacks[currentSentenceNum]["Task3"]
@@ -291,7 +291,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     }
     
     func callAPI() {
-        let sentence = PostFeedbackLine(Sentence: self.feedbacks[currentSentenceNum]["Sentence\(currentSentenceNum + 1)"] ?? "Sentence error occured")
+        let sentence = PostFeedbackLine(Sentence: self.feedbacks[currentSentenceNum]["Sentence"] ?? "Sentence error occured")
         print(sentence)
         
         let body = [
@@ -304,7 +304,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
                 // Convert JSON data to Swift objects
                 if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [String] {
                     
-                    let newFeedback = ["Sentence\(self.currentSentenceNum + 2)": jsonArray[0],
+                    let newFeedback = ["Sentence": jsonArray[0],
                                        "Task1": jsonArray[1],
                                        "Task2": jsonArray[2],
                                        "Task3": jsonArray[3]

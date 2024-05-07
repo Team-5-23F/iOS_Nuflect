@@ -185,7 +185,7 @@ class MainVC: UIViewController {
             let VC = OutlineVC()
             VC.formatText = self.formatTextView.text
             VC.purposeText = self.purposeTextView.text
-            VC.paragraphsTitle = outline
+            VC.paragraphsTitles = outline
             self.navigationController?.pushViewController(VC, animated: true)
         }
         

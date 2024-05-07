@@ -13,7 +13,7 @@ class OutlineVC: UIViewController {
     lazy var formatText : String = ""
     lazy var purposeText : String = ""
     //will get from API
-    lazy var paragraphsTitle : [String] = []
+    lazy var paragraphsTitles : [String] = []
     //is each paragrapgh written
     lazy var isWritten : [Bool] = []
     
@@ -80,7 +80,7 @@ class OutlineVC: UIViewController {
         let VC = CompleteVC()
         VC.formatText = formatText
         VC.purposeText = purposeText
-        VC.paragraphsTitle = paragraphsTitle
+        VC.paragraphsTitles = paragraphsTitles
         VC.paragraphsText = writtenParagraphsText
         navigationController?.pushViewController(VC, animated: true)
     }
@@ -103,7 +103,7 @@ class OutlineVC: UIViewController {
         super.viewDidLoad()
         setView()
         setConstraint()
-        for _ in 0 ..< paragraphsTitle.count {
+        for _ in 0 ..< paragraphsTitles.count {
             self.isWritten.append(false)
             self.writtenParagraphsText.append("")
         }
@@ -199,12 +199,12 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        paragraphsTitle.count + 1
+        paragraphsTitles.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
-        case paragraphsTitle.count:
+        case paragraphsTitles.count:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCell", for: indexPath) as! AddCell
             
             return cell
@@ -213,7 +213,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "outlineCell", for: indexPath) as! OutlineCell
             cell.delegate = self
             cell.paragraphNum = indexPath.item
-            cell.paragraphTitleLabel.text = String(indexPath.item + 1) + ". " + paragraphsTitle[indexPath.item]
+            cell.paragraphTitleLabel.text = String(indexPath.item + 1) + ". " + paragraphsTitles[indexPath.item]
             
             return cell
         }
@@ -234,15 +234,32 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.item {
         //last cell, add button
-        case paragraphsTitle.count:
-            print("Add")
-            //To do
+        case paragraphsTitles.count:
+            print("Add paragraph")
+            let alert = UIAlertController(title: "단락 추가", message: nil, preferredStyle: .alert)
+            alert.addTextField { textField in
+                textField.placeholder = "단락 이름을 입력하세요."
+            }
+            let addAction = UIAlertAction(title: "추가", style: .default) { [weak self] _ in
+                guard let title = alert.textFields?.first?.text, !title.isEmpty else { return }
+                self?.addParagraph(title)
+            }
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+            
+            alert.addAction(addAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true)
+            
             break
+            
         default:
             print(indexPath.item)
             let VC = WritingVC()
             VC.paragraphNum = indexPath.item
-            VC.paragraphTitle = paragraphsTitle[indexPath.item]
+            VC.paragraphTitle = paragraphsTitles[indexPath.item]
+            if self.isWritten[indexPath.row] {
+                VC.writingTextView.text = self.writtenParagraphsText[indexPath.row]
+            }
             navigationController?.pushViewController(VC, animated: true)
             break
         }
@@ -255,16 +272,105 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         case "단락 작성":
             let VC = WritingVC()
             VC.paragraphNum = paragraphNum
-            VC.paragraphTitle = paragraphsTitle[paragraphNum]
+            VC.paragraphTitle = paragraphsTitles[paragraphNum]
             VC.writingTextView.text = writtenParagraphsText[paragraphNum]
             navigationController?.pushViewController(VC, animated: true)
             break
-        
-        //To do "이름 변경", "순서 변경", "단락 삭제"
+        case "이름 변경":
+            let alert = UIAlertController(title: "이름 변경", message: nil, preferredStyle: .alert)
+            alert.addTextField { textField in
+                textField.placeholder = "변경할 이름을 입력하세요."
+            }
+            let addAction = UIAlertAction(title: "변경", style: .default) { [weak self] _ in
+                guard let title = alert.textFields?.first?.text, !title.isEmpty else { return }
+                self?.renameParagraph(paragraphNum, title)
+            }
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+            
+            alert.addAction(addAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true)
+        case "순서 변경":
+            let alert = UIAlertController(title: "순서 변경", message: nil, preferredStyle: .alert)
+            alert.addTextField { textField in
+                textField.placeholder = "몇 번째 단락으로 변경할지 입력하세요."
+                textField.keyboardType = .numberPad // 이 부분이 추가되었습니다.
+            }
+            let addAction = UIAlertAction(title: "변경", style: .default) { [weak self] _ in
+                guard let numString = alert.textFields?.first?.text,
+                      let num = Int(numString) else {
+                        return
+                    }
+                self?.reorderParagraph(from: paragraphNum, to: num - 1)
+            }
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+            
+            alert.addAction(addAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true)
+        case "단락 삭제":
+            let alert = UIAlertController(title: "\(paragraphNum + 1)번 단락을 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
+
+            let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
+                self?.deleteParagraph(at: paragraphNum)
+            }
+
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+
+            alert.addAction(deleteAction)
+            alert.addAction(cancelAction)
+
+            present(alert, animated: true)
             
         default:
             print("error")
         }
+    }
+    
+    // Function to add a new paragraph
+    func addParagraph(_ title: String) {
+        paragraphsTitles.append(title)
+        isWritten.append(false)
+        writtenParagraphsText.append("")
+        outlineCollectionView.reloadData()
+    }
+    
+    // Function to rename a new paragraph
+    func renameParagraph(_ num: Int, _ title: String) {
+        paragraphsTitles[num] = title
+        outlineCollectionView.reloadData()
+    }
+    
+    // Function to delete a paragraph
+    func deleteParagraph(at index: Int) {
+        paragraphsTitles.remove(at: index)
+        isWritten.remove(at: index)
+        writtenParagraphsText.remove(at: index)
+        outlineCollectionView.reloadData()
+    }
+    
+    // Function to reorder paragraphs
+    func reorderParagraph(from sourceIndex: Int, to destinationIndex: Int) {
+        if destinationIndex >= paragraphsTitles.count || destinationIndex < 0 {
+            let alert = UIAlertController(title: "1 ~ \(paragraphsTitles.count) 사이의 숫자를 입력해주세요", message: nil, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "확인", style: .default)
+            
+            alert.addAction(okAction)
+            present(alert, animated: true)
+            return
+        }
+        let movingParagraph = self.paragraphsTitles[sourceIndex]
+        let movingIsWritten = self.isWritten[sourceIndex]
+        let movingParagraphText = self.writtenParagraphsText[sourceIndex]
+        
+        paragraphsTitles.remove(at: sourceIndex)
+        isWritten.remove(at: sourceIndex)
+        writtenParagraphsText.remove(at: sourceIndex)
+        
+        paragraphsTitles.insert(movingParagraph, at: destinationIndex)
+        isWritten.insert(movingIsWritten, at: destinationIndex)
+        writtenParagraphsText.insert(movingParagraphText, at: destinationIndex)
+        outlineCollectionView.reloadData()
     }
     
     //for end writing a paragraph

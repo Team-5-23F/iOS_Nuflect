@@ -13,11 +13,11 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     //will get from OutlineVC
     lazy var formatText : String = ""
     lazy var purposeText : String = ""
-    lazy var paragraphsTitle : [String] = []
+    lazy var paragraphsTitles : [String] = []
     lazy var paragraphsText : [String] = []
 //    lazy var formatText : String = "format\nformat"
 //    lazy var purposeText : String = "purpose\n\npurpose"
-//    lazy var paragraphsTitle : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
+//    lazy var paragraphsTitles : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
 //    lazy var paragraphsText : [String] = ["Paragraph 1\n\n\n\nParagraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
     
     //MARK: - UI ProPerties
@@ -301,13 +301,13 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
 extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return paragraphsTitle.count
+        return paragraphsTitles.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "completeCell", for: indexPath) as! CompleteCell
         
-        cell.paragraphTitleLabel.text = paragraphsTitle[indexPath.item]
+        cell.paragraphTitleLabel.text = paragraphsTitles[indexPath.item]
         cell.paragraphTextLabel.text = paragraphsText[indexPath.item]
         
         return cell
@@ -315,7 +315,7 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
-        let height = heightForText(paragraphsTitle[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
+        let height = heightForText(paragraphsTitles[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
         
         return CGSize(width: width, height: height)
     }
@@ -344,7 +344,7 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
         for i in 0 ..< paragraphsText.count {
             let indexPath = IndexPath(row: i, section: 0)
             let width = completeWritingCollectionView.frame.width
-            let cellHeight = heightForText(paragraphsTitle[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
+            let cellHeight = heightForText(paragraphsTitles[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
             
             collectionViewHeight += cellHeight + 16
         }
