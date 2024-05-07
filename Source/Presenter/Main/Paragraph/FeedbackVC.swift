@@ -124,7 +124,6 @@ class FeedbackVC: UIViewController {
         setView()
         setConstraint()
         translationTextView.textColor = UIColor.Nuflect.black
-//        self.feedbackSubView.updateFeedback()
     }
     
     func callAPI() {
@@ -156,6 +155,14 @@ class FeedbackVC: UIViewController {
             }
             
             self.feedbackSubView.updateFeedback()
+            self.feedbackSubView.originalSubtitleLabel.text = "< Original >"
+            self.feedbackSubView.ambiguitySubtitleLabel.text = "< Ambiguity >"
+            self.feedbackSubView.alternativeSubtitleLabel.text = "< Alternative >"
+            self.feedbackSubView.nuanceSubtitleLabel.text = "< Nuance >"
+            self.feedbackSubView.otherFeedbackButton.isHidden = false
+            self.feedbackSubView.otherFeedbackButton.isEnabled = true
+            self.feedbackSubView.reflectFeedbackButton.isHidden = false
+            self.feedbackSubView.reflectFeedbackButton.isEnabled = true
         }
         
     }

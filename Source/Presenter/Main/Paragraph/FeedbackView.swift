@@ -50,6 +50,9 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         
         button.addTarget(self, action: #selector(otherFeedbackButtonTapped), for: .touchUpInside)
         
+        button.isEnabled = false
+        button.isHidden = true
+        
         return button
     }()
     
@@ -65,6 +68,9 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         button.setTitleColor(UIColor.Nuflect.black, for: .normal)
         
         button.addTarget(self, action: #selector(reflectFeedbackButtonTapped), for: .touchUpInside)
+        
+        button.isEnabled = false
+        button.isHidden = true
         
         return button
     }()
@@ -122,7 +128,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //original subtitle label
     lazy var originalSubtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "< Original >"
+        label.text = "피드백 불러오는 중"
         label.font = UIFont.Nuflect.baseSemiBold
         label.textColor = UIColor.Nuflect.black
         
@@ -132,7 +138,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //original text label
     lazy var originalTextLabel: UILabel = {
         let label = UILabel()
-        label.text = "original sentence\n\noriginal sentence"
+        label.text = "문장별로 피드백을 불러오는 중입니다.\n잠시만 기다려주세요"
         label.numberOfLines = 0
         label.font = UIFont.Nuflect.smallMedium
         label.textColor = UIColor.Nuflect.black
@@ -144,7 +150,8 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //ambiguity subtitle label
     lazy var ambiguitySubtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "< Ambiguity >"
+//        label.text = "< Ambiguity >"
+        label.text = ""
         label.font = UIFont.Nuflect.baseSemiBold
         label.textColor = UIColor.Nuflect.black
         
@@ -154,7 +161,8 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //ambiguity text label
     lazy var ambiguityTextLabel: UILabel = {
         let label = UILabel()
-        label.text = "ambiguity text\n\nambiguity text"
+//        label.text = "ambiguity text"
+        label.text = ""
         label.numberOfLines = 0
         label.font = UIFont.Nuflect.smallMedium
         label.textColor = UIColor.Nuflect.black
@@ -166,7 +174,8 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //alternative subtitle label
     lazy var alternativeSubtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "< Alternative >"
+//        label.text = "< Alternative >"
+        label.text = ""
         label.font = UIFont.Nuflect.baseSemiBold
         label.textColor = UIColor.Nuflect.black
         
@@ -176,7 +185,8 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //alternative text label
     lazy var alternativeTextLabel: UILabel = {
         let label = UILabel()
-        label.text = "alternative text\n\nalternative text"
+//        label.text = "alternative text"
+        label.text = ""
         label.numberOfLines = 0
         label.font = UIFont.Nuflect.smallMedium
         label.textColor = UIColor.Nuflect.black
@@ -188,7 +198,8 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //nuance subtitle label
     lazy var nuanceSubtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "< Nuance >"
+//        label.text = "< Nuance >"
+        label.text = ""
         label.font = UIFont.Nuflect.baseSemiBold
         label.textColor = UIColor.Nuflect.black
         
@@ -198,7 +209,8 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //nuance text label
     lazy var nuanceTextLabel: UILabel = {
         let label = UILabel()
-        label.text = "nuance text\n\nnuance text"
+//        label.text = "nuance text"
+        label.text = ""
         label.numberOfLines = 0
         label.font = UIFont.Nuflect.smallMedium
         label.textColor = UIColor.Nuflect.black
@@ -215,11 +227,6 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         ambiguityTextLabel.text = feedbacks[currentSentenceNum]["Task1"]
         alternativeTextLabel.text = feedbacks[currentSentenceNum]["Task2"]
         nuanceTextLabel.text = feedbacks[currentSentenceNum]["Task3"]
-        
-        print(feedbacks[currentSentenceNum]["Sentence\(currentSentenceNum + 1)"])
-        print(feedbacks[currentSentenceNum]["Task1"])
-        print(alternativeTextLabel.text = feedbacks[currentSentenceNum]["Task2"])
-        print(nuanceTextLabel.text = feedbacks[currentSentenceNum]["Task3"])
         
         //undo
         if isReflected[currentSentenceNum] {
@@ -238,10 +245,15 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     
     @objc func otherFeedbackButtonTapped() {
         print("other feedback tapped")
+        callAPI()
     }
     
     @objc func reflectFeedbackButtonTapped() {
         print("reflect feedback tapped")
+        if feedbacks[self.currentSentenceNum]["Task2"] == "No improvement needed." {
+            print("No improvement needed.")
+            return
+        }
         //undo
         if isReflected[currentSentenceNum] {
             delegate?.undoFeedback(alternative: alternativeTextLabel.text ?? "", original: originalTextLabel.text ?? "")
@@ -276,6 +288,43 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         currentSentenceNum += 1
         updateFeedback()
         feedbackScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
+    
+    func callAPI() {
+        let sentence = PostFeedbackLine(Sentence: self.feedbacks[currentSentenceNum]["Sentence\(currentSentenceNum + 1)"] ?? "Sentence error occured")
+        print(sentence)
+        
+        let body = [
+            "Sentence": sentence.Sentence as Any
+        ] as [String: Any]
+        
+        APIManger.shared.callPostRequest(baseEndPoint: .feedbackLine, addPath: "", parameters: body) { JSON in
+            print(JSON)
+            do {
+                // Convert JSON data to Swift objects
+                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [String] {
+                    
+                    let newFeedback = ["Sentence\(self.currentSentenceNum + 2)": jsonArray[0],
+                                       "Task1": jsonArray[1],
+                                       "Task2": jsonArray[2],
+                                       "Task3": jsonArray[3]
+                                   ]
+                    
+                    print(newFeedback)
+                    self.feedbacks.insert(newFeedback, at: self.currentSentenceNum + 1)
+//                    for feedback in feedbacks {
+//                        fe
+//                    }
+                    self.isReflected.insert(false, at: self.currentSentenceNum + 1)
+                    
+                    self.currentSentenceNum += 1
+                    self.updateFeedback()
+                }
+            } catch {
+                print("Error converting JSON to Swift objects: \(error)")
+            }
+        }
+        
     }
     
     override init(frame: CGRect) {
