@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		090B28DA2BB8039800493044 /* AddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090B28D92BB8039800493044 /* AddCell.swift */; };
+		090DFDBB2BEA536300D63CBA /* MypageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DFDBA2BEA536300D63CBA /* MypageCell.swift */; };
 		093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D52BA83FE300CFA054 /* BaseVC.swift */; };
 		093535D82BA8404600CFA054 /* SetFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D72BA8404600CFA054 /* SetFont.swift */; };
 		093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D92BA8439300CFA054 /* BaseScrollVC.swift */; };
@@ -70,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		090B28D92BB8039800493044 /* AddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCell.swift; sourceTree = "<group>"; };
+		090DFDBA2BEA536300D63CBA /* MypageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageCell.swift; sourceTree = "<group>"; };
 		093535D52BA83FE300CFA054 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		093535D72BA8404600CFA054 /* SetFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFont.swift; sourceTree = "<group>"; };
 		093535D92BA8439300CFA054 /* BaseScrollVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollVC.swift; sourceTree = "<group>"; };
@@ -142,6 +144,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		090DFDB92BEA50CD00D63CBA /* History */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
 		09F75EF62BA3FC0700F1440C = {
 			isa = PBXGroup;
 			children = (
@@ -284,7 +293,9 @@
 		09F75F472BA3FC2300F1440C /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				090DFDB92BEA50CD00D63CBA /* History */,
 				093535F02BA9812B00CFA054 /* MypageVC.swift */,
+				090DFDBA2BEA536300D63CBA /* MypageCell.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -487,6 +498,7 @@
 				093535D82BA8404600CFA054 /* SetFont.swift in Sources */,
 				093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */,
 				09EADC242BDB94E200A75F61 /* Extension URL.swift in Sources */,
+				090DFDBB2BEA536300D63CBA /* MypageCell.swift in Sources */,
 				093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */,
 				09EADC352BDE410200A75F61 /* KakaoAuthVM.swift in Sources */,
 				098ED6242BAAC476006A6628 /* OutlineCell.swift in Sources */,
