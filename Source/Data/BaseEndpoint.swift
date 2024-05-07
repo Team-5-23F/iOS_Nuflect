@@ -23,7 +23,7 @@ enum BaseEndpoint {
         case.outline: return URL.getEndpointString("/apis/gpt/outline/")
         case.translate: return URL.getEndpointString("/apis/gpt/translate/")
         case.feedbackLine: return URL.getEndpointString("/apis/gpt/feedback/line/")
-        case.feedbackWriting: return URL.getEndpointString("/apis/gpt/feedback/wiriting/")
+        case.feedbackWriting: return URL.getEndpointString("/apis/gpt/feedback/writing/")
         case.enrollParagraph: return URL.getEndpointString("/apis/gpt/enroll/paragraph/")
         }
     }

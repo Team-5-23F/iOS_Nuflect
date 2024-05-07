@@ -114,12 +114,50 @@ class FeedbackVC: UIViewController {
             navigationController?.popToViewController(VC, animated: true)
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        callAPI()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
         setConstraint()
         translationTextView.textColor = UIColor.Nuflect.black
+//        self.feedbackSubView.updateFeedback()
+    }
+    
+    func callAPI() {
+        let postFeedbackWriting = PostFeedbackWriting(Writing: self.translatedRawText)
+        print(postFeedbackWriting)
+        
+        let body = [
+            "Writing": postFeedbackWriting.Writing as Any
+        ] as [String: Any]
+        
+        APIManger.shared.callPostRequest(baseEndPoint: .feedbackWriting, addPath: "", parameters: body) { JSON in
+            let numOfFeedbacks = JSON.count
+            print(numOfFeedbacks)
+            print(JSON)
+            print(JSON.arrayValue)
+            
+            do {
+                // Convert JSON data to Swift objects
+                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: String]] {
+                    print(jsonArray)
+                    // Now jsonArray is of type [[String: String]]
+                    self.feedbackSubView.feedbacks = jsonArray
+                    for _ in 0 ..< self.feedbackSubView.feedbacks.count {
+                        self.feedbackSubView.isReflected.append(false)
+                    }
+                }
+            } catch {
+                print("Error converting JSON to Swift objects: \(error)")
+            }
+            
+            self.feedbackSubView.updateFeedback()
+        }
+        
     }
     
     //MARK: - Set Ui

@@ -119,12 +119,15 @@ class WritingVC: UIViewController {
         ] as [String: Any]
         
         APIManger.shared.callPostRequest(baseEndPoint: .translate, addPath: "", parameters: body) { JSON in
-            let translation = JSON["Translation"].stringValue
+            let translation = JSON["Text"].stringValue
             print(translation)
             
             let VC = FeedbackVC()
             VC.paragraphNum = self.paragraphNum
             VC.translatedRawText = translation
+//            VC.translatedText = NSMutableAttributedString(string: translation, attributes: [
+//                .font: UIFont.Nuflect.baseMedium,
+//                .foregroundColor: UIColor.Nuflect.black ?? .black])
             if let outlineVC = self.navigationController?.viewControllers.first(where: { $0 is OutlineVC }) as? OutlineVC {
                     VC.delegate = outlineVC
                 }
@@ -188,6 +191,7 @@ class WritingVC: UIViewController {
         writingTitle.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(titleLeading)
+            make.trailing.equalToSuperview().offset(-titleLeading)
         }
         
         writingIntroductionLabel.snp.makeConstraints { make in

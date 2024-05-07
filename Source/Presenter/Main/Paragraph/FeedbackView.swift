@@ -12,22 +12,8 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //MARK: - Properties
     //will get from API
     lazy var currentSentenceNum: Int = 0
-    lazy var feedbakcs: [[String]] = [
-        ["If you can prioritize responses, you can deepen connections with individual customers, whether through one-off interactions or through more meaningful connections.",
-         "deepen connections with individual customers라는 구문에서 전치사 with가 어색하게 사용되었습니다. 왜냐하면 prioritize responses를 individual customers와 함께 하는 것이 아니라 individual customers를 향한 prioritize responses라는 의미를 전달하기 때문입니다.",
-         "If you can prioritize responses directed towards individual customers, you can deepen connections, whether through one-off interactions or through more meaningful connections.",
-         "원래의 문장에서 individual customers와 함께 prioritize responses를 하는 것으로 오해될 수 있는 부분을 수정하여, prioritize responses가 individual customers를 향한 것임을 명확하게 보여줍니다."],
-        ["Generally, people post comments because they want their words to be acknowledged.",
-         "to be acknowledged 뒤의 전치사 \"to\"가 불필요하며, \"acknowledged\"가 동사가 아닌 형용사로 사용되었습니다. \n이유: \"want\" 뒤에는 동사 원형이 올 수 있으므로, \"to be acknowledged\" 대신 \"acknowledgement\"로 수정할 필요가 있습니다.",
-         "Generally, people post comments because they want acknowledgment of their words.",
-         "\"to be acknowledged\" 대신 \"acknowledgment of their words\"로 수정되어, 원래의 문장보다 좀 더 명확하고 간결한 의미를 전달합니다."],
-        ["Particularly when people post positive comments, it is an expression of gratitude.",
-         "post 뒤에 붙은 positive comments가 전치사인데, 올바른 표현은 post positive comments라고 해야 합니다.\n이유: post는 전치사가 필요하지 않은 동사이기 때문에, positive comments가 post 뒤에 붙어야 합니다.",
-         "Particularly when people post positive comments, it is an expression of gratitude.",
-         "원래 문장에서 어색한 부분을 수정하여, 사람들이 긍정적인 코멘트를 남길 때 표현되는 감사의 표현에 대해 강조하는 내용이 더 명확해졌습니다."]
-    ]
-    
-    lazy var isReflected: [Bool] = [false, false, false]
+    lazy var feedbacks: [[String:String]] = []
+    lazy var isReflected: [Bool] = []
     
     weak var delegate: feedbackViewDelegate?
     
@@ -225,10 +211,15 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //MARK: - Define Method
     func updateFeedback() {
         print("update to " + String(currentSentenceNum))
-        originalTextLabel.text = feedbakcs[currentSentenceNum][0]
-        ambiguityTextLabel.text = feedbakcs[currentSentenceNum][1]
-        alternativeTextLabel.text = feedbakcs[currentSentenceNum][2]
-        nuanceTextLabel.text = feedbakcs[currentSentenceNum][3]
+        originalTextLabel.text = feedbacks[currentSentenceNum]["Sentence\(currentSentenceNum + 1)"]
+        ambiguityTextLabel.text = feedbacks[currentSentenceNum]["Task1"]
+        alternativeTextLabel.text = feedbacks[currentSentenceNum]["Task2"]
+        nuanceTextLabel.text = feedbacks[currentSentenceNum]["Task3"]
+        
+        print(feedbacks[currentSentenceNum]["Sentence\(currentSentenceNum + 1)"])
+        print(feedbacks[currentSentenceNum]["Task1"])
+        print(alternativeTextLabel.text = feedbacks[currentSentenceNum]["Task2"])
+        print(nuanceTextLabel.text = feedbacks[currentSentenceNum]["Task3"])
         
         //undo
         if isReflected[currentSentenceNum] {
@@ -278,7 +269,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     
     @objc func nextFeedbackButtonTapped() {
         print("next feedback tapped")
-        if currentSentenceNum >= feedbakcs.count - 1 {
+        if currentSentenceNum >= feedbacks.count - 1 {
             print("last sentence")
             return
         }
@@ -320,7 +311,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         UIGraphicsEndImageContext()
         
         print(isReflected)
-        updateFeedback()
+//        updateFeedback()
         addSubView()
         self.backgroundColor = UIColor.Nuflect.white
     }

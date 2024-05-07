@@ -25,8 +25,7 @@ struct PostFeedbackLine: Codable {
 
 // Post : feedback writing
 struct PostFeedbackWriting: Codable {
-//    let Sentence: String
-//    let Writing: String
+    let Writing: String
 }
 
 //func callrequest() {
