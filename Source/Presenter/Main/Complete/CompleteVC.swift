@@ -11,14 +11,15 @@ import SnapKit
 class CompleteVC: UIViewController, UIScrollViewDelegate {
     //MARK: - Properties
     //will get from OutlineVC
-    lazy var formatText : String = ""
-    lazy var purposeText : String = ""
-    lazy var paragraphsTitles : [String] = []
-    lazy var paragraphsText : [String] = []
-//    lazy var formatText : String = "format\nformat"
-//    lazy var purposeText : String = "purpose\n\npurpose"
-//    lazy var paragraphsTitles : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
-//    lazy var paragraphsText : [String] = ["Paragraph 1\n\n\n\nParagraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
+//    lazy var formatText : String = ""
+//    lazy var purposeText : String = ""
+//    lazy var paragraphsTitles : [String] = []
+//    lazy var paragraphsText : [String] = []
+    
+    lazy var formatText : String = "format\nformat"
+    lazy var purposeText : String = "purpose\n\npurpose"
+    lazy var paragraphsTitles : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
+    lazy var paragraphsText : [String] = ["Paragraph 1\n\n\n\nParagraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -104,6 +105,30 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         return label
     }()
     
+    //copy all button
+    lazy var copyAllButton: UIButton = {
+        let button = UIButton()
+        let other = UIImage(systemName: "doc.on.doc")
+        let coloredOther = other?.withTintColor(UIColor.Nuflect.black ?? .systemBlue)
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width:24, height: 24), false, 0.0)
+        coloredOther?.draw(in: CGRect(x: 0, y: 0, width: 24, height: 24))
+        let resizedOther = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        button.setImage(resizedOther, for: .normal)
+//        button.semanticContentAttribute = .forceRightToLeft
+        button.backgroundColor = UIColor.Nuflect.white
+        
+        button.setTitle(" 전체 복사", for: .normal)
+        button.titleLabel?.font = UIFont.Nuflect.subheadMedium
+        button.setTitleColor(UIColor.Nuflect.black, for: .normal)
+        
+//        button.addTarget(self, action: #selector(copyAllButtonTapped), for: .touchUpInside)
+        
+        return button
+    }()
+    
     //complete writing collectionView
     lazy var completeWritingCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -144,6 +169,10 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     
     @objc func mypageButtonTapped() {
         print("mypage tapped")
+    }
+    
+    @objc func copyAllButtonTapped() {
+        print("copy all tapped")
     }
     
     @objc func saveButtonTapped() {
@@ -209,7 +238,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
             scrollView.addSubview(view)
         }
 
-        [completeTitle, formatSubtitle, formatLabel, purposeSubtitle, purposeLabel, completeWritingSubtitle, completeWritingCollectionView, saveButton].forEach { view in
+        [completeTitle, formatSubtitle, formatLabel, purposeSubtitle, purposeLabel, completeWritingSubtitle, copyAllButton, completeWritingCollectionView, saveButton].forEach { view in
             contentView.addSubview(view)
         }
     }
@@ -279,6 +308,11 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
             make.leading.equalToSuperview().offset(subtitleLeading)
         }
         
+        copyAllButton.snp.makeConstraints { make in
+            make.bottom.equalTo(completeWritingSubtitle.snp.bottom)
+            make.trailing.equalToSuperview().offset(-leading)
+        }
+        
         completeWritingCollectionView.snp.makeConstraints { make in
             make.top.equalTo(completeWritingSubtitle.snp.bottom).offset(top / 2)
             make.leading.equalToSuperview().offset(leading)
@@ -307,7 +341,7 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "completeCell", for: indexPath) as! CompleteCell
         
-        cell.paragraphTitleLabel.text = paragraphsTitles[indexPath.item]
+        cell.paragraphTitleLabel.text = "\(indexPath.item + 1). " + paragraphsTitles[indexPath.item]
         cell.paragraphTextLabel.text = paragraphsText[indexPath.item]
         
         return cell
