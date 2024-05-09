@@ -330,52 +330,39 @@ extension MypageVC: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
     
     // -> cell 액션 이벤트(눌렀을 때 페이지 이동)
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
-//        if collectionView == collectionView1 {
-//            switch indexPath.row {
-//            case 0:
-//                let VC = ReportDoneViewController()
-//                VC.fromVC = "MyPage"
-//                navigationController?.pushViewController(VC, animated: true)
-//            case 1:
-//                let VC = CalculateHistoryViewController()
-//                navigationController?.pushViewController(VC, animated: true)
-//            default :
-//                return
-//            }
-//        } else if collectionView == collectionView2 {
-//            switch indexPath.row {
-//            case 0:
-//                showCustomAlert(alertType: .done,
-//                                alertTitle: "앱 버전",
-//                                alertContext: "ver 1.0 Demo",
-//                                confirmText: "확인")
-//            case 1:
-//                let url:String = "https://www.naver.com/"
-//                openURL(url)
-//            case 2:
-//                let VC = InquiryViewController()
-//                navigationController?.pushViewController(VC, animated: true)
-//            default :
-//                return
-//            }
-//        } else if collectionView == collectionView3 {
-//            switch indexPath.row {
-//            case 0:
-//                showCustomAlert(alertType: .canCancel,
-//                                alertTitle: "로그아웃",
-//                                alertContext: "정말로 로그아웃 하시겠습니까?",
-//                                cancelText: "취소",
-//                                confirmText: "로그아웃")
-//            case 1:
-//                let VC = WithdrawViewController()
-//                navigationController?.pushViewController(VC, animated: true)
-//            default :
-//                return
-//            }
-//        } else {
-//            return
-//        }
-        
+        if collectionView == historyCollectionView {
+            switch indexPath.row {
+            case 0:
+                let VC = WritingHistoryVC()
+                self.navigationController?.pushViewController(VC, animated: true)
+            case 1:
+                let VC = ParagraphHistoryVC()
+                self.navigationController?.pushViewController(VC, animated: true)
+            default :
+                return
+            }
+        } else if collectionView == appCollectionView {
+            switch indexPath.row {
+            case 0:
+                print(3)
+            case 1:
+                print(4)
+            case 2:
+                print(5)
+            default :
+                return
+            }
+        } else if collectionView == userCollectionView {
+            switch indexPath.row {
+            case 0:
+                print(6)
+            case 1:
+                print(7)
+            default :
+                return
+            }
+        } else {
+            return
+        }
     }
 }
