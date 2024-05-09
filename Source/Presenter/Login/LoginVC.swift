@@ -48,9 +48,11 @@ class LoginVC: UIViewController {
     
     @objc func kakaoLoginButtonTapped(_ sender: UIButton) {
         print("kakao login button tapped")
-//        let VC = CompleteVC()
-//        self.navigationController?.pushViewController(VC, animated: true)
+        callAPI()
         
+    }
+    
+    func callAPI() {
         Task { [weak self] in
             if await kakaoAuthVM.KakaoLogin() {
                 DispatchQueue.main.async {
@@ -66,6 +68,8 @@ class LoginVC: UIViewController {
                             print("ID error")
                             return
                         }
+                        
+                        print(user?.kakaoAccount?.profile?.nickname)
                         
                         print(userID)
                         
@@ -95,9 +99,11 @@ class LoginVC: UIViewController {
                             APIManger.shared.jwtToken = accessToken
                             print(APIManger.shared.jwtToken)
                             
-                            let VC = MainVC()
+//                            let VC = MainVC()
+                            let VC = OutlineVC()
+//                            let VC = WritingVC()
                             self?.navigationController?.pushViewController(VC, animated: true)
-                        }                        
+                        }
                     }
                 }
             } else {
@@ -105,7 +111,6 @@ class LoginVC: UIViewController {
             }
         }
     }
-    
     
     //MARK: - Set Ui
     func setView() {

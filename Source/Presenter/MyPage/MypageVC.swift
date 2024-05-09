@@ -15,8 +15,11 @@ class MypageVC: UIViewController, UIScrollViewDelegate {
     lazy var navigationBar = UINavigationBar()
     
     //스크롤을 위한 스크롤 뷰
-    lazy var scrollview:UIScrollView = {
+    lazy var scrollView:UIScrollView = {
         let view = UIScrollView()
+        
+        // 필요시 true로 수정
+        view.isScrollEnabled = false
         
         return view
     }()
@@ -62,6 +65,8 @@ class MypageVC: UIViewController, UIScrollViewDelegate {
     // History collectionView 선언
     lazy var historyCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.backgroundColor = .white
         
@@ -82,6 +87,8 @@ class MypageVC: UIViewController, UIScrollViewDelegate {
     // App collectionView 선언
     lazy var appCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.backgroundColor = .white
         
@@ -102,6 +109,8 @@ class MypageVC: UIViewController, UIScrollViewDelegate {
     // User collectionView 선언
     lazy var userCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.backgroundColor = .white
         
@@ -128,6 +137,18 @@ class MypageVC: UIViewController, UIScrollViewDelegate {
         self.view.backgroundColor = UIColor.Nuflect.white
     }
     
+    //Set scrollview size to fit contentView
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        contentView.snp.makeConstraints { make in
+            make.width.equalTo(view.snp.width)
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.height.equalTo(700)
+        }
+        scrollView.contentSize = contentView.frame.size
+    }
+    
     func setNavigationBar() {
         let navigationItem = UINavigationItem()
         
@@ -150,12 +171,12 @@ class MypageVC: UIViewController, UIScrollViewDelegate {
     }
 
     func addSubView() {
-        [navigationBar, scrollview].forEach { view in
+        [navigationBar, scrollView].forEach { view in
             self.view.addSubview(view)
         }
         
         [contentView].forEach { view in
-            scrollview.addSubview(view)
+            scrollView.addSubview(view)
         }
         
         [userNameLabel, underLine, historySubtitleLabel, historyCollectionView, appSubtitleLabel, appCollectionView, userSubtitleLabel, userCollectionView].forEach { view in
@@ -166,7 +187,7 @@ class MypageVC: UIViewController, UIScrollViewDelegate {
     //auto layout
     func setConstraint() {
         let leading = 16
-        let top = 20
+        let top = 15
         
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -174,64 +195,64 @@ class MypageVC: UIViewController, UIScrollViewDelegate {
             make.trailing.equalToSuperview().offset(-leading)
         }
         
-        scrollview.snp.makeConstraints { make in
+        scrollView.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom)
             make.width.equalTo(view.snp.width)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
         
-        contentView.snp.makeConstraints { make in
-            make.width.equalTo(view.snp.width)
-            make.height.equalTo(700)
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
+//        contentView.snp.makeConstraints { make in
+//            make.width.equalTo(view.snp.width)
+//            make.height.equalTo(700)
+//            make.top.equalToSuperview()
+//            make.bottom.equalToSuperview()
+//        }
         
         userNameLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(top)
             make.leading.equalToSuperview().offset(leading)
-            make.top.equalTo(navigationBar.snp.bottom).offset(top)
         }
         
         underLine.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalTo(8)
-            make.top.equalTo(userNameLabel.snp.bottom).offset(top * 2)
+            make.top.equalTo(userNameLabel.snp.bottom).offset(top)
             make.centerX.equalToSuperview()
         }
         
         historySubtitleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(leading)
-            make.top.equalTo(underLine.snp.bottom).offset(top * 3)
+            make.top.equalTo(underLine.snp.bottom).offset(top * 2)
         }
         
         historyCollectionView.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
-            make.top.equalTo(historySubtitleLabel.snp.bottom).offset(top)
+            make.top.equalTo(historySubtitleLabel.snp.bottom).offset(top / 2)
             make.height.equalTo(100)
         }
         
         appSubtitleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(leading)
-            make.top.equalTo(historyCollectionView.snp.bottom).offset(top * 3)
+            make.top.equalTo(historyCollectionView.snp.bottom).offset(top * 2)
         }
         
         appCollectionView.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
-            make.top.equalTo(appSubtitleLabel.snp.bottom).offset(top)
-            make.height.equalTo(150)
+            make.top.equalTo(appSubtitleLabel.snp.bottom).offset(top / 2)
+            make.height.equalTo(166)
         }
         
         userSubtitleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(leading)
-            make.top.equalTo(appCollectionView.snp.bottom).offset(top * 3)
+            make.top.equalTo(appCollectionView.snp.bottom).offset(top * 2)
         }
         
         userCollectionView.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
-            make.top.equalTo(userSubtitleLabel.snp.bottom).offset(top)
+            make.top.equalTo(userSubtitleLabel.snp.bottom).offset(top / 2)
             make.height.equalTo(100)
         }
     }
@@ -246,6 +267,7 @@ extension MypageVC: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
             collectionView.dataSource = self
             collectionView.isScrollEnabled = false
             collectionView.register(MypageCell.self, forCellWithReuseIdentifier: "mypageCell")
+//            collectionView.contentOffset
         }
     }
     
@@ -292,7 +314,7 @@ extension MypageVC: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
             return size
         case appCollectionView:
             let width: CGFloat = appCollectionView.frame.width
-            let height = appCollectionView.frame.height / 2
+            let height = appCollectionView.frame.height / 3
             let size = CGSize(width: width, height: height)
             return size
         case userCollectionView:
@@ -308,7 +330,7 @@ extension MypageVC: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
     
     // -> cell 액션 이벤트(눌렀을 때 페이지 이동)
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("1")
+        print(indexPath.row)
 //        if collectionView == collectionView1 {
 //            switch indexPath.row {
 //            case 0:
