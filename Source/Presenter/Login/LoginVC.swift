@@ -49,7 +49,6 @@ class LoginVC: UIViewController {
     @objc func kakaoLoginButtonTapped(_ sender: UIButton) {
         print("kakao login button tapped")
         callAPI()
-        
     }
     
     func callAPI() {
@@ -99,9 +98,7 @@ class LoginVC: UIViewController {
                             APIManger.shared.jwtToken = accessToken
                             print(APIManger.shared.jwtToken)
                             
-//                            let VC = MainVC()
-                            let VC = OutlineVC()
-//                            let VC = WritingVC()
+                            let VC = MainVC()
                             self?.navigationController?.pushViewController(VC, animated: true)
                         }
                     }
