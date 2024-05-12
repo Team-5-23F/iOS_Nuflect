@@ -292,6 +292,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     
     func callAPI() {
         let sentence = PostFeedbackLine(Sentence: self.feedbacks[currentSentenceNum]["Sentence"] ?? "Sentence error occured")
+        let newFeedbackSentenceNum = currentSentenceNum + 1
         print(sentence)
         
         let body = [
@@ -311,20 +312,17 @@ class FeedbackView: UIView, UIScrollViewDelegate {
                                    ]
                     
                     print(newFeedback)
-                    self.feedbacks.insert(newFeedback, at: self.currentSentenceNum + 1)
-//                    for feedback in feedbacks {
-//                        fe
-//                    }
-                    self.isReflected.insert(false, at: self.currentSentenceNum + 1)
+                    self.feedbacks.insert(newFeedback, at: newFeedbackSentenceNum)
+                    self.isReflected.insert(false, at: newFeedbackSentenceNum)
                     
-                    self.currentSentenceNum += 1
+                    self.currentSentenceNum += newFeedbackSentenceNum
                     self.updateFeedback()
+                    
                 }
             } catch {
                 print("Error converting JSON to Swift objects: \(error)")
             }
         }
-        
     }
     
     override init(frame: CGRect) {
@@ -360,7 +358,6 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         UIGraphicsEndImageContext()
         
         print(isReflected)
-//        updateFeedback()
         addSubView()
         self.backgroundColor = UIColor.Nuflect.white
     }

@@ -124,7 +124,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         button.titleLabel?.font = UIFont.Nuflect.subheadMedium
         button.setTitleColor(UIColor.Nuflect.black, for: .normal)
         
-//        button.addTarget(self, action: #selector(copyAllButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(copyAllButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -173,6 +173,22 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     
     @objc func copyAllButtonTapped() {
         print("copy all tapped")
+        let clipboard = UIPasteboard.general
+        var wrting = ""
+        
+        for i in 0 ..< self.paragraphsTitles.count {
+            wrting += "\(i + 1). " + paragraphsTitles[i] + "\n" + paragraphsText[i]
+            
+            if i >= self.paragraphsTitles.count - 1 {
+                break
+            }
+            else {
+                wrting += "\n\n"
+            }
+        }
+        
+        clipboard.string = wrting
+        print(clipboard)
     }
     
     @objc func saveButtonTapped() {
@@ -310,7 +326,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         
         copyAllButton.snp.makeConstraints { make in
             make.bottom.equalTo(completeWritingSubtitle.snp.bottom)
-            make.trailing.equalToSuperview().offset(-leading)
+            make.trailing.equalToSuperview().offset(-subtitleLeading)
         }
         
         completeWritingCollectionView.snp.makeConstraints { make in
