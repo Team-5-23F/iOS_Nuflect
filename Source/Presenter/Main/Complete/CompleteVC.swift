@@ -173,7 +173,6 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     
     @objc func copyAllButtonTapped() {
         print("copy all tapped")
-        let clipboard = UIPasteboard.general
         var wrting = ""
         
         for i in 0 ..< self.paragraphsTitles.count {
@@ -187,8 +186,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        clipboard.string = wrting
-        print(clipboard)
+        copyToClipboardAndShowToast(text: wrting, viewController: self)
     }
     
     @objc func saveButtonTapped() {

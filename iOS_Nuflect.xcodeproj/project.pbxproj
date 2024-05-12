@@ -27,6 +27,7 @@
 		096A3CC62BC2587E005CF1A9 /* CompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096A3CC52BC2587E005CF1A9 /* CompleteCell.swift */; };
 		098ED6242BAAC476006A6628 /* OutlineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098ED6232BAAC476006A6628 /* OutlineCell.swift */; };
 		09BDCFC22BDF61AA00D11376 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BDCFC12BDF61AA00D11376 /* PaddingLabel.swift */; };
+		09CC6EB22BF1078A005ED96A /* ShowToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CC6EB12BF1078A005ED96A /* ShowToast.swift */; };
 		09EADC242BDB94E200A75F61 /* Extension URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC232BDB94E200A75F61 /* Extension URL.swift */; };
 		09EADC262BDB954E00A75F61 /* BaseEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC252BDB954E00A75F61 /* BaseEndpoint.swift */; };
 		09EADC282BDB965C00A75F61 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC272BDB965C00A75F61 /* APIManager.swift */; };
@@ -92,6 +93,7 @@
 		096A3CC52BC2587E005CF1A9 /* CompleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteCell.swift; sourceTree = "<group>"; };
 		098ED6232BAAC476006A6628 /* OutlineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineCell.swift; sourceTree = "<group>"; };
 		09BDCFC12BDF61AA00D11376 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		09CC6EB12BF1078A005ED96A /* ShowToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowToast.swift; sourceTree = "<group>"; };
 		09EADC232BDB94E200A75F61 /* Extension URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension URL.swift"; sourceTree = "<group>"; };
 		09EADC252BDB954E00A75F61 /* BaseEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEndpoint.swift; sourceTree = "<group>"; };
 		09EADC272BDB965C00A75F61 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				09F75F642BA40B3D00F1440C /* SetColor.swift */,
 				093535D72BA8404600CFA054 /* SetFont.swift */,
 				093535E22BA9342200CFA054 /* ColorToImage.swift */,
+				09CC6EB12BF1078A005ED96A /* ShowToast.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 				090DFDBB2BEA536300D63CBA /* MypageCell.swift in Sources */,
 				093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */,
 				09EADC352BDE410200A75F61 /* KakaoAuthVM.swift in Sources */,
+				09CC6EB22BF1078A005ED96A /* ShowToast.swift in Sources */,
 				098ED6242BAAC476006A6628 /* OutlineCell.swift in Sources */,
 				093F1F612BBD82C400760270 /* FeedbackView.swift in Sources */,
 				093535ED2BA9810B00CFA054 /* FeedbackVC.swift in Sources */,

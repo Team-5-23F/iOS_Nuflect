@@ -344,20 +344,20 @@ extension MypageVC: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         } else if collectionView == appCollectionView {
             switch indexPath.row {
             case 0:
-                print(3)
+                self.showToast(message: "Beta 1.0", duration: 2, delay: 1)
             case 1:
-                print(4)
+                self.showToast(message: "구현 예정", duration: 1, delay: 0.5)
             case 2:
-                print(5)
+                self.showToast(message: "구현 예정", duration: 1, delay: 0.5)
             default :
                 return
             }
         } else if collectionView == userCollectionView {
             switch indexPath.row {
             case 0:
-                print(6)
+                navigationController?.popToRootViewController(animated: true)
             case 1:
-                print(7)
+                self.showToast(message: "구현 예정", duration: 1, delay: 0.5)
             default :
                 return
             }
