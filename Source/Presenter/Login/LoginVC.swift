@@ -49,6 +49,9 @@ class LoginVC: UIViewController {
     @objc func kakaoLoginButtonTapped(_ sender: UIButton) {
         print("kakao login button tapped")
         callAPI()
+//        let VC = MypageVC()
+//        self.navigationController?.pushViewController(VC, animated: true)
+        
     }
     
     func callAPI() {
@@ -68,12 +71,14 @@ class LoginVC: UIViewController {
                             return
                         }
                         
+                        //To do
                         print(user?.kakaoAccount?.profile?.nickname)
                         
                         print(userID)
                         
                         let body = [
-                            "social_id": "kakao_" + String(userID)
+                            "social_id": "kakao_" + String(userID),
+                            "social_type": "kakao"
                         ] as [String: Any]
                         
                         print(body)
@@ -99,6 +104,7 @@ class LoginVC: UIViewController {
                             print(APIManger.shared.jwtToken)
                             
                             let VC = MainVC()
+//                            let VC = WritingVC()
                             self?.navigationController?.pushViewController(VC, animated: true)
                         }
                     }

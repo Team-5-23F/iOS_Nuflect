@@ -11,6 +11,8 @@ import KakaoSDKAuth
 import KakaoSDKUser
 
 class KakaoAuthVM: ObservableObject {
+    var socialID: String = ""
+    var nickname: String = ""
     
     var subscriptions = Set<AnyCancellable>()
     
