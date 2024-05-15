@@ -14,7 +14,7 @@ class WritingVC: UIViewController {
     lazy var paragraphNum: Int = 0
     lazy var paragraphTitle : String = "ParagraphTitle"
     
-    lazy var placeholder = paragraphTitle + " 단락의 내용을 작성해주세요"
+    lazy var placeholder = String(paragraphNum + 1) + paragraphTitle + "\n단락의 내용을 작성해주세요"
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -23,7 +23,7 @@ class WritingVC: UIViewController {
     lazy var writingTitle: UILabel = {
         let label = UILabel()
         label.text = String(paragraphNum + 1) + ". " + paragraphTitle + "\n단락의 내용을 작성해주세요"
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         label.font = UIFont.Nuflect.headtitlebold
         
         return label
