@@ -336,7 +336,7 @@ extension MypageVC: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
                 let VC = WritingHistoryVC()
                 self.navigationController?.pushViewController(VC, animated: true)
             case 1:
-                let VC = ParagraphHistoryVC()
+                let VC = BookmarkParagraphVC()
                 self.navigationController?.pushViewController(VC, animated: true)
             default :
                 return

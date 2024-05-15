@@ -178,7 +178,7 @@ class OutlineVC: UIViewController {
 }
 
 //set collectionView and delegates
-extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, outlineCollectionViewCellDelegate, returnToOutlineVCDelegate {
+extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, moreOptionDelegate, returnToOutlineVCDelegate {
     //set collectionView
     func setCollectionView() {
         outlineCollectionView.backgroundColor = .Nuflect.white
@@ -224,7 +224,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     //cell size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
-        let height = collectionView.frame.width / 4
+        let height = CGFloat(82)
         return CGSize(width: width, height: height)
     }
     
@@ -266,14 +266,14 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     }
     
     //for more option button
-    func moreOptionTapped(paragraphNum: Int, selectedOption: String) {
-        print(String(paragraphNum) + " " + selectedOption)
+    func moreOptionTapped(cellNum: Int, selectedOption: String) {
+        print(String(cellNum) + " " + selectedOption)
         switch selectedOption {
         case "단락 작성":
             let VC = WritingVC()
-            VC.paragraphNum = paragraphNum
-            VC.paragraphTitle = paragraphsTitles[paragraphNum]
-            VC.writingTextView.text = writtenParagraphsText[paragraphNum]
+            VC.paragraphNum = cellNum
+            VC.paragraphTitle = paragraphsTitles[cellNum]
+            VC.writingTextView.text = writtenParagraphsText[cellNum]
             navigationController?.pushViewController(VC, animated: true)
             break
         case "이름 변경":
@@ -283,7 +283,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
             }
             let addAction = UIAlertAction(title: "변경", style: .default) { [weak self] _ in
                 guard let title = alert.textFields?.first?.text, !title.isEmpty else { return }
-                self?.renameParagraph(paragraphNum, title)
+                self?.renameParagraph(cellNum, title)
             }
             let cancelAction = UIAlertAction(title: "취소", style: .cancel)
             
@@ -301,7 +301,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
                       let num = Int(numString) else {
                         return
                     }
-                self?.reorderParagraph(from: paragraphNum, to: num - 1)
+                self?.reorderParagraph(from: cellNum, to: num - 1)
             }
             let cancelAction = UIAlertAction(title: "취소", style: .cancel)
             
@@ -309,10 +309,10 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
             alert.addAction(cancelAction)
             present(alert, animated: true)
         case "단락 삭제":
-            let alert = UIAlertController(title: "\(paragraphNum + 1)번 단락을 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
+            let alert = UIAlertController(title: "\(cellNum + 1)번 단락을 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
 
             let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
-                self?.deleteParagraph(at: paragraphNum)
+                self?.deleteParagraph(at: cellNum)
             }
 
             let cancelAction = UIAlertAction(title: "취소", style: .cancel)

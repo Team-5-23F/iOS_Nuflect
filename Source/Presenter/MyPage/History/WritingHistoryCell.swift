@@ -1,26 +1,36 @@
 //
-//  OutlineCell.swift
+//  WritingHistoryCell.swift
 //  iOS_Nuflect
 //
-//  Created by Jiwoong's MacBook Air on 3/20/24.
+//  Created by Jiwoong's MacBook Air on 5/15/24.
 //
 
 import UIKit
 import SnapKit
 
-class OutlineCell: UICollectionViewCell {
+class WritingHistoryCell: UICollectionViewCell {
     //delegate for more button
     weak var delegate: moreOptionDelegate?
     
-    lazy var paragraphNum: Int = 0
+    lazy var writingNum: Int = 0
     
     //MARK: - UI ProPerties
-    lazy var paragraphTitleLabel: UILabel = {
+    lazy var formatLabel: UILabel = {
         let label = UILabel()
-        label.text = "Paragraph"
+        label.text = "Format : "
         label.font = UIFont.Nuflect.subtitleSemiBold
         label.textColor = UIColor.Nuflect.black
-        label.numberOfLines = 2
+        label.numberOfLines = 1
+        
+        return label
+    }()
+    
+    lazy var purposeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Purpose : "
+        label.font = UIFont.Nuflect.subtitleSemiBold
+        label.textColor = UIColor.Nuflect.black
+        label.numberOfLines = 1
         
         return label
     }()
@@ -41,14 +51,13 @@ class OutlineCell: UICollectionViewCell {
         let selectedMenu = {(action: UIAction) in
             print(action.title)
             //delegate func to OutlineVC
-            self.delegate?.moreOptionTapped(cellNum: self.paragraphNum, selectedOption: action.title)
+            self.delegate?.moreOptionTapped(cellNum: self.writingNum, selectedOption: action.title)
         }
         
         button.menu = UIMenu(children: [
-            UIAction(title: "단락 작성", state: .off, handler: selectedMenu),
-            UIAction(title: "이름 변경", state: .off, handler: selectedMenu),
-            UIAction(title: "순서 변경", state: .off, handler: selectedMenu),
-            UIAction(title: "단락 삭제", attributes: .destructive, state: .off, handler: selectedMenu),
+            UIAction(title: "작성 내역 보기", state: .off, handler: selectedMenu),
+            UIAction(title: "작성 내역 공유", state: .off, handler: selectedMenu),
+            UIAction(title: "작성 내역 삭제", attributes: .destructive, state: .off, handler: selectedMenu),
         ])
         
         button.showsMenuAsPrimaryAction = true
@@ -80,15 +89,21 @@ class OutlineCell: UICollectionViewCell {
     }
     
     func addsubview() {
-        [paragraphTitleLabel, moreButton].forEach { view in
+        [formatLabel, purposeLabel, moreButton].forEach { view in
             self.addSubview(view)
         }
     }
     
     func setConstraint(){
-        paragraphTitleLabel.snp.makeConstraints { make in
+        formatLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)
-            make.centerY.equalToSuperview()
+            make.top.equalToSuperview().offset(18)
+            make.trailing.equalTo(moreButton).offset(-25)
+        }
+        
+        purposeLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(25)
+            make.bottom.equalToSuperview().offset(-18)
             make.trailing.equalTo(moreButton).offset(-25)
         }
         
@@ -98,9 +113,4 @@ class OutlineCell: UICollectionViewCell {
         }
         
     }
-}
-
-
-protocol moreOptionDelegate: AnyObject {
-    func moreOptionTapped(cellNum: Int, selectedOption: String)
 }
