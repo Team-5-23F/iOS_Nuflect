@@ -334,10 +334,15 @@ extension MypageVC: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
             switch indexPath.row {
             case 0:
                 let VC = WritingHistoryVC()
+                VC.writingFormats = ["F1", "F2", "F3"]
+                VC.writingpurposes = ["P1", "P2", "P3"]
                 self.navigationController?.pushViewController(VC, animated: true)
             case 1:
                 let VC = BookmarkParagraphVC()
                 self.navigationController?.pushViewController(VC, animated: true)
+                VC.paragraphFormats = ["F1", "F2", "F3"]
+                VC.paragraphpurposes = ["P1", "P2", "P3"]
+                VC.paragraphtitles = ["PP1", "PP2", "PP3"]
             default :
                 return
             }

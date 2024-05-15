@@ -55,9 +55,9 @@ class WritingHistoryCell: UICollectionViewCell {
         }
         
         button.menu = UIMenu(children: [
-            UIAction(title: "작성 내역 보기", state: .off, handler: selectedMenu),
-            UIAction(title: "작성 내역 공유", state: .off, handler: selectedMenu),
-            UIAction(title: "작성 내역 삭제", attributes: .destructive, state: .off, handler: selectedMenu),
+            UIAction(title: "글 보기", state: .off, handler: selectedMenu),
+            UIAction(title: "글 복사", state: .off, handler: selectedMenu),
+            UIAction(title: "글 삭제", attributes: .destructive, state: .off, handler: selectedMenu),
         ])
         
         button.showsMenuAsPrimaryAction = true

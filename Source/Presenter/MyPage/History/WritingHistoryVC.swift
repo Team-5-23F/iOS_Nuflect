@@ -21,7 +21,7 @@ class WritingHistoryVC: UIViewController {
     lazy var writingHistoryTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "글 작성 내역"
-        label.numberOfLines = 2
+        label.numberOfLines = 1
         label.font = UIFont.Nuflect.headtitlebold
         
         return label
@@ -173,14 +173,14 @@ extension WritingHistoryVC: UICollectionViewDataSource, UICollectionViewDelegate
     func moreOptionTapped(cellNum: Int, selectedOption: String) {
         print(String(cellNum) + " " + selectedOption)
         switch selectedOption {
-        case "작성 내역 보기":
+        case "글 보기":
             callGetAPI()
             break
-        case "작성 내역 공유":
-            print("share")
+        case "글 복사":
+            print("copy")
             //Todo
             //copy?
-        case "작성 내역 삭제":
+        case "글 삭제":
             let alert = UIAlertController(title: "작성 내역을 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
             
             let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
