@@ -50,7 +50,7 @@ class WritingHistoryCell: UICollectionViewCell {
         
         let selectedMenu = {(action: UIAction) in
             print(action.title)
-            //delegate func to OutlineVC
+            //delegate func to WritingHistoryVC
             self.delegate?.moreOptionTapped(cellNum: self.writingNum, selectedOption: action.title)
         }
         

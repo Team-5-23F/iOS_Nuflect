@@ -15,11 +15,14 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
 //    lazy var purposeText : String = ""
 //    lazy var paragraphsTitles : [String] = []
 //    lazy var paragraphsText : [String] = []
+//    lazy var isBokkmarked : [Bool] = []
+
     
     lazy var formatText : String = "format\nformat"
     lazy var purposeText : String = "purpose\n\npurpose"
     lazy var paragraphsTitles : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
     lazy var paragraphsText : [String] = ["Paragraph 1\n\n\n\nParagraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
+    lazy var isBokkmarked : [Bool] = [false,false,false,false]
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -195,6 +198,11 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
             navigationController?.popToViewController(VC, animated: true)
         }
     }
+    
+    func callPatchAPI() {
+        print("patch bookmark")
+        //call
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -346,7 +354,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
 }
 
 //set collectionView
-extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
+extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, moreOptionDelegate  {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return paragraphsTitles.count
@@ -354,7 +362,8 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "completeCell", for: indexPath) as! CompleteCell
-        
+        cell.delegate = self
+        cell.paragraphNum = indexPath.item
         cell.paragraphTitleLabel.text = "\(indexPath.item + 1). " + paragraphsTitles[indexPath.item]
         cell.paragraphTextLabel.text = paragraphsText[indexPath.item]
         
@@ -397,5 +406,22 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
             collectionViewHeight += cellHeight + 16
         }
         return collectionViewHeight
+    }
+    
+    //for more option button
+    func moreOptionTapped(cellNum: Int, selectedOption: String) {
+        print(String(cellNum) + " " + selectedOption)
+        switch selectedOption {
+        case "북마크 등록/해제":
+            callPatchAPI()
+            break
+        case "단락 복사":
+            print("copy")
+            var wrting = paragraphsTitles[cellNum] + "\n" + paragraphsText[cellNum]
+            
+            copyToClipboardAndShowToast(text: wrting, viewController: self)
+        default:
+            print("error")
+        }
     }
 }

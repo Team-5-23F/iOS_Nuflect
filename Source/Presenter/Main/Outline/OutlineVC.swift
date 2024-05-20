@@ -82,6 +82,9 @@ class OutlineVC: UIViewController {
         VC.purposeText = purposeText
         VC.paragraphsTitles = paragraphsTitles
         VC.paragraphsText = writtenParagraphsText
+        for i in 0 ..< paragraphsTitles.count {
+            VC.isBokkmarked.append(false)
+        }
         navigationController?.pushViewController(VC, animated: true)
     }
     

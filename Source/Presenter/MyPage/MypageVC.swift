@@ -351,7 +351,7 @@ extension MypageVC: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
             case 0:
                 self.showToast(message: "Beta 1.0", duration: 2, delay: 1)
             case 1:
-                self.showToast(message: "구현 예정", duration: 1, delay: 0.5)
+                self.showToast(message: "약간 및 정책", duration: 1, delay: 0.5)
             case 2:
                 self.showToast(message: "구현 예정", duration: 1, delay: 0.5)
             default :

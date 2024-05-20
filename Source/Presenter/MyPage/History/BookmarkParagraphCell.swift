@@ -60,7 +60,7 @@ class BookmarkParagraphCell: UICollectionViewCell {
         
         let selectedMenu = {(action: UIAction) in
             print(action.title)
-            //delegate func to OutlineVC
+            //delegate func to BookmarkParagraphVC
             self.delegate?.moreOptionTapped(cellNum: self.bookmarkedParagraphNum, selectedOption: action.title)
         }
         
