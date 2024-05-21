@@ -154,6 +154,8 @@ class MainVC: UIViewController {
     
     @objc func introductionButtonTapped() {
         print("introduction tapped")
+        let VC = IntroductionVC()
+        self.navigationController?.pushViewController(VC, animated: true)
     }
     
     @objc func startButtonTapped() {
