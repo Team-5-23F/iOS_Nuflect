@@ -119,9 +119,42 @@ class APIManger {
 
     }
     
+    //Patch요청
+    func callPatchRequest(baseEndPoint:BaseEndpoint, addPath:String?, completionHnadler: @escaping(JSON) -> ()) {
+
+        let headers: HTTPHeaders = [
+            "accept": "application/json",
+            "Authorization": jwtToken
+        ]
+
+        guard let addPath = addPath else { return }
+        let url = baseEndPoint.requestURL + addPath
+        print(url)
+
+        AF.request(url, method: .patch, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { response in
+            debugPrint(response)
+            switch response.result {
+                
+            case .success(let value):
+                print(value)
+                let json = JSON(value)
+                completionHnadler(json)
+                print("patch 요청 성공")
+
+            case .failure(let error):
+                print(error)
+                print(error.responseCode)
+//                let json = JSON(error)
+//                completionHnadler(json)
+                print("patch 요청 실패")
+            }
+
+        }
+
+    }
 
     //Delete요청
-    func callDeleteRequest(baseEndPoint:BaseEndpoint, addPath:String?,parameters: [String: String]? ,completionHnadler: @escaping (JSON, Int) -> Void) {
+    func callDeleteRequest(baseEndPoint:BaseEndpoint, addPath:String?,completionHnadler: @escaping (JSON, Int) -> Void) {
 
         let headers: HTTPHeaders = [
             "accept": "application/json",
@@ -132,7 +165,7 @@ class APIManger {
         let url = baseEndPoint.requestURL + addPath
         print(url)
 
-        AF.request(url, method: .delete, parameters:parameters, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { response in
+        AF.request(url, method: .delete, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { response in
             debugPrint(response)
             switch response.result {
             case .success(let value):
