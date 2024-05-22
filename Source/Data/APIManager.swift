@@ -43,6 +43,7 @@ class APIManger {
                 print(error)
                 let json = JSON(error)
                 print("get 요청 실패")
+                UIViewController.shared.showToast(message: "요청 실패", duration: 1, delay: 0.5)
                 completionHnadler(json)
                 
             }
@@ -80,6 +81,7 @@ class APIManger {
 //                let json = JSON(error)
 //                completionHnadler(json)
                 print("post 요청 실패")
+                UIViewController.shared.showToast(message: "요청 실패", duration: 1, delay: 0.5)
             }
 
         }
@@ -113,6 +115,7 @@ class APIManger {
                 let json = JSON(error)
                 completionHnadler(json)
                 print("로그인 post 요청 실패")
+                UIViewController.shared.showToast(message: "요청 실패", duration: 1, delay: 0.5)
             }
 
         }
@@ -147,6 +150,7 @@ class APIManger {
 //                let json = JSON(error)
 //                completionHnadler(json)
                 print("patch 요청 실패")
+                UIViewController.shared.showToast(message: "요청 실패", duration: 1, delay: 0.5)
             }
 
         }
@@ -180,6 +184,7 @@ class APIManger {
                 print(error)
                 let json = JSON(error)
                 print("delete 요청 실패", json)
+                UIViewController.shared.showToast(message: "요청 실패", duration: 1, delay: 0.5)
             }
         }
     }

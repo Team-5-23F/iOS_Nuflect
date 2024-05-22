@@ -14,7 +14,7 @@ class WritingVC: UIViewController {
     lazy var paragraphNum: Int = 0
     lazy var paragraphTitle : String = "ParagraphTitle"
     
-    lazy var placeholder = String(paragraphNum + 1) + paragraphTitle + "\n단락의 내용을 작성해주세요"
+    lazy var placeholder = "단락의 내용을 작성해주세요"
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -103,10 +103,13 @@ class WritingVC: UIViewController {
     
     @objc func mypageButtonTapped() {
         print("mypage tapped")
+        let VC = MypageVC()
+        self.navigationController?.pushViewController(VC, animated: true)
     }
     
     @objc func requestButtonTapped() {
         print("request tapped")
+        self.showToast(message: "요청 완료", duration: 1, delay: 0.5)
         callAPI()
     }
     

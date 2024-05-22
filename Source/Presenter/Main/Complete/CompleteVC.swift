@@ -11,18 +11,17 @@ import SnapKit
 class CompleteVC: UIViewController, UIScrollViewDelegate {
     //MARK: - Properties
     //will get from OutlineVC
-//    lazy var formatText : String = ""
-//    lazy var purposeText : String = ""
-//    lazy var paragraphsTitles : [String] = []
-//    lazy var paragraphsText : [String] = []
-//    lazy var isBokkmarked : [Bool] = []
+    lazy var formatText : String = ""
+    lazy var purposeText : String = ""
+    lazy var paragraphs : [[String]] = []
+    lazy var isBokkmarked : [Bool] = []
 
     
-    lazy var formatText : String = "format\nformat"
-    lazy var purposeText : String = "purpose\n\npurpose"
-    lazy var paragraphsTitles : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
-    lazy var paragraphsText : [String] = ["Paragraph 1\n\n\n\nParagraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
-    lazy var isBokkmarked : [Bool] = [false,false,false,false]
+//    lazy var formatText : String = "format\nformat"
+//    lazy var purposeText : String = "purpose\n\npurpose"
+//    lazy var paragraphsTitles : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
+//    lazy var paragraphsText : [String] = ["Paragraph 1\n\n\n\nParagraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
+//    lazy var isBokkmarked : [Bool] = [false,false,false,false]
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -170,18 +169,17 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func mypageButtonTapped() {
-        print("mypage tapped")
-    }
-    
     @objc func copyAllButtonTapped() {
         print("copy all tapped")
         var wrting = ""
         
-        for i in 0 ..< self.paragraphsTitles.count {
-            wrting += "\(i + 1). " + paragraphsTitles[i] + "\n" + paragraphsText[i]
+//        for i in 0 ..< self.paragraphsTitles.count {
+        for i in 0 ..< self.paragraphs.count {
+//            wrting += "\(i + 1). " + paragraphsTitles[i] + "\n" + paragraphsText[i]
+            wrting += "\(i + 1). " + paragraphs[i][0] + "\n" + paragraphs[i][1]
             
-            if i >= self.paragraphsTitles.count - 1 {
+//            if i >= self.paragraphsTitles.count - 1 {
+            if i >= self.paragraphs.count - 1 {
                 break
             }
             else {
@@ -194,14 +192,35 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     
     @objc func saveButtonTapped() {
         print("save tapped")
-        if let VC = navigationController?.viewControllers.first(where: {$0 is MainVC}) {
-            navigationController?.popToViewController(VC, animated: true)
-        }
+        callPostAPI()
     }
     
     func callPatchAPI() {
         print("patch bookmark")
         //call
+    }
+    
+    func callPostAPI() {
+        print("post writing")
+        let postMyWriting = PostMyWriting(format: formatText, purpose: purposeText, paragraphs: paragraphs)
+        
+        let body = [
+            "format": postMyWriting.format as Any,
+            "purpose" : postMyWriting.purpose as Any,
+            "paragraphs" : postMyWriting.paragraphs as Any
+        ] as [String: Any]
+        
+        APIManger.shared.callPostRequest(baseEndPoint: .myWriting, addPath: "", parameters: body) { JSON in
+            print(JSON["pk"])
+            print(JSON["format"])
+            print(JSON["purpose"])
+            print(JSON["paragraphs"])
+            
+            if let VC = self.navigationController?.viewControllers.first(where: {$0 is MainVC}) {
+                self.navigationController?.popToViewController(VC, animated: true)
+            }
+        }
+        
     }
 
     override func viewDidLoad() {
@@ -357,22 +376,26 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
 extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, moreOptionDelegate  {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return paragraphsTitles.count
+//        return paragraphsTitles.count
+        return paragraphs.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "completeCell", for: indexPath) as! CompleteCell
         cell.delegate = self
         cell.paragraphNum = indexPath.item
-        cell.paragraphTitleLabel.text = "\(indexPath.item + 1). " + paragraphsTitles[indexPath.item]
-        cell.paragraphTextLabel.text = paragraphsText[indexPath.item]
+//        cell.paragraphTitleLabel.text = "\(indexPath.item + 1). " + paragraphsTitles[indexPath.item]
+//        cell.paragraphTextLabel.text = paragraphsText[indexPath.item]
+        cell.paragraphTitleLabel.text = "\(indexPath.item + 1). " + paragraphs[indexPath.item][0]
+        cell.paragraphTextLabel.text = paragraphs[indexPath.item][1]
         
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
-        let height = heightForText(paragraphsTitles[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
+//        let height = heightForText(paragraphsTitles[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
+        let height = heightForText(paragraphs[indexPath.item][0], width: width - 46) +  heightForText(paragraphs[indexPath.item][1], width: width - 46) + 46
         
         return CGSize(width: width, height: height)
     }
@@ -398,10 +421,12 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     private func calculateCollectionViewHeight() -> CGFloat {
         var collectionViewHeight: CGFloat = 0
         
-        for i in 0 ..< paragraphsText.count {
+//        for i in 0 ..< paragraphsText.count {
+        for i in 0 ..< paragraphs.count {
             let indexPath = IndexPath(row: i, section: 0)
             let width = completeWritingCollectionView.frame.width
-            let cellHeight = heightForText(paragraphsTitles[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
+//            let cellHeight = heightForText(paragraphsTitles[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
+            let cellHeight = heightForText(paragraphs[indexPath.item][0], width: width - 46) +  heightForText(paragraphs[indexPath.item][1], width: width - 46) + 46
             
             collectionViewHeight += cellHeight + 16
         }
@@ -417,7 +442,8 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
             break
         case "단락 복사":
             print("copy")
-            var wrting = paragraphsTitles[cellNum] + "\n" + paragraphsText[cellNum]
+//            var wrting = paragraphsTitles[cellNum] + "\n" + paragraphsText[cellNum]
+            var wrting = paragraphs[cellNum][0] + "\n" + paragraphs[cellNum][1]
             
             copyToClipboardAndShowToast(text: wrting, viewController: self)
         default:

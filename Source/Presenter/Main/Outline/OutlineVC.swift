@@ -12,13 +12,11 @@ class OutlineVC: UIViewController {
     //MARK: - Properties
     lazy var formatText : String = ""
     lazy var purposeText : String = ""
+    
     //will get from API
-    lazy var paragraphsTitles : [String] = []
+    lazy var paragraphs : [[String]] = []
     //is each paragrapgh written
     lazy var isWritten : [Bool] = []
-    
-    //will save written paragraph's text
-    lazy var writtenParagraphsText : [String] = []
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -80,9 +78,8 @@ class OutlineVC: UIViewController {
         let VC = CompleteVC()
         VC.formatText = formatText
         VC.purposeText = purposeText
-        VC.paragraphsTitles = paragraphsTitles
-        VC.paragraphsText = writtenParagraphsText
-        for i in 0 ..< paragraphsTitles.count {
+        VC.paragraphs = paragraphs
+        for i in 0 ..< paragraphs.count {
             VC.isBokkmarked.append(false)
         }
         navigationController?.pushViewController(VC, animated: true)
@@ -106,9 +103,8 @@ class OutlineVC: UIViewController {
         super.viewDidLoad()
         setView()
         setConstraint()
-        for _ in 0 ..< paragraphsTitles.count {
+        for i in 0 ..< paragraphs.count {
             self.isWritten.append(false)
-            self.writtenParagraphsText.append("")
         }
     }
     
@@ -202,12 +198,12 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        paragraphsTitles.count + 1
+        paragraphs.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
-        case paragraphsTitles.count:
+        case paragraphs.count:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCell", for: indexPath) as! AddCell
             
             return cell
@@ -216,10 +212,13 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "outlineCell", for: indexPath) as! OutlineCell
             cell.delegate = self
             cell.paragraphNum = indexPath.item
-            cell.paragraphTitleLabel.text = String(indexPath.item + 1) + ". " + paragraphsTitles[indexPath.item]
+            cell.paragraphTitleLabel.text = String(indexPath.item + 1) + ". " + paragraphs[indexPath.item][0]
             
             if isWritten[indexPath.item] {
                 cell.backgroundColor = UIColor.Nuflect.inputBlue
+            }
+            else {
+                cell.backgroundColor = UIColor.Nuflect.white
             }
             
             return cell
@@ -241,7 +240,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.item {
         //last cell, add button
-        case paragraphsTitles.count:
+        case paragraphs.count:
             print("Add paragraph")
             let alert = UIAlertController(title: "단락 추가", message: nil, preferredStyle: .alert)
             alert.addTextField { textField in
@@ -261,15 +260,21 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
             
         default:
             print(indexPath.item)
-            let VC = WritingVC()
-            VC.paragraphNum = indexPath.item
-            VC.paragraphTitle = paragraphsTitles[indexPath.item]
-            if self.isWritten[indexPath.row] {
-                VC.writingTextView.text = self.writtenParagraphsText[indexPath.row]
-            }
-            navigationController?.pushViewController(VC, animated: true)
+            toWritingVC(cellNum: indexPath.item)
             break
         }
+    }
+    
+    func toWritingVC(cellNum: Int) {
+        let VC = WritingVC()
+        VC.paragraphNum = cellNum
+        VC.paragraphTitle = paragraphs[cellNum][0]
+        if self.isWritten[cellNum] {
+            VC.writingTextView.text = paragraphs[cellNum][1]
+            VC.writingTextView.textColor = UIColor.Nuflect.black
+            VC.textViewDidEndEditing(VC.writingTextView)
+        }
+        navigationController?.pushViewController(VC, animated: true)
     }
     
     //for more option button
@@ -277,11 +282,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         print(String(cellNum) + " " + selectedOption)
         switch selectedOption {
         case "단락 작성":
-            let VC = WritingVC()
-            VC.paragraphNum = cellNum
-            VC.paragraphTitle = paragraphsTitles[cellNum]
-            VC.writingTextView.text = writtenParagraphsText[cellNum]
-            navigationController?.pushViewController(VC, animated: true)
+            toWritingVC(cellNum: cellNum)
             break
         case "이름 변경":
             let alert = UIAlertController(title: "이름 변경", message: nil, preferredStyle: .alert)
@@ -336,47 +337,44 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     
     // Function to add a new paragraph
     func addParagraph(_ title: String) {
-        paragraphsTitles.append(title)
+        paragraphs.append([title, ""])
         isWritten.append(false)
-        writtenParagraphsText.append("")
         outlineCollectionView.reloadData()
     }
     
     // Function to rename a new paragraph
     func renameParagraph(_ num: Int, _ title: String) {
-        paragraphsTitles[num] = title
+        paragraphs[num][0] = title
         outlineCollectionView.reloadData()
     }
     
     // Function to delete a paragraph
     func deleteParagraph(at index: Int) {
-        paragraphsTitles.remove(at: index)
+        paragraphs.remove(at: index)
         isWritten.remove(at: index)
-        writtenParagraphsText.remove(at: index)
         outlineCollectionView.reloadData()
+        checkAllparagraphsIsWritten()
     }
     
     // Function to reorder paragraphs
     func reorderParagraph(from sourceIndex: Int, to destinationIndex: Int) {
-        if destinationIndex >= paragraphsTitles.count || destinationIndex < 0 {
-            let alert = UIAlertController(title: "1 ~ \(paragraphsTitles.count) 사이의 숫자를 입력해주세요", message: nil, preferredStyle: .alert)
+        if destinationIndex >= paragraphs.count || destinationIndex < 0 {
+            let alert = UIAlertController(title: "1 ~ \(paragraphs.count) 사이의 숫자를 입력해주세요", message: nil, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "확인", style: .default)
             
             alert.addAction(okAction)
             present(alert, animated: true)
             return
         }
-        let movingParagraph = self.paragraphsTitles[sourceIndex]
+        
+        let movingParagraph = self.paragraphs[sourceIndex]
         let movingIsWritten = self.isWritten[sourceIndex]
-        let movingParagraphText = self.writtenParagraphsText[sourceIndex]
         
-        paragraphsTitles.remove(at: sourceIndex)
+        paragraphs.remove(at: sourceIndex)
         isWritten.remove(at: sourceIndex)
-        writtenParagraphsText.remove(at: sourceIndex)
         
-        paragraphsTitles.insert(movingParagraph, at: destinationIndex)
+        paragraphs.insert(movingParagraph, at: destinationIndex)
         isWritten.insert(movingIsWritten, at: destinationIndex)
-        writtenParagraphsText.insert(movingParagraphText, at: destinationIndex)
         outlineCollectionView.reloadData()
     }
     
@@ -386,14 +384,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         print(paragraphContents)
         
         self.isWritten[paragraghNum] = true
-        self.writtenParagraphsText[paragraghNum] = paragraphContents
-        
-//        //get cell, change color
-//        guard let cell = outlineCollectionView.cellForItem(at: IndexPath(item: paragraghNum, section: 0)) as? OutlineCell else {
-//            print("Failed to get cell at index \(String(paragraghNum))")
-//                    return
-//            }
-//        cell.backgroundColor = UIColor.Nuflect.inputBlue
+        self.paragraphs[paragraghNum][1] = paragraphContents
         
         outlineCollectionView.reloadData()
         checkAllparagraphsIsWritten()

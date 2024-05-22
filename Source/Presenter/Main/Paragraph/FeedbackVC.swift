@@ -103,6 +103,8 @@ class FeedbackVC: UIViewController {
     
     @objc func mypageButtonTapped() {
         print("mypage tapped")
+        let VC = MypageVC()
+        self.navigationController?.pushViewController(VC, animated: true)
     }
     
     @objc func endWritingParagraghButtonTapped() {
@@ -254,6 +256,11 @@ extension FeedbackVC: feedbackViewDelegate {
     
     func reflecfFeedback(original: String, alternative: String) {
         print("apply feedback called")
+        
+        if alternative == "No improvements needed." {
+            self.showToast(message: "반영할 피드백이 없습니다.", duration: 1, delay: 0.5)
+            return
+        }
         
         let range = (translatedText.string as NSString).range(of: original)
         

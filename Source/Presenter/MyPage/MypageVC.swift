@@ -123,6 +123,8 @@ class MypageVC: UIViewController, UIScrollViewDelegate {
         navigationController?.popViewController(animated: true)
     }
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()

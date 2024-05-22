@@ -47,7 +47,7 @@ class LoginVC: UIViewController {
     }
     
     @objc func kakaoLoginButtonTapped(_ sender: UIButton) {
-        print("kakao login button tapped")
+        self.showToast(message: "로그인 요청", duration: 1, delay: 0.5)
         callAPI()
 //        let VC = MypageVC()
 //        self.navigationController?.pushViewController(VC, animated: true)
@@ -104,7 +104,6 @@ class LoginVC: UIViewController {
                             print(APIManger.shared.jwtToken)
                             
                             let VC = MainVC()
-//                            let VC = WritingVC()
                             self?.navigationController?.pushViewController(VC, animated: true)
                         }
                     }

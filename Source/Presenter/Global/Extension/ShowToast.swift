@@ -8,7 +8,9 @@
 import UIKit
 
 extension UIViewController {
-    func showToast(message: String, duration: TimeInterval = 2.0, delay: TimeInterval = 0.5) {
+    static let shared = UIViewController()
+    
+    public func showToast(message: String, duration: TimeInterval = 2.0, delay: TimeInterval = 0.5) {
         let height = self.view.frame.size.height
         let width = self.view.frame.size.width
         
