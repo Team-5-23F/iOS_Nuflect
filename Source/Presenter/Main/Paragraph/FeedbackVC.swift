@@ -134,7 +134,7 @@ class FeedbackVC: UIViewController {
             "Writing": postFeedbackWriting.Writing as Any
         ] as [String: Any]
         
-        APIManger.shared.callPostRequest(baseEndPoint: .feedbackWriting, addPath: "", parameters: body) { JSON in
+        APIManger.shared.callPostRequest(baseEndPoint: .feedback, addPath: "writing/", parameters: body) { JSON in
             let numOfFeedbacks = JSON.count
             print(numOfFeedbacks)
             print(JSON)

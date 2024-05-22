@@ -34,7 +34,7 @@ class MypageVC: UIViewController, UIScrollViewDelegate {
     // User name label
     lazy var userNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Nuflect님"
+        label.text = "Nuflect 님"
         label.textColor = UIColor.Nuflect.black
         label.textAlignment = .left
         label.numberOfLines = 1

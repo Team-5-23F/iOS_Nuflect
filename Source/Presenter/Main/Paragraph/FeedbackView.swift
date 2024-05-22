@@ -299,7 +299,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
             "Sentence": sentence.Sentence as Any
         ] as [String: Any]
         
-        APIManger.shared.callPostRequest(baseEndPoint: .feedbackLine, addPath: "", parameters: body) { JSON in
+        APIManger.shared.callPostRequest(baseEndPoint: .feedback, addPath: "line/", parameters: body) { JSON in
             print(JSON)
             do {
                 // Convert JSON data to Swift objects

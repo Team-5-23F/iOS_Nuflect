@@ -154,7 +154,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         button.backgroundColor = UIColor.Nuflect.mainBlue
         button.layer.cornerRadius = 11
         
-        button.setTitle("저장 및 내보내기", for: .normal)
+        button.setTitle("저장 및 메인으로", for: .normal)
         button.setTitleColor(UIColor.Nuflect.white, for: .normal)
         button.titleLabel?.font = UIFont.Nuflect.subheadMedium
         

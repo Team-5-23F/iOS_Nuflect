@@ -160,10 +160,10 @@ class MainVC: UIViewController {
     
     @objc func startButtonTapped() {
         print("start tapped")
-        callAPI()
+        callPostAPI()
     }
     
-    func callAPI() {
+    func callPostAPI() {
         let postOutline = PostOutline(Task: self.formatTextView.text, Context: self.purposeTextView.text)
         print(postOutline)
         

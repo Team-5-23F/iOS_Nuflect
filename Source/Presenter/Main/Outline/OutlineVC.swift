@@ -218,6 +218,10 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
             cell.paragraphNum = indexPath.item
             cell.paragraphTitleLabel.text = String(indexPath.item + 1) + ". " + paragraphsTitles[indexPath.item]
             
+            if isWritten[indexPath.item] {
+                cell.backgroundColor = UIColor.Nuflect.inputBlue
+            }
+            
             return cell
         }
         
@@ -384,13 +388,14 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         self.isWritten[paragraghNum] = true
         self.writtenParagraphsText[paragraghNum] = paragraphContents
         
-        //get cell, change color
-        guard let cell = outlineCollectionView.cellForItem(at: IndexPath(item: paragraghNum, section: 0)) as? OutlineCell else {
-            print("Failed to get cell at index \(String(paragraghNum))")
-                    return
-            }
-        cell.backgroundColor = UIColor.Nuflect.inputBlue
+//        //get cell, change color
+//        guard let cell = outlineCollectionView.cellForItem(at: IndexPath(item: paragraghNum, section: 0)) as? OutlineCell else {
+//            print("Failed to get cell at index \(String(paragraghNum))")
+//                    return
+//            }
+//        cell.backgroundColor = UIColor.Nuflect.inputBlue
         
+        outlineCollectionView.reloadData()
         checkAllparagraphsIsWritten()
     }
 }

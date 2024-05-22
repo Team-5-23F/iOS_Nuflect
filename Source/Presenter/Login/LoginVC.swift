@@ -82,7 +82,7 @@ class LoginVC: UIViewController {
                         ] as [String: Any]
                         
                         print(body)
-                        APIManger.shared.callLoginPostRequest(baseEndPoint: .login, addPath: "", parameters: body) { JSON in
+                        APIManger.shared.callLoginPostRequest(baseEndPoint: .user, addPath: "login/", parameters: body) { JSON in
                             
                             if JSON.isEmpty {
                                 print("server error")

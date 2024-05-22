@@ -112,7 +112,7 @@ class IntroductionVC: UIViewController, UIScrollViewDelegate {
     //Set scrollview size to fit contentView
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let height = logoImageView.frame.height + introductionTitle.frame.height + abstractionLabel.frame.height + detailLabel.frame.height + toMainButton.frame.height + 750
+        let height = logoImageView.frame.height + introductionTitle.frame.height + abstractionLabel.frame.height + detailLabel.frame.height + toMainButton.frame.height + 780
         
         contentView.snp.makeConstraints { make in
             make.width.equalTo(view.snp.width)
@@ -192,7 +192,7 @@ class IntroductionVC: UIViewController, UIScrollViewDelegate {
         
         introductionTitle.snp.makeConstraints { make in
             make.top.equalTo(logoImageView.snp.bottom).offset(top)
-            make.leading.equalToSuperview().offset(textLeading)
+            make.centerX.equalToSuperview()
         }
         
         abstractionLabel.snp.makeConstraints { make in
