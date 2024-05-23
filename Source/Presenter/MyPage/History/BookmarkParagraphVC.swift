@@ -49,14 +49,33 @@ class BookmarkParagraphVC: UIViewController {
     }
     
     func callGetAPI() {
-        //call
-        
-        let VC = CompleteVC()
-        //VC.format
-        //VC.purpose
-        //VC.paragraphs
-        VC.saveButton.isHidden = true
-        navigationController?.pushViewController(VC, animated: true)
+        let pkWriting = 0
+        let pkParagraph = 0
+        // ?writing_id{pk:int}&?paragraph_id{pk:int}
+        APIManger.shared.callGetRequest(baseEndPoint: .myParagraph, addPath: "?writing_id\(pkWriting)&?paragraph_id\(pkParagraph)") { JSON in
+            let numOfWritings = JSON.count
+            print(numOfWritings)
+            
+            do {
+                // Convert JSON data to Swift objects
+                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: String]] {
+                    print(jsonArray)
+                    // Now jsonArray is of type [[String: String]]
+                    //Todo : 이대로 파싱 안됨. 내부에 writing 정보가 있어버림
+                    
+                    
+                    let VC = CompleteVC()
+                    //VC.format
+                    //VC.purpose
+                    //VC.paragraphs
+                    VC.saveButton.isHidden = true
+                    self.navigationController?.pushViewController(VC, animated: true)
+                    
+                }
+            } catch {
+                print("Error converting JSON to Swift objects: \(error)")
+            }
+        }
     }
     
     func callDeleteAPI() -> Bool {

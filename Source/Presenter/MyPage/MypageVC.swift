@@ -123,7 +123,52 @@ class MypageVC: UIViewController, UIScrollViewDelegate {
         navigationController?.popViewController(animated: true)
     }
     
+    func callGetAPIWriting() {
+        APIManger.shared.callGetRequest(baseEndPoint: .myWriting, addPath: "") { JSON in
+            let numOfWritings = JSON.count
+            print(numOfWritings)
+            
+            do {
+                // Convert JSON data to Swift objects
+                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: String]] {
+                    print(jsonArray)
+                    // Now jsonArray is of type [[String: String]]
+                    
+                    let VC = WritingHistoryVC()
+                    //Todo paragraps를 어떻게 저장할 것인가.
+//                    VC.writings = jsonArray
+                    self.navigationController?.pushViewController(VC, animated: true)
+                    
+                }
+            } catch {
+                print("Error converting JSON to Swift objects: \(error)")
+            }
+        }
+    }
     
+    func callGetAPIBookmark() {
+        APIManger.shared.callGetRequest(baseEndPoint: .myParagraph, addPath: "") { JSON in
+            let numOfWritings = JSON.count
+            print(numOfWritings)
+            
+            do {
+                // Convert JSON data to Swift objects
+                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: String]] {
+                    print(jsonArray)
+                    // Now jsonArray is of type [[String: String]]
+                    //Todo : 이대로 파싱 안됨. 내부에 writing 정보가 있어버림
+                    
+                    let VC = BookmarkParagraphVC()
+                    //Todo : paragraps를 어떻게 저장할 것인가.
+//                    VC.paragraphs = jsonArray
+                    self.navigationController?.pushViewController(VC, animated: true)
+                    
+                }
+            } catch {
+                print("Error converting JSON to Swift objects: \(error)")
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

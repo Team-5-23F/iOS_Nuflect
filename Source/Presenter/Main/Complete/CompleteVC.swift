@@ -197,7 +197,14 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     
     func callPatchAPI() {
         print("patch bookmark")
-        //call
+        let pkWriting = 0
+        let pkParagraph = 0
+        // ?writing_id{pk:int}&?paragraph_id{pk:int}
+        APIManger.shared.callPatchRequest(baseEndPoint: .myParagraph, addPath: "?writing_id\(pkWriting)&?paragraph_id\(pkParagraph)") { JSON in
+            
+            //Todo : 에러 안뜨면 성공. 북마크 등록/해제 알림 보여주기
+            //Todo : isBookmarked로 more 버튼 팝업에 등록 | 해제 로 보여주기 가능?
+        }
     }
     
     func callPostAPI() {

@@ -48,17 +48,68 @@ class WritingHistoryVC: UIViewController {
     }
     
     func callGetAPI() {
-        //call
+        let pkWriting = 0
+        // ?writing_id{pk:int}&?paragraph_id{pk:int}
+        APIManger.shared.callGetRequest(baseEndPoint: .myWriting, addPath: "?writing_id\(pkWriting)") { JSON in
+            let numOfWritings = JSON.count
+            print(numOfWritings)
+            
+            do {
+                // Convert JSON data to Swift objects
+                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: String]] {
+                    print(jsonArray)
+                    // Now jsonArray is of type [[String: String]]
+                    //Todo : 이대로 파싱 안됨. 내부에 paragraphs 정보가 있어버림
+                    
+                    let VC = CompleteVC()
+                    //VC.format
+                    //VC.purpose
+                    //VC.paragraphs
+                    VC.saveButton.isHidden = true
+                    self.navigationController?.pushViewController(VC, animated: true)
+                }
+            } catch {
+                print("Error converting JSON to Swift objects: \(error)")
+            }
+        }
         
-        let VC = CompleteVC()
-        //VC.format
-        //VC.purpose
-        //VC.paragraphs
-        VC.saveButton.isHidden = true
-        navigationController?.pushViewController(VC, animated: true)
     }
     
+    //Delete writing. 성공 여부로 view에서 삭제 동작 결정
     func callDeleteAPI() -> Bool {
+        func callGetAPI() {
+            let pkWriting = 0
+            // ?writing_id{pk:int}
+            APIManger.shared.callDeleteRequest(baseEndPoint: .myWriting, addPath: "?writing_id\(pkWriting)") { JSON,n  in
+                let numOfWritings = JSON.count
+                print(numOfWritings)
+                
+                do {
+                    // Convert JSON data to Swift objects
+                    if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: String]] {
+                        print(jsonArray)
+                        // Now jsonArray is of type [[String: String]]
+                        //Todo : 이대로 파싱 안됨. 내부에 paragraphs 정보가 있어버림
+                        
+                        let VC = BookmarkParagraphVC()
+                        //Todo : paragraps를 어떻게 저장할 것인가.
+    //                    VC.paragraphs = jsonArray
+                        self.navigationController?.pushViewController(VC, animated: true)
+                        
+                    }
+                } catch {
+                    print("Error converting JSON to Swift objects: \(error)")
+                }
+            }
+            
+            let VC = CompleteVC()
+            //VC.format
+            //VC.purpose
+            //VC.paragraphs
+            VC.saveButton.isHidden = true
+            navigationController?.pushViewController(VC, animated: true)
+        }
+        
         return true
     }
     
