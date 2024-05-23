@@ -58,7 +58,7 @@ class MainVC: UIViewController {
     //purpose title
     lazy var purposeTitle: UILabel = {
         let label = UILabel()
-        label.text = "글쓰기에 앞서\n글의 목적을 입력해주세요"
+        label.text = "작성할 글의\n형식과 목적을 입력해주세요"
         label.numberOfLines = 2
         label.font = UIFont.Nuflect.headtitlebold
         
