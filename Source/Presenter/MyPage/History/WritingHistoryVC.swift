@@ -65,7 +65,7 @@ class WritingHistoryVC: UIViewController {
                     //VC.format
                     //VC.purpose
                     //VC.paragraphs
-                    VC.saveButton.isHidden = true
+                    VC.toMainButton.isHidden = true
                     self.navigationController?.pushViewController(VC, animated: true)
                 }
             } catch {
@@ -106,7 +106,7 @@ class WritingHistoryVC: UIViewController {
             //VC.format
             //VC.purpose
             //VC.paragraphs
-            VC.saveButton.isHidden = true
+            VC.toMainButton.isHidden = true
             navigationController?.pushViewController(VC, animated: true)
         }
         

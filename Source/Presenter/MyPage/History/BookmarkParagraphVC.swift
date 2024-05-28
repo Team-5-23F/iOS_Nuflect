@@ -68,7 +68,7 @@ class BookmarkParagraphVC: UIViewController {
                     //VC.format
                     //VC.purpose
                     //VC.paragraphs
-                    VC.saveButton.isHidden = true
+                    VC.toMainButton.isHidden = true
                     self.navigationController?.pushViewController(VC, animated: true)
                     
                 }

@@ -14,7 +14,7 @@ class OutlineVC: UIViewController {
     lazy var purposeText : String = ""
     
     //will get from API
-    lazy var paragraphs : [[String]] = []
+    lazy var paragraphs : [[String:String]] = []
     //is each paragrapgh written
     lazy var isWritten : [Bool] = []
     
@@ -74,15 +74,41 @@ class OutlineVC: UIViewController {
     
     @objc func completeButtonTapped() {
         print("complete tapped")
-        //To do
-        let VC = CompleteVC()
-        VC.formatText = formatText
-        VC.purposeText = purposeText
-        VC.paragraphs = paragraphs
-        for i in 0 ..< paragraphs.count {
-            VC.isBokkmarked.append(false)
+        callPostAPI()
+    }
+    
+    func callPostAPI() {
+        print("post writing")
+        let postMyWriting = PostMyWriting(format: formatText, purpose: purposeText, paragraphs: paragraphs)
+        
+        let body = [
+            "format": postMyWriting.format as Any,
+            "purpose" : postMyWriting.purpose as Any,
+            "paragraphs" : postMyWriting.paragraphs as Any
+        ] as [String: Any]
+        
+        APIManger.shared.callPostRequest(baseEndPoint: .myWriting, addPath: "", parameters: body) { JSON in
+            print(JSON["pk"])
+            print(JSON["format"])
+            print(JSON["purpose"])
+            print(JSON["paragraphs"])
+            
+            do {
+                // Convert JSON data to Swift objects
+                if let jsonArray = try JSONSerialization.jsonObject(with: JSON["paragraphs"].rawData(), options: []) as? [[String: Any]] {
+                    print(jsonArray)
+                    // Now jsonArray is of type [[String: String]]
+                    
+                    let VC = CompleteVC()
+                    VC.formatText = self.formatText
+                    VC.purposeText = self.purposeText
+                    VC.paragraphs = jsonArray
+                    self.navigationController?.pushViewController(VC, animated: true)
+                }
+            } catch {
+                print("Error converting JSON to Swift objects: \(error)")
+            }
         }
-        navigationController?.pushViewController(VC, animated: true)
     }
     
     func checkAllparagraphsIsWritten() {
@@ -103,7 +129,7 @@ class OutlineVC: UIViewController {
         super.viewDidLoad()
         setView()
         setConstraint()
-        for i in 0 ..< paragraphs.count {
+        for _ in 0 ..< paragraphs.count {
             self.isWritten.append(false)
         }
     }
@@ -212,7 +238,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "outlineCell", for: indexPath) as! OutlineCell
             cell.delegate = self
             cell.paragraphNum = indexPath.item
-            cell.paragraphTitleLabel.text = String(indexPath.item + 1) + ". " + paragraphs[indexPath.item][0]
+            cell.paragraphTitleLabel.text = String(indexPath.item + 1) + ". " + paragraphs[indexPath.item]["index"]!
             
             if isWritten[indexPath.item] {
                 cell.backgroundColor = UIColor.Nuflect.inputBlue
@@ -268,9 +294,9 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     func toWritingVC(cellNum: Int) {
         let VC = WritingVC()
         VC.paragraphNum = cellNum
-        VC.paragraphTitle = paragraphs[cellNum][0]
+        VC.paragraphTitle = paragraphs[cellNum]["index"]!
         if self.isWritten[cellNum] {
-            VC.writingTextView.text = paragraphs[cellNum][1]
+            VC.writingTextView.text = paragraphs[cellNum]["content"]
             VC.writingTextView.textColor = UIColor.Nuflect.black
             VC.textViewDidEndEditing(VC.writingTextView)
         }
@@ -337,14 +363,14 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     
     // Function to add a new paragraph
     func addParagraph(_ title: String) {
-        paragraphs.append([title, ""])
+        paragraphs.append(["index": title, "content": ""])
         isWritten.append(false)
         outlineCollectionView.reloadData()
     }
     
     // Function to rename a new paragraph
     func renameParagraph(_ num: Int, _ title: String) {
-        paragraphs[num][0] = title
+        paragraphs[num]["index"] = title
         outlineCollectionView.reloadData()
     }
     
@@ -384,7 +410,7 @@ extension OutlineVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         print(paragraphContents)
         
         self.isWritten[paragraghNum] = true
-        self.paragraphs[paragraghNum][1] = paragraphContents
+        self.paragraphs[paragraghNum]["content"] = paragraphContents
         
         outlineCollectionView.reloadData()
         checkAllparagraphsIsWritten()

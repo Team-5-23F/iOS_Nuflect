@@ -32,5 +32,5 @@ struct PostFeedbackWriting: Codable {
 struct PostMyWriting: Codable {
     let format: String
     let purpose: String
-    let paragraphs: [[String]]
+    let paragraphs: [[String:String]]
 }

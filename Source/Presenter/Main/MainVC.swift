@@ -177,19 +177,18 @@ class MainVC: UIViewController {
         APIManger.shared.callPostRequest(baseEndPoint: .outline, addPath: "", parameters: body) { JSON in
             let numOfIndex = JSON["NumOfIndex"].intValue
             print(numOfIndex)
-            var outline: [[String]] = []
+            var outline: [[String:String]] = []
             for i in 1 ... numOfIndex {
                 let index = JSON["Index"]["para\(i)"].stringValue
                 print(i)
                 print(index)
-                outline.append([index, ""])
+                outline.append(["index": index, "content": ""])
             }
             print(outline)
             
             let VC = OutlineVC()
             VC.formatText = self.formatTextView.text
             VC.purposeText = self.purposeTextView.text
-//            VC.paragraphsTitles = outline
             VC.paragraphs = outline
             self.navigationController?.pushViewController(VC, animated: true)
         }

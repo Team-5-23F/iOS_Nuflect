@@ -13,16 +13,10 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     //will get from OutlineVC
     lazy var formatText : String = ""
     lazy var purposeText : String = ""
-    lazy var paragraphs : [[String]] = []
-    lazy var isBokkmarked : [Bool] = []
+//    lazy var paragraphs : [[String]] = []
+    lazy var paragraphs : [[String:Any]] = []
+//    lazy var isBokkmarked : [Bool] = []
 
-    
-//    lazy var formatText : String = "format\nformat"
-//    lazy var purposeText : String = "purpose\n\npurpose"
-//    lazy var paragraphsTitles : [String] = ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4", "Paragraph 5", "Paragraph 6", "Paragraph 7", "Paragraph 8", "Paragraph 9"]
-//    lazy var paragraphsText : [String] = ["Paragraph 1\n\n\n\nParagraph 1Paragraph 1", "Paragraph 2\n\n\nParagraph 1Paragraph 1Paragraph 2", "Paragraph 3\n\n\nParagraph 3Paragraph 3Paragraph 3", "Paragraph 4\n\n\nParagraph 3Paragraph 3Paragraph 4", "Paragraph 5\n\n\nParagraph 3Paragraph 3Paragraph 5", "Paragraph 6\n\n\nParagraph 6", "Paragraph 7\n\n\nParagraph 3Paragraph 3Paragraph 7", "Paragraph 8\n\n\nParagraph 3Paragraph 3Paragraph 8", "Paragraph 9\n\n\nParagraph 9"]
-//    lazy var isBokkmarked : [Bool] = [false,false,false,false]
-    
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
     
@@ -119,7 +113,6 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         UIGraphicsEndImageContext()
         
         button.setImage(resizedOther, for: .normal)
-//        button.semanticContentAttribute = .forceRightToLeft
         button.backgroundColor = UIColor.Nuflect.white
         
         button.setTitle(" 전체 복사", for: .normal)
@@ -147,8 +140,8 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         return collectionView
     }()
     
-    //save button
-    lazy var saveButton: UIButton = {
+    //to main button
+    lazy var toMainButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor.Nuflect.mainBlue
         button.layer.cornerRadius = 11
@@ -157,7 +150,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         button.setTitleColor(UIColor.Nuflect.white, for: .normal)
         button.titleLabel?.font = UIFont.Nuflect.subheadMedium
         
-        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(toMainButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -173,12 +166,12 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         print("copy all tapped")
         var wrting = ""
         
-//        for i in 0 ..< self.paragraphsTitles.count {
         for i in 0 ..< self.paragraphs.count {
-//            wrting += "\(i + 1). " + paragraphsTitles[i] + "\n" + paragraphsText[i]
-            wrting += "\(i + 1). " + paragraphs[i][0] + "\n" + paragraphs[i][1]
+//            wrting += "\(i + 1). " + paragraphs[i][0] + "\n" + paragraphs[i][1]
+            wrting += "\(i + 1). "
+            wrting += paragraphs[i]["index"] as! String
+            wrting += paragraphs[i]["content"] as! String
             
-//            if i >= self.paragraphsTitles.count - 1 {
             if i >= self.paragraphs.count - 1 {
                 break
             }
@@ -190,9 +183,11 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         copyToClipboardAndShowToast(text: wrting, viewController: self)
     }
     
-    @objc func saveButtonTapped() {
-        print("save tapped")
-        callPostAPI()
+    @objc func toMainButtonTapped() {
+        print("to Main tapped")
+        if let VC = self.navigationController?.viewControllers.first(where: {$0 is MainVC}) {
+            self.navigationController?.popToViewController(VC, animated: true)
+        }
     }
     
     func callPatchAPI() {
@@ -205,29 +200,6 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
             //Todo : 에러 안뜨면 성공. 북마크 등록/해제 알림 보여주기
             //Todo : isBookmarked로 more 버튼 팝업에 등록 | 해제 로 보여주기 가능?
         }
-    }
-    
-    func callPostAPI() {
-        print("post writing")
-        let postMyWriting = PostMyWriting(format: formatText, purpose: purposeText, paragraphs: paragraphs)
-        
-        let body = [
-            "format": postMyWriting.format as Any,
-            "purpose" : postMyWriting.purpose as Any,
-            "paragraphs" : postMyWriting.paragraphs as Any
-        ] as [String: Any]
-        
-        APIManger.shared.callPostRequest(baseEndPoint: .myWriting, addPath: "", parameters: body) { JSON in
-            print(JSON["pk"])
-            print(JSON["format"])
-            print(JSON["purpose"])
-            print(JSON["paragraphs"])
-            
-            if let VC = self.navigationController?.viewControllers.first(where: {$0 is MainVC}) {
-                self.navigationController?.popToViewController(VC, animated: true)
-            }
-        }
-        
     }
 
     override func viewDidLoad() {
@@ -286,7 +258,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
             scrollView.addSubview(view)
         }
 
-        [completeTitle, formatSubtitle, formatLabel, purposeSubtitle, purposeLabel, completeWritingSubtitle, copyAllButton, completeWritingCollectionView, saveButton].forEach { view in
+        [completeTitle, formatSubtitle, formatLabel, purposeSubtitle, purposeLabel, completeWritingSubtitle, copyAllButton, completeWritingCollectionView, toMainButton].forEach { view in
             contentView.addSubview(view)
         }
     }
@@ -368,7 +340,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
             make.height.equalTo(calculateCollectionViewHeight())
         }
         
-        saveButton.snp.makeConstraints { make in
+        toMainButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(53)
@@ -391,18 +363,15 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "completeCell", for: indexPath) as! CompleteCell
         cell.delegate = self
         cell.paragraphNum = indexPath.item
-//        cell.paragraphTitleLabel.text = "\(indexPath.item + 1). " + paragraphsTitles[indexPath.item]
-//        cell.paragraphTextLabel.text = paragraphsText[indexPath.item]
-        cell.paragraphTitleLabel.text = "\(indexPath.item + 1). " + paragraphs[indexPath.item][0]
-        cell.paragraphTextLabel.text = paragraphs[indexPath.item][1]
+        cell.paragraphTitleLabel.text = "\(indexPath.item + 1). " + (paragraphs[indexPath.item]["index"] as! String)
+        cell.paragraphTextLabel.text = paragraphs[indexPath.item]["content"] as? String
         
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
-//        let height = heightForText(paragraphsTitles[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
-        let height = heightForText(paragraphs[indexPath.item][0], width: width - 46) +  heightForText(paragraphs[indexPath.item][1], width: width - 46) + 46
+        let height = heightForText(paragraphs[indexPath.item]["index"] as! String, width: width - 46) +  heightForText(paragraphs[indexPath.item]["content"] as! String, width: width - 46) + 46
         
         return CGSize(width: width, height: height)
     }
@@ -420,7 +389,7 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     private func calculateContentViewHeight() -> CGFloat {
         var totalHeight: CGFloat = 0
         // Add heights of all UI elements in contentView
-        totalHeight += completeTitle.frame.height + formatSubtitle.frame.height + formatLabel.frame.height + purposeSubtitle.frame.height + purposeLabel.frame.height + completeWritingSubtitle.frame.height + saveButton.frame.height + 110 + calculateCollectionViewHeight()
+        totalHeight += completeTitle.frame.height + formatSubtitle.frame.height + formatLabel.frame.height + purposeSubtitle.frame.height + purposeLabel.frame.height + completeWritingSubtitle.frame.height + toMainButton.frame.height + 110 + calculateCollectionViewHeight()
         
         return totalHeight
     }
@@ -428,12 +397,10 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     private func calculateCollectionViewHeight() -> CGFloat {
         var collectionViewHeight: CGFloat = 0
         
-//        for i in 0 ..< paragraphsText.count {
         for i in 0 ..< paragraphs.count {
             let indexPath = IndexPath(row: i, section: 0)
             let width = completeWritingCollectionView.frame.width
-//            let cellHeight = heightForText(paragraphsTitles[indexPath.item], width: width - 46) +  heightForText(paragraphsText[indexPath.item], width: width - 46) + 46
-            let cellHeight = heightForText(paragraphs[indexPath.item][0], width: width - 46) +  heightForText(paragraphs[indexPath.item][1], width: width - 46) + 46
+            let cellHeight = heightForText(paragraphs[indexPath.item]["index"] as! String, width: width - 46) +  heightForText(paragraphs[indexPath.item]["content"] as! String, width: width - 46) + 46
             
             collectionViewHeight += cellHeight + 16
         }
@@ -449,8 +416,9 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
             break
         case "단락 복사":
             print("copy")
-//            var wrting = paragraphsTitles[cellNum] + "\n" + paragraphsText[cellNum]
-            var wrting = paragraphs[cellNum][0] + "\n" + paragraphs[cellNum][1]
+            var wrting = ""
+            wrting += paragraphs[cellNum]["index"] as! String
+            wrting += paragraphs[cellNum]["content"] as! String
             
             copyToClipboardAndShowToast(text: wrting, viewController: self)
         default:
