@@ -123,7 +123,7 @@ class APIManger {
     }
     
     //Patch요청
-    func callPatchRequest(baseEndPoint:BaseEndpoint, addPath:String?, completionHnadler: @escaping(JSON) -> ()) {
+    func callPatchRequest(baseEndPoint:BaseEndpoint, addPath:String?, completionHnadler: @escaping() -> ()) {
 
         let headers: HTTPHeaders = [
             "accept": "application/json",
@@ -134,21 +134,17 @@ class APIManger {
         let url = baseEndPoint.requestURL + addPath
         print(url)
 
-        AF.request(url, method: .patch, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { response in
+        AF.request(url, method: .patch, encoding: JSONEncoding.default, headers: headers).validate().response { response in
             debugPrint(response)
             switch response.result {
                 
-            case .success(let value):
-                print(value)
-                let json = JSON(value)
-                completionHnadler(json)
+            case .success:
+                completionHnadler()
                 print("patch 요청 성공")
 
             case .failure(let error):
                 print(error)
-                print(error.responseCode)
-//                let json = JSON(error)
-//                completionHnadler(json)
+                print(error.responseCode ?? "error")
                 print("patch 요청 실패")
                 UIViewController.shared.showToast(message: "요청 실패", duration: 1, delay: 0.5)
             }

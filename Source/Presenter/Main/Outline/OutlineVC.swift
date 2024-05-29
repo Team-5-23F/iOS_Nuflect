@@ -100,6 +100,7 @@ class OutlineVC: UIViewController {
                     // Now jsonArray is of type [[String: String]]
                     
                     let VC = CompleteVC()
+                    VC.pkWriting = JSON["pk"].intValue
                     VC.formatText = self.formatText
                     VC.purposeText = self.purposeText
                     VC.paragraphs = jsonArray

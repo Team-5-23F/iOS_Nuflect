@@ -11,6 +11,9 @@ class CompleteCell: UICollectionViewCell {
     //delegate for more button
     weak var delegate: moreOptionDelegate?
     
+    var bookmarkAction: UIAction!
+    var copyAction: UIAction!
+    
     lazy var paragraphNum: Int = 0
     
     //MARK: - UI ProPerties
@@ -53,16 +56,41 @@ class CompleteCell: UICollectionViewCell {
             self.delegate?.moreOptionTapped(cellNum: self.paragraphNum, selectedOption: action.title)
         }
         
-        button.menu = UIMenu(children: [
-            UIAction(title: "북마크 등록/해제", state: .off, handler: selectedMenu),
-            UIAction(title: "단락 복사", state: .off, handler: selectedMenu)
-        ])
+        bookmarkAction = UIAction(title: "북마크 등록", state: .off) { [weak self] action in
+            print(action.title)
+            self?.delegate?.moreOptionTapped(cellNum: self?.paragraphNum ?? 0, selectedOption: action.title)
+        }
+                
+        copyAction = UIAction(title: "단락 복사", state: .off) { [weak self] action in
+            print(action.title)
+            self?.delegate?.moreOptionTapped(cellNum: self?.paragraphNum ?? 0, selectedOption: action.title)
+        }
+        
+        // Set the menu
+        button.menu = UIMenu(children: [bookmarkAction, copyAction])
         
         button.showsMenuAsPrimaryAction = true
         button.changesSelectionAsPrimaryAction = false
         
         return button
     }()
+    
+    func updateMenuItemTitle(isBookmarked: Bool) {
+        //true, is bookmarked
+        if isBookmarked {
+            bookmarkAction = UIAction(title: "북마크 해제", state: .off) { [weak self] action in
+                self?.delegate?.moreOptionTapped(cellNum: self?.paragraphNum ?? 0, selectedOption: action.title)
+            }
+        }
+        //false, is not bookmarked
+        else {
+            bookmarkAction = UIAction(title: "북마크 등록", state: .off) { [weak self] action in
+                self?.delegate?.moreOptionTapped(cellNum: self?.paragraphNum ?? 0, selectedOption: action.title)
+            }
+        }
+        
+        moreButton.menu = UIMenu(children: [bookmarkAction, copyAction])
+    }
     
     //MARK: - Define Method
     override init(frame: CGRect) {
@@ -107,7 +135,7 @@ class CompleteCell: UICollectionViewCell {
         
         moreButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(top)
-            make.trailing.equalToSuperview().offset(-leading)
+            make.trailing.equalToSuperview().offset(-leading / 2)
             make.width.equalTo(24)
             make.height.equalTo(24)
         }

@@ -11,11 +11,24 @@ import SnapKit
 class CompleteVC: UIViewController, UIScrollViewDelegate {
     //MARK: - Properties
     //will get from OutlineVC
-    lazy var formatText : String = ""
-    lazy var purposeText : String = ""
-//    lazy var paragraphs : [[String]] = []
-    lazy var paragraphs : [[String:Any]] = []
-//    lazy var isBokkmarked : [Bool] = []
+    lazy var pkWriting : Int = 0
+    lazy var formatText : String = "12"
+    lazy var purposeText : String = "34"
+    lazy var paragraphs : [[String:Any]] = [
+        ["pk": 3,
+        "index": "Maroon5",
+        "content": "Payphon\n\n\n\n\ne",
+        "bookmark": false],
+        ["pk": 3,
+        "index": "Maroon5",
+        "content": "Payphon\n\n\n\n\ne",
+        "bookmark": false],
+        ["pk": 3,
+        "index": "Maroon5",
+        "content": "Payphon\n\n\n\n\ne",
+        "bookmark": false],
+    ]
+    
 
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -146,7 +159,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         button.backgroundColor = UIColor.Nuflect.mainBlue
         button.layer.cornerRadius = 11
         
-        button.setTitle("저장 및 메인으로", for: .normal)
+        button.setTitle("메인으로", for: .normal)
         button.setTitleColor(UIColor.Nuflect.white, for: .normal)
         button.titleLabel?.font = UIFont.Nuflect.subheadMedium
         
@@ -167,9 +180,9 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         var wrting = ""
         
         for i in 0 ..< self.paragraphs.count {
-//            wrting += "\(i + 1). " + paragraphs[i][0] + "\n" + paragraphs[i][1]
             wrting += "\(i + 1). "
             wrting += paragraphs[i]["index"] as! String
+            wrting += "\n"
             wrting += paragraphs[i]["content"] as! String
             
             if i >= self.paragraphs.count - 1 {
@@ -190,15 +203,34 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    func callPatchAPI() {
+    func callPatchAPI(cellNum: Int) {
         print("patch bookmark")
-        let pkWriting = 0
-        let pkParagraph = 0
-        // ?writing_id{pk:int}&?paragraph_id{pk:int}
-        APIManger.shared.callPatchRequest(baseEndPoint: .myParagraph, addPath: "?writing_id\(pkWriting)&?paragraph_id\(pkParagraph)") { JSON in
+        APIManger.shared.callPatchRequest(baseEndPoint: .myParagraph, addPath: "?writing_id=\(pkWriting)&paragraph_id=\(paragraphs[cellNum]["pk"] ?? -1)") {
             
-            //Todo : 에러 안뜨면 성공. 북마크 등록/해제 알림 보여주기
-            //Todo : isBookmarked로 more 버튼 팝업에 등록 | 해제 로 보여주기 가능?
+            //등록 -> 해제
+            if self.paragraphs[cellNum]["bookmark"] as! Bool {
+                self.showToast(message: "북마크 해제 완료", duration: 1, delay: 0.5)
+                self.paragraphs[cellNum]["bookmark"] = false
+                
+                let indexPath = IndexPath(item: cellNum, section: 0)
+                if let cell = self.completeWritingCollectionView.cellForItem(at: indexPath) as? CompleteCell {
+                    cell.updateMenuItemTitle(isBookmarked: false)
+                } else {
+                    print("Cell not found or not visible at index \(cellNum)")
+                }
+            }
+            //해제 -> 등록
+            else {
+                self.showToast(message: "북마크 등록 완료", duration: 1, delay: 0.5)
+                self.paragraphs[cellNum]["bookmark"] = true
+                
+                let indexPath = IndexPath(item: cellNum, section: 0)
+                if let cell = self.completeWritingCollectionView.cellForItem(at: indexPath) as? CompleteCell {
+                    cell.updateMenuItemTitle(isBookmarked: true)
+                } else {
+                    print("Cell not found or not visible at index \(cellNum)")
+                }
+            }
         }
     }
 
@@ -212,9 +244,9 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         contentView.snp.makeConstraints { make in
-            make.width.equalTo(view.snp.width)
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
+//            make.width.equalTo(view.snp.width)
+//            make.top.equalToSuperview()
+//            make.bottom.equalToSuperview()
             make.height.equalTo(calculateContentViewHeight())
         }
         scrollView.contentSize = contentView.frame.size
@@ -241,7 +273,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
 
         let leftButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(backButtonTapped))
 
-        navigationItem.leftBarButtonItem = leftButton
+//        navigationItem.leftBarButtonItem = leftButton
         
         navigationBar.setItems([navigationItem], animated: false)
         navigationBar.barTintColor = .Nuflect.white // 배경색 변경
@@ -296,8 +328,14 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
 //            make.height.equalTo(calculateContentViewHeight())
 //        }
         
+        contentView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+                make.width.equalTo(scrollView.snp.width)
+        }
+        
         completeTitle.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(top)
+//            make.top.equalToSuperview().offset(top)
+            make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(titleLeading)
         }
         
@@ -338,13 +376,15 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(calculateCollectionViewHeight())
+//            make.bottom.greaterThanOrEqualTo(toMainButton.snp.top).offset(-top)
         }
         
         toMainButton.snp.makeConstraints { make in
+//            make.top.lessThanOrEqualTo(completeWritingCollectionView.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(leading)
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(53)
-            make.bottom.equalToSuperview().offset(-top)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-top)
         }
     }
   
@@ -355,7 +395,6 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
 extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, moreOptionDelegate  {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return paragraphsTitles.count
         return paragraphs.count
     }
 
@@ -389,9 +428,11 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     private func calculateContentViewHeight() -> CGFloat {
         var totalHeight: CGFloat = 0
         // Add heights of all UI elements in contentView
-        totalHeight += completeTitle.frame.height + formatSubtitle.frame.height + formatLabel.frame.height + purposeSubtitle.frame.height + purposeLabel.frame.height + completeWritingSubtitle.frame.height + toMainButton.frame.height + 110 + calculateCollectionViewHeight()
+//        totalHeight += navigationBar.frame.height + completeTitle.frame.height + formatSubtitle.frame.height + formatLabel.frame.height + purposeSubtitle.frame.height + purposeLabel.frame.height + completeWritingSubtitle.frame.height + toMainButton.frame.height + 130 + calculateCollectionViewHeight()
+        totalHeight += navigationBar.frame.height + completeTitle.frame.height + formatSubtitle.frame.height + formatLabel.frame.height + purposeSubtitle.frame.height + purposeLabel.frame.height + completeWritingSubtitle.frame.height + toMainButton.frame.height + 130 + completeWritingCollectionView.frame.height
         
-        return totalHeight
+//        return totalHeight
+        return max(totalHeight, scrollView.frame.height)
     }
     
     private func calculateCollectionViewHeight() -> CGFloat {
@@ -402,7 +443,11 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
             let width = completeWritingCollectionView.frame.width
             let cellHeight = heightForText(paragraphs[indexPath.item]["index"] as! String, width: width - 46) +  heightForText(paragraphs[indexPath.item]["content"] as! String, width: width - 46) + 46
             
-            collectionViewHeight += cellHeight + 16
+            if i < paragraphs.count - 1 {
+                collectionViewHeight += cellHeight + 16
+            } else {
+                collectionViewHeight += cellHeight // 마지막 셀일 경우 여백 추가하지 않음
+            }
         }
         return collectionViewHeight
     }
@@ -411,16 +456,23 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     func moreOptionTapped(cellNum: Int, selectedOption: String) {
         print(String(cellNum) + " " + selectedOption)
         switch selectedOption {
-        case "북마크 등록/해제":
-            callPatchAPI()
+        case "북마크 등록":
+            print("bookmark")
+            callPatchAPI(cellNum: cellNum)
+            break
+        case "북마크 해제":
+            print("unbookmark")
+            callPatchAPI(cellNum: cellNum)
             break
         case "단락 복사":
             print("copy")
-            var wrting = ""
+            var wrting = "\(cellNum + 1). "
             wrting += paragraphs[cellNum]["index"] as! String
+            wrting += "\n"
             wrting += paragraphs[cellNum]["content"] as! String
             
             copyToClipboardAndShowToast(text: wrting, viewController: self)
+            break
         default:
             print("error")
         }
