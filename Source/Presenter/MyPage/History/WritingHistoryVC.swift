@@ -11,8 +11,7 @@ import UIKit
 class WritingHistoryVC: UIViewController {
     //MARK: - Properties
     //will get from API
-    lazy var writingFormats : [String] = []
-    lazy var writingpurposes : [String] = []
+    lazy var writings : [[String:Any]] = []
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -47,25 +46,25 @@ class WritingHistoryVC: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    func callGetAPI() {
-        let pkWriting = 0
-        // ?writing_id{pk:int}&?paragraph_id{pk:int}
-        APIManger.shared.callGetRequest(baseEndPoint: .myWriting, addPath: "?writing_id\(pkWriting)") { JSON in
-            let numOfWritings = JSON.count
-            print(numOfWritings)
-            
+    func callGetAPI(cellNum: Int) {
+        let pkWriting = writings[cellNum]["pk"] as? Int ?? 0
+        APIManger.shared.callGetRequest(baseEndPoint: .myWriting, addPath: "?writing_id=\(pkWriting)") { JSON in
             do {
                 // Convert JSON data to Swift objects
-                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: String]] {
+                if let jsonArray = try JSONSerialization.jsonObject(with: JSON["paragraphs"].rawData(), options: []) as? [[String: Any]] {
                     print(jsonArray)
                     // Now jsonArray is of type [[String: String]]
-                    //Todo : 이대로 파싱 안됨. 내부에 paragraphs 정보가 있어버림
                     
                     let VC = CompleteVC()
-                    //VC.format
-                    //VC.purpose
-                    //VC.paragraphs
-                    VC.toMainButton.isHidden = true
+                    VC.pkWriting = JSON["pk"].intValue
+                    VC.formatText = JSON["format"].stringValue
+                    VC.purposeText = JSON["purpose"].stringValue
+                    VC.paragraphs = jsonArray
+                    
+                    VC.toMainButton.setTitle("뒤로 가기", for: .normal)
+                    VC.toMainButton.removeTarget(VC, action: #selector(VC.toMainButtonTapped), for: .touchUpInside)
+                    VC.toMainButton.addTarget(VC, action: #selector(VC.backButtonTapped), for: .touchUpInside)
+                    
                     self.navigationController?.pushViewController(VC, animated: true)
                 }
             } catch {
@@ -76,42 +75,23 @@ class WritingHistoryVC: UIViewController {
     }
     
     //Delete writing. 성공 여부로 view에서 삭제 동작 결정
-    func callDeleteAPI() -> Bool {
-        func callGetAPI() {
-            let pkWriting = 0
-            // ?writing_id{pk:int}
-            APIManger.shared.callDeleteRequest(baseEndPoint: .myWriting, addPath: "?writing_id\(pkWriting)") { JSON,n  in
-                let numOfWritings = JSON.count
-                print(numOfWritings)
-                
-                do {
-                    // Convert JSON data to Swift objects
-                    if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: String]] {
-                        print(jsonArray)
-                        // Now jsonArray is of type [[String: String]]
-                        //Todo : 이대로 파싱 안됨. 내부에 paragraphs 정보가 있어버림
-                        
-                        let VC = BookmarkParagraphVC()
-                        //Todo : paragraps를 어떻게 저장할 것인가.
-    //                    VC.paragraphs = jsonArray
-                        self.navigationController?.pushViewController(VC, animated: true)
-                        
-                    }
-                } catch {
-                    print("Error converting JSON to Swift objects: \(error)")
-                }
-            }
-            
-            let VC = CompleteVC()
-            //VC.format
-            //VC.purpose
-            //VC.paragraphs
-            VC.toMainButton.isHidden = true
-            navigationController?.pushViewController(VC, animated: true)
+    func callDeleteAPI(cellNum: Int, completion: @escaping (Bool) -> Void) {
+        guard let pkWriting = writings[cellNum]["pk"] as? Int else {
+            completion(false)
+            return
         }
-        
-        return true
+
+        APIManger.shared.callDeleteRequest(baseEndPoint: .myWriting, addPath: "?writing_id=\(pkWriting)") { statusCode in
+            guard statusCode == 200 || statusCode == 202
+            else {
+                completion(false)
+                return
+            }
+            completion(true)
+        }
     }
+
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -191,7 +171,7 @@ extension WritingHistoryVC: UICollectionViewDataSource, UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        writingFormats.count
+        writings.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -199,8 +179,8 @@ extension WritingHistoryVC: UICollectionViewDataSource, UICollectionViewDelegate
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "writingHistoryCell", for: indexPath) as! WritingHistoryCell
         cell.delegate = self
         cell.writingNum = indexPath.item
-        cell.formatLabel.text! = "Format : " + writingFormats[indexPath.item]
-        cell.purposeLabel.text! = "Purpose : " + writingpurposes[indexPath.item]
+        cell.formatLabel.text! = "Format : " + (writings[indexPath.item]["format"] as? String ?? "")
+        cell.purposeLabel.text! = "Purpose : " + (writings[indexPath.item]["purpose"] as? String ?? "")
         
         return cell
         
@@ -218,7 +198,7 @@ extension WritingHistoryVC: UICollectionViewDataSource, UICollectionViewDelegate
     //cell touch action
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
-        callGetAPI()
+        callGetAPI(cellNum: indexPath.item)
     }
     
     //for more option button
@@ -226,20 +206,23 @@ extension WritingHistoryVC: UICollectionViewDataSource, UICollectionViewDelegate
         print(String(cellNum) + " " + selectedOption)
         switch selectedOption {
         case "글 보기":
-            callGetAPI()
+            callGetAPI(cellNum: cellNum)
             break
         case "글 복사":
             print("copy")
-            //Todo
+            self.showToast(message: "미구현", duration: 1, delay: 0.5)
             //copy?
         case "글 삭제":
             let alert = UIAlertController(title: "작성 내역을 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
             
             let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
-                if self!.callDeleteAPI() {
-                    self?.deleteWriting(at: cellNum)
-                    
-                    return
+                self?.callDeleteAPI(cellNum: cellNum) { success in
+                    if success {
+                        self!.deleteWriting(at: cellNum)
+                        self!.showToast(message: "삭제 완료", duration: 1, delay: 0.5)
+                    } else {
+                        self!.showToast(message: "error", duration: 1, delay: 0.5)
+                    }
                 }
             }
             
@@ -257,8 +240,7 @@ extension WritingHistoryVC: UICollectionViewDataSource, UICollectionViewDelegate
     
     // Function to delete a writing
     func deleteWriting(at index: Int) {
-        writingFormats.remove(at: index)
-        writingpurposes.remove(at: index)
+        writings.remove(at: index)
         writingHistoryCollectionView.reloadData()
     }
 }

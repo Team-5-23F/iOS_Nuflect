@@ -14,25 +14,7 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     lazy var pkWriting : Int = 0
     lazy var formatText : String = "12"
     lazy var purposeText : String = "34"
-    lazy var paragraphs : [[String:Any]] = [
-        ["pk": 3,
-        "index": "Maroon5",
-        "content": "죄송합니다. 코드를 다시 확인해보니 이미 toMainButton의 제약이 contentView의 bottom에 대해 설정되어 있습니다. 그렇다면 다른 이유로 버튼이 collection view 위로 올라오는 문제가 발생할 수 있습니다. 몇 가지 가능한 이유를 살펴보겠습니다:",
-        "bookmark": false],
-        ["pk": 3,
-        "index": "Maroon5",
-        "content": "Payphon죄송합니다. 코드를 다시 확인해보니 이미 toMainButton의 제약이 contentView의 bottom에 대해 설정되어 있습니다. 그렇다면 다른 이유로 버튼이 collection view 위로 올라오는 문제가 발생할 수 있습니다. 몇 가지 가능한 이유를 살펴보겠습니다:e",
-        "bookmark": false],
-        ["pk": 3,
-        "index": "Maroon5",
-        "content": "Payphon죄송합니다. 코드를 다시 확인해보니 이미 toMainButton의 제약이 contentView의 bottom에 대해 설정되어 있습니다. 그렇다면 다른 이유로 버튼이 collection view 위로 올라오는 문제가 발생할 수 있습니다. 몇 가지 가능한 이유를 살펴보겠습니다:e",
-        "bookmark": false],
-        
-        ["pk": 3,
-        "index": "Maroon5",
-        "content": "Payphon죄송합니다. 코드를 다시 확인해보니 이미 toMainButton의 제약이 contentView의 bottom에 대해 설정되어 있습니다. 그렇다면 다른 이유로 버튼이 collection view 위로 올라오는 문제가 발생할 수 있습니다. 몇 가지 가능한 이유를 살펴보겠습니다:e",
-        "bookmark": false],
-    ]
+    lazy var paragraphs : [[String:Any]] = []
     
 
     //MARK: - UI ProPerties
@@ -55,8 +37,8 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     //writing title
     lazy var completeTitle: UILabel = {
         let label = UILabel()
-        label.text = "완성된 글을 최종 검토하고\n저장하세요"
-        label.numberOfLines = 2
+        label.text = "완성된 글을 확인하고\n원하는 단락을 북마크 하세요"
+        label.numberOfLines = 1
         label.font = UIFont.Nuflect.headtitlebold
         
         return label
@@ -278,12 +260,14 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
 
         let leftButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(backButtonTapped))
 
-//        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.leftBarButtonItem = leftButton
         
         navigationBar.setItems([navigationItem], animated: false)
         navigationBar.barTintColor = .Nuflect.white // 배경색 변경
         navigationBar.tintColor = .clear
         navigationBar.shadowImage = UIImage() // 테두리 없애기
+        
+//        navigationBar.isHidden = true
     }
     
     func addSubView() {
@@ -409,6 +393,8 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
         cell.paragraphNum = indexPath.item
         cell.paragraphTitleLabel.text = "\(indexPath.item + 1). " + (paragraphs[indexPath.item]["index"] as! String)
         cell.paragraphTextLabel.text = paragraphs[indexPath.item]["content"] as? String
+        
+        cell.updateMenuItemTitle(isBookmarked: (paragraphs[indexPath.item]["bookmark"] as? Bool)!)
         
         return cell
     }

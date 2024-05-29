@@ -125,47 +125,40 @@ class MypageVC: UIViewController, UIScrollViewDelegate {
     
     func callGetAPIWriting() {
         APIManger.shared.callGetRequest(baseEndPoint: .myWriting, addPath: "") { JSON in
-            let numOfWritings = JSON.count
-            print(numOfWritings)
-            
             do {
                 // Convert JSON data to Swift objects
-                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: String]] {
+                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: Any]] {
                     print(jsonArray)
-                    // Now jsonArray is of type [[String: String]]
+                    // Now jsonArray is of type [[String: Any]]
                     
                     let VC = WritingHistoryVC()
-                    //Todo paragraps를 어떻게 저장할 것인가.
-//                    VC.writings = jsonArray
+                    VC.writings = jsonArray
                     self.navigationController?.pushViewController(VC, animated: true)
                     
                 }
             } catch {
                 print("Error converting JSON to Swift objects: \(error)")
+                self.showToast(message: "작성한 글이 없습니다.", duration: 1, delay: 0.5)
             }
         }
     }
     
     func callGetAPIBookmark() {
         APIManger.shared.callGetRequest(baseEndPoint: .myParagraph, addPath: "") { JSON in
-            let numOfWritings = JSON.count
-            print(numOfWritings)
-            
             do {
                 // Convert JSON data to Swift objects
-                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: String]] {
+                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: Any]] {
                     print(jsonArray)
-                    // Now jsonArray is of type [[String: String]]
-                    //Todo : 이대로 파싱 안됨. 내부에 writing 정보가 있어버림
+                    // Now jsonArray is of type [[String: Any]]
                     
                     let VC = BookmarkParagraphVC()
-                    //Todo : paragraps를 어떻게 저장할 것인가.
-//                    VC.paragraphs = jsonArray
+                    VC.paragraphs = jsonArray
                     self.navigationController?.pushViewController(VC, animated: true)
                     
                 }
             } catch {
                 print("Error converting JSON to Swift objects: \(error)")
+                self.showToast(message: "북마크 한 단락이 없습니다.", duration: 1, delay: 0.5)
             }
         }
     }
@@ -331,7 +324,7 @@ extension MypageVC: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
     
     // cell에 들어갈 data 설정
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let historyCellText = ["전체 글 저장 내역", "단락별 저장 내역"]
+        let historyCellText = ["글 작성 내역 조회", "북마크 단락 조회"]
         let infoCellText = ["앱 버전", "약관 및 정책", "문의하기"]
         let accountCellText = ["로그아웃", "탈퇴하기"]
         
@@ -380,16 +373,9 @@ extension MypageVC: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         if collectionView == historyCollectionView {
             switch indexPath.row {
             case 0:
-                let VC = WritingHistoryVC()
-                VC.writingFormats = ["F1", "F2", "F3"]
-                VC.writingpurposes = ["P1", "P2", "P3"]
-                self.navigationController?.pushViewController(VC, animated: true)
+                callGetAPIWriting()
             case 1:
-                let VC = BookmarkParagraphVC()
-                self.navigationController?.pushViewController(VC, animated: true)
-                VC.paragraphFormats = ["F1", "F2", "F3"]
-                VC.paragraphpurposes = ["P1", "P2", "P3"]
-                VC.paragraphtitles = ["PP1", "PP2", "PP3"]
+                callGetAPIBookmark()
             default :
                 return
             }

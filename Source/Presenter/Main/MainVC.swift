@@ -191,6 +191,10 @@ class MainVC: UIViewController {
             VC.purposeText = self.purposeTextView.text
             VC.paragraphs = outline
             self.navigationController?.pushViewController(VC, animated: true)
+            
+            self.formatTextView.text = ""
+            self.purposeTextView.text = ""
+            self.textViewDidEndEditing(self.purposeTextView)
         }
         
     }

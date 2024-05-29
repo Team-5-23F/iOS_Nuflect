@@ -308,6 +308,15 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         
         APIManger.shared.callPostRequest(baseEndPoint: .feedback, addPath: "line/", parameters: body) { JSON in
             print(JSON)
+            
+            var translation = JSON["Translation"].stringValue
+            
+            if translation.hasPrefix("[Output]: ") {
+                translation = String(translation.dropFirst("[Output]: ".count))
+            } else if translation.hasPrefix("[Text]: ") {
+                translation = String(translation.dropFirst("[Text]: ".count))
+            }
+            
             var alternative = JSON["Task2"].stringValue
 //            if alternative.hasSuffix(".") {
 //                alternative = String(alternative.dropLast())
@@ -317,7 +326,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
                                 "Translation": alternative]
             self.textTuples.insert(newTextTuple, at: newFeedbackSentenceNum)
             
-            let newFeedback = ["Translation": JSON["Translation"].stringValue,
+            let newFeedback = ["Translation": translation,
                                "Task1": JSON["Task1"].stringValue,
                                "Task2": alternative,
                                "Task3": JSON["Task3"].stringValue

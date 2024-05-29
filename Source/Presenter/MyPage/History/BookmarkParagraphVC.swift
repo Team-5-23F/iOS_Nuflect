@@ -11,9 +11,7 @@ import UIKit
 class BookmarkParagraphVC: UIViewController {
     //MARK: - Properties
     //will get from API
-    lazy var paragraphFormats : [String] = []
-    lazy var paragraphpurposes : [String] = []
-    lazy var paragraphtitles : [String] = []
+    lazy var paragraphs : [[String:Any]] = []
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -48,33 +46,36 @@ class BookmarkParagraphVC: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    func callGetAPI() {
-        let pkWriting = 0
-        let pkParagraph = 0
-        // ?writing_id{pk:int}&?paragraph_id{pk:int}
-        APIManger.shared.callGetRequest(baseEndPoint: .myParagraph, addPath: "?writing_id\(pkWriting)&?paragraph_id\(pkParagraph)") { JSON in
-            let numOfWritings = JSON.count
-            print(numOfWritings)
-            
-            do {
-                // Convert JSON data to Swift objects
-                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: String]] {
-                    print(jsonArray)
-                    // Now jsonArray is of type [[String: String]]
-                    //Todo : 이대로 파싱 안됨. 내부에 writing 정보가 있어버림
-                    
-                    
-                    let VC = CompleteVC()
-                    //VC.format
-                    //VC.purpose
-                    //VC.paragraphs
-                    VC.toMainButton.isHidden = true
-                    self.navigationController?.pushViewController(VC, animated: true)
-                    
-                }
-            } catch {
-                print("Error converting JSON to Swift objects: \(error)")
+    func callGetAPI(cellNum: Int) {
+        
+        let paragraph = paragraphs[cellNum]
+        if let writing = paragraph["writing"] as? [String: Any],
+           let pkParagraph = paragraph["pk"] as? Int,
+           let pkWriting = writing["pk"] as? Int {
+            APIManger.shared.callGetRequest(baseEndPoint: .myParagraph, addPath: "?writing_id=\(pkWriting)&paragraph_id=\(pkParagraph)") { JSON in
+                
+                let VC = CompleteVC()
+                VC.paragraphs = [
+                    ["pk": JSON["pk"].intValue,
+                     "index": JSON["index"].stringValue,
+                     "content": JSON["content"].stringValue,
+                     "bookmark": JSON["bookmark"].boolValue]
+                ]
+                
+                VC.pkWriting = JSON["writing"]["pk"].intValue
+                VC.formatText = JSON["writing"]["format"].stringValue
+                VC.purposeText = JSON["writing"]["purpose"].stringValue
+                
+                VC.completeTitle.text = "북마크 된 단락을 확인하세요"
+                VC.toMainButton.setTitle("뒤로 가기", for: .normal)
+                VC.toMainButton.removeTarget(VC, action: #selector(VC.toMainButtonTapped), for: .touchUpInside)
+                VC.toMainButton.addTarget(VC, action: #selector(VC.backButtonTapped), for: .touchUpInside)
+                
+                self.navigationController?.pushViewController(VC, animated: true)
             }
+        }
+        else {
+            self.showToast(message: "error", duration: 1, delay: 0.5)
         }
     }
     
@@ -160,7 +161,7 @@ extension BookmarkParagraphVC: UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        paragraphFormats.count
+        paragraphs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -168,9 +169,19 @@ extension BookmarkParagraphVC: UICollectionViewDataSource, UICollectionViewDeleg
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookmarkParagraphCell", for: indexPath) as! BookmarkParagraphCell
         cell.delegate = self
         cell.bookmarkedParagraphNum = indexPath.item
-        cell.formatLabel.text! = "Format : " + paragraphFormats[indexPath.item]
-        cell.purposeLabel.text! = "Purpose : " + paragraphpurposes[indexPath.item]
-        cell.paragraphLabel.text! = "Paragraph : " + paragraphtitles[indexPath.item]
+        
+        let paragraph = paragraphs[indexPath.item]
+            if let writing = paragraph["writing"] as? [String: Any],
+               let format = writing["format"] as? String,
+               let purpose = writing["purpose"] as? String {
+                cell.formatLabel.text = "Format : \(format)"
+                cell.purposeLabel.text = "Purpose : \(purpose)"
+            } else {
+                cell.formatLabel.text = "Format : N/A"
+                cell.purposeLabel.text = "Purpose : N/A"
+            }
+
+            cell.paragraphLabel.text = "Paragraph : \(paragraph["index"] as? String ?? "N/A")"
         
         return cell
         
@@ -188,7 +199,7 @@ extension BookmarkParagraphVC: UICollectionViewDataSource, UICollectionViewDeleg
     //cell touch action
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
-        callGetAPI()
+        callGetAPI(cellNum: indexPath.item)
     }
     
     //for more option button
@@ -196,7 +207,8 @@ extension BookmarkParagraphVC: UICollectionViewDataSource, UICollectionViewDeleg
         print(String(cellNum) + " " + selectedOption)
         switch selectedOption {
         case "단락 보기":
-            callGetAPI()
+            print(cellNum)
+            callGetAPI(cellNum: cellNum)
             break
         case "단락 복사":
             print("share")
@@ -227,9 +239,7 @@ extension BookmarkParagraphVC: UICollectionViewDataSource, UICollectionViewDeleg
     
     // Function to delete a writing
     func deleteWriting(at index: Int) {
-        paragraphFormats.remove(at: index)
-        paragraphpurposes.remove(at: index)
-        paragraphtitles.remove(at: index)
+        paragraphs.remove(at: index)
         writingHistoryCollectionView.reloadData()
     }
 }

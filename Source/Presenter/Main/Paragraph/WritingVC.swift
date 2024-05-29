@@ -137,11 +137,11 @@ class WritingVC: UIViewController {
                     print(jsonArray)
                     // Now jsonArray is of type [[String: String]]
                     for (index, item) in jsonArray.enumerated() {
-                        if let original = item["Original"] {
+                        if let original = item["Translation"] {
                             if original.hasPrefix("[Output]: ") {
-                                jsonArray[index]["Original"] = String(original.dropFirst("[Output]: ".count))
+                                jsonArray[index]["Translation"] = String(original.dropFirst("[Output]: ".count))
                             } else if original.hasPrefix("[Text]: ") {
-                                jsonArray[index]["Original"] = String(original.dropFirst("[Text]: ".count))
+                                jsonArray[index]["Translation"] = String(original.dropFirst("[Text]: ".count))
                             }
                         }
                     }

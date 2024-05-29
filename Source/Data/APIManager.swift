@@ -154,8 +154,7 @@ class APIManger {
     }
 
     //Delete요청
-    func callDeleteRequest(baseEndPoint:BaseEndpoint, addPath:String?,completionHnadler: @escaping (JSON, Int) -> Void) {
-
+    func callDeleteRequest(baseEndPoint: BaseEndpoint, addPath: String?, completionHandler: @escaping (Int) -> Void) {
         let headers: HTTPHeaders = [
             "accept": "application/json",
             "Authorization": jwtToken,
@@ -165,25 +164,23 @@ class APIManger {
         let url = baseEndPoint.requestURL + addPath
         print(url)
 
-        AF.request(url, method: .delete, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { response in
+        AF.request(url, method: .delete, encoding: JSONEncoding.default, headers: headers).validate().response { response in
             debugPrint(response)
             switch response.result {
             case .success(let value):
-                print(value)
                 let statusCode = response.response?.statusCode ?? 0
-                print(statusCode)
-                let json = JSON(value)
-                completionHnadler(json, statusCode)
-                print("delete 요청 성공")
+                completionHandler(statusCode)
+                print("Delete request succeeded with status code: \(statusCode)")
 
             case .failure(let error):
-                print(error)
-                let json = JSON(error)
-                print("delete 요청 실패", json)
-                UIViewController.shared.showToast(message: "요청 실패", duration: 1, delay: 0.5)
+                let statusCode = response.response?.statusCode ?? 0
+                completionHandler(statusCode)
+                print("Delete request failed with status code: \(statusCode), error: \(error)")
+                UIViewController.shared.showToast(message: "Request failed", duration: 1, delay: 0.5)
             }
         }
     }
+
 
 
 }
