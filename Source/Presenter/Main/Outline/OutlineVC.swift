@@ -88,11 +88,6 @@ class OutlineVC: UIViewController {
         ] as [String: Any]
         
         APIManger.shared.callPostRequest(baseEndPoint: .myWriting, addPath: "", parameters: body) { JSON in
-            print(JSON["pk"])
-            print(JSON["format"])
-            print(JSON["purpose"])
-            print(JSON["paragraphs"])
-            
             do {
                 // Convert JSON data to Swift objects
                 if let jsonArray = try JSONSerialization.jsonObject(with: JSON["paragraphs"].rawData(), options: []) as? [[String: Any]] {

@@ -17,15 +17,20 @@ class CompleteVC: UIViewController, UIScrollViewDelegate {
     lazy var paragraphs : [[String:Any]] = [
         ["pk": 3,
         "index": "Maroon5",
-        "content": "Payphon\n\n\n\n\ne",
+        "content": "죄송합니다. 코드를 다시 확인해보니 이미 toMainButton의 제약이 contentView의 bottom에 대해 설정되어 있습니다. 그렇다면 다른 이유로 버튼이 collection view 위로 올라오는 문제가 발생할 수 있습니다. 몇 가지 가능한 이유를 살펴보겠습니다:",
         "bookmark": false],
         ["pk": 3,
         "index": "Maroon5",
-        "content": "Payphon\n\n\n\n\ne",
+        "content": "Payphon죄송합니다. 코드를 다시 확인해보니 이미 toMainButton의 제약이 contentView의 bottom에 대해 설정되어 있습니다. 그렇다면 다른 이유로 버튼이 collection view 위로 올라오는 문제가 발생할 수 있습니다. 몇 가지 가능한 이유를 살펴보겠습니다:e",
         "bookmark": false],
         ["pk": 3,
         "index": "Maroon5",
-        "content": "Payphon\n\n\n\n\ne",
+        "content": "Payphon죄송합니다. 코드를 다시 확인해보니 이미 toMainButton의 제약이 contentView의 bottom에 대해 설정되어 있습니다. 그렇다면 다른 이유로 버튼이 collection view 위로 올라오는 문제가 발생할 수 있습니다. 몇 가지 가능한 이유를 살펴보겠습니다:e",
+        "bookmark": false],
+        
+        ["pk": 3,
+        "index": "Maroon5",
+        "content": "Payphon죄송합니다. 코드를 다시 확인해보니 이미 toMainButton의 제약이 contentView의 bottom에 대해 설정되어 있습니다. 그렇다면 다른 이유로 버튼이 collection view 위로 올라오는 문제가 발생할 수 있습니다. 몇 가지 가능한 이유를 살펴보겠습니다:e",
         "bookmark": false],
     ]
     
@@ -428,8 +433,9 @@ extension CompleteVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     private func calculateContentViewHeight() -> CGFloat {
         var totalHeight: CGFloat = 0
         // Add heights of all UI elements in contentView
-//        totalHeight += navigationBar.frame.height + completeTitle.frame.height + formatSubtitle.frame.height + formatLabel.frame.height + purposeSubtitle.frame.height + purposeLabel.frame.height + completeWritingSubtitle.frame.height + toMainButton.frame.height + 130 + calculateCollectionViewHeight()
-        totalHeight += navigationBar.frame.height + completeTitle.frame.height + formatSubtitle.frame.height + formatLabel.frame.height + purposeSubtitle.frame.height + purposeLabel.frame.height + completeWritingSubtitle.frame.height + toMainButton.frame.height + 130 + completeWritingCollectionView.frame.height
+        totalHeight += completeTitle.frame.height + formatSubtitle.frame.height + formatLabel.frame.height + purposeSubtitle.frame.height + purposeLabel.frame.height + completeWritingSubtitle.frame.height + toMainButton.frame.height + 130 + calculateCollectionViewHeight()
+        print(totalHeight)
+        print(scrollView.frame.height)
         
 //        return totalHeight
         return max(totalHeight, scrollView.frame.height)
