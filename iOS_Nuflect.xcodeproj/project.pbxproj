@@ -29,6 +29,7 @@
 		09BDCFC22BDF61AA00D11376 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BDCFC12BDF61AA00D11376 /* PaddingLabel.swift */; };
 		09BF8A6C2BFC438D00C98FC1 /* IntroductionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BF8A6B2BFC438D00C98FC1 /* IntroductionVC.swift */; };
 		09CC6EB22BF1078A005ED96A /* ShowToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CC6EB12BF1078A005ED96A /* ShowToast.swift */; };
+		09CF09552C077B6A00F29C98 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 09CF09542C077B6A00F29C98 /* KakaoSDK */; };
 		09EADC242BDB94E200A75F61 /* Extension URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC232BDB94E200A75F61 /* Extension URL.swift */; };
 		09EADC262BDB954E00A75F61 /* BaseEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC252BDB954E00A75F61 /* BaseEndpoint.swift */; };
 		09EADC282BDB965C00A75F61 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC272BDB965C00A75F61 /* APIManager.swift */; };
@@ -50,9 +51,7 @@
 		09F75F522BA3FCDB00F1440C /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F512BA3FCDB00F1440C /* IQKeyboardManagerSwift */; };
 		09F75F552BA3FCF200F1440C /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F542BA3FCF200F1440C /* SwiftyJSON */; };
 		09F75F582BA3FD0400F1440C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F572BA3FD0400F1440C /* SnapKit */; };
-		09F75F5A2BA3FD0400F1440C /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F592BA3FD0400F1440C /* SnapKit-Dynamic */; };
 		09F75F5D2BA3FD1800F1440C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F5C2BA3FD1800F1440C /* Alamofire */; };
-		09F75F5F2BA3FD1800F1440C /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F5E2BA3FD1800F1440C /* AlamofireDynamic */; };
 		09F75F652BA40B3D00F1440C /* SetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F642BA40B3D00F1440C /* SetColor.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +71,19 @@
 			remoteInfo = iOS_Nuflect;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		09CF09522C077B0F00F29C98 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		090B28D92BB8039800493044 /* AddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCell.swift; sourceTree = "<group>"; };
@@ -124,13 +136,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				09EADC312BDE402100A75F61 /* KakaoSDKCommon in Frameworks */,
+				09CF09552C077B6A00F29C98 /* KakaoSDK in Frameworks */,
 				09EADC2F2BDE402100A75F61 /* KakaoSDKAuth in Frameworks */,
 				09F75F5D2BA3FD1800F1440C /* Alamofire in Frameworks */,
-				09F75F5F2BA3FD1800F1440C /* AlamofireDynamic in Frameworks */,
 				09F75F582BA3FD0400F1440C /* SnapKit in Frameworks */,
 				09F75F552BA3FCF200F1440C /* SwiftyJSON in Frameworks */,
 				09F75F522BA3FCDB00F1440C /* IQKeyboardManagerSwift in Frameworks */,
-				09F75F5A2BA3FD0400F1440C /* SnapKit-Dynamic in Frameworks */,
 				09EADC332BDE402100A75F61 /* KakaoSDKUser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,6 +174,13 @@
 			path = History;
 			sourceTree = "<group>";
 		};
+		09CF095C2C07829700F29C98 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		09F75EF62BA3FC0700F1440C = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +189,7 @@
 				09F75F1B2BA3FC0900F1440C /* iOS_NuflectTests */,
 				09F75F252BA3FC0900F1440C /* iOS_NuflectUITests */,
 				09F75F002BA3FC0700F1440C /* Products */,
+				09CF095C2C07829700F29C98 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -347,6 +366,7 @@
 				09F75EFB2BA3FC0700F1440C /* Sources */,
 				09F75EFC2BA3FC0700F1440C /* Frameworks */,
 				09F75EFD2BA3FC0700F1440C /* Resources */,
+				09CF09522C077B0F00F29C98 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -357,12 +377,11 @@
 				09F75F512BA3FCDB00F1440C /* IQKeyboardManagerSwift */,
 				09F75F542BA3FCF200F1440C /* SwiftyJSON */,
 				09F75F572BA3FD0400F1440C /* SnapKit */,
-				09F75F592BA3FD0400F1440C /* SnapKit-Dynamic */,
 				09F75F5C2BA3FD1800F1440C /* Alamofire */,
-				09F75F5E2BA3FD1800F1440C /* AlamofireDynamic */,
 				09EADC2E2BDE402100A75F61 /* KakaoSDKAuth */,
 				09EADC302BDE402100A75F61 /* KakaoSDKCommon */,
 				09EADC322BDE402100A75F61 /* KakaoSDKUser */,
+				09CF09542C077B6A00F29C98 /* KakaoSDK */,
 			);
 			productName = iOS_Nuflect;
 			productReference = 09F75EFF2BA3FC0700F1440C /* iOS_Nuflect.app */;
@@ -909,6 +928,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		09CF09542C077B6A00F29C98 /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09EADC2D2BDE402100A75F61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
+		};
 		09EADC2E2BDE402100A75F61 /* KakaoSDKAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 09EADC2D2BDE402100A75F61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
@@ -939,20 +963,10 @@
 			package = 09F75F562BA3FD0400F1440C /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		09F75F592BA3FD0400F1440C /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 09F75F562BA3FD0400F1440C /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
-		};
 		09F75F5C2BA3FD1800F1440C /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 09F75F5B2BA3FD1800F1440C /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
-		};
-		09F75F5E2BA3FD1800F1440C /* AlamofireDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 09F75F5B2BA3FD1800F1440C /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = AlamofireDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 
