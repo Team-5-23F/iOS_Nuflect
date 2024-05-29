@@ -129,7 +129,8 @@ class FeedbackVC: UIViewController {
     }
     
     func callAPI() {
-        let postFeedbackWriting = PostFeedbackWriting(Writing: self.translatedRawText)
+//        let postFeedbackWriting = PostFeedbackWriting(Writing: self.translatedRawText)
+        let postFeedbackWriting = PostFeedbackWriting(Writing: feedbackSubView.textTuples)       
         print(postFeedbackWriting)
         
         let body = [
@@ -157,7 +158,7 @@ class FeedbackVC: UIViewController {
             }
             
             self.feedbackSubView.updateFeedback()
-            self.feedbackSubView.originalSubtitleLabel.text = "< Original >"
+            self.feedbackSubView.originalSubtitleLabel.text = "< Translation >"
             self.feedbackSubView.ambiguitySubtitleLabel.text = "< Ambiguity >"
             self.feedbackSubView.alternativeSubtitleLabel.text = "< Alternative >"
             self.feedbackSubView.nuanceSubtitleLabel.text = "< Nuance >"
@@ -254,19 +255,20 @@ class FeedbackVC: UIViewController {
 
 extension FeedbackVC: feedbackViewDelegate {
     
-    func reflecfFeedback(original: String, alternative: String) {
+    func reflecfFeedback(original: String, alternative: String) -> Bool {
         print("apply feedback called")
         
         if alternative == "No improvements needed." {
             self.showToast(message: "반영할 피드백이 없습니다.", duration: 1, delay: 0.5)
-            return
+            return false
         }
         
         let range = (translatedText.string as NSString).range(of: original)
         
         guard range.location != NSNotFound else {
+            self.showToast(message: "해당 텍스트를 찾을 수 없습니다.", duration: 1, delay: 0.5)
                 print("Original string not found")
-                return
+                return false
             }
         
         translatedText.replaceCharacters(in: range, with: NSAttributedString(string: alternative, attributes: [
@@ -275,17 +277,18 @@ extension FeedbackVC: feedbackViewDelegate {
                 ]))
         
         translationTextView.attributedText = translatedText
-    
+        return true
     }
     
-    func undoFeedback(alternative: String, original: String) {
+    func undoFeedback(alternative: String, original: String) -> Bool {
         print("undo feedback called")
         
         let range = (translatedText.string as NSString).range(of: alternative)
         
         guard range.location != NSNotFound else {
+            self.showToast(message: "해당 텍스트를 찾을 수 없습니다.", duration: 1, delay: 0.5)
                 print("alternative string not found")
-                return
+                return false
             }
         
         translatedText.replaceCharacters(in: range, with: NSAttributedString(string: original, attributes: [
@@ -294,7 +297,7 @@ extension FeedbackVC: feedbackViewDelegate {
                 ]))
         
         translationTextView.attributedText = translatedText
-    
+        return true
     }
     
 }

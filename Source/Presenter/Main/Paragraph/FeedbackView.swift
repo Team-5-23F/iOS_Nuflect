@@ -12,6 +12,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //MARK: - Properties
     //will get from API
     lazy var currentSentenceNum: Int = 0
+    lazy var textTuples: [[String:String]] = []
     lazy var feedbacks: [[String:String]] = []
     lazy var isReflected: [Bool] = []
     
@@ -223,7 +224,7 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     //MARK: - Define Method
     func updateFeedback() {
         print("update to " + String(currentSentenceNum))
-        originalTextLabel.text = feedbacks[currentSentenceNum]["Sentence"]
+        originalTextLabel.text = feedbacks[currentSentenceNum]["Translation"]
         ambiguityTextLabel.text = feedbacks[currentSentenceNum]["Task1"]
         alternativeTextLabel.text = feedbacks[currentSentenceNum]["Task2"]
         nuanceTextLabel.text = feedbacks[currentSentenceNum]["Task3"]
@@ -256,13 +257,17 @@ class FeedbackView: UIView, UIScrollViewDelegate {
         }
         //undo
         if isReflected[currentSentenceNum] {
-            delegate?.undoFeedback(alternative: alternativeTextLabel.text ?? "", original: originalTextLabel.text ?? "")
-            isReflected[currentSentenceNum] = false
+            let result = delegate?.undoFeedback(alternative: alternativeTextLabel.text ?? "", original: originalTextLabel.text ?? "") ?? false
+            if result {
+                isReflected[currentSentenceNum] = false
+            }
         }
         //reflect
         else {
-            delegate?.reflecfFeedback(original: originalTextLabel.text ?? "", alternative: alternativeTextLabel.text ?? "")
-            isReflected[currentSentenceNum] = true
+            let result = delegate?.reflecfFeedback(original: originalTextLabel.text ?? "", alternative: alternativeTextLabel.text ?? "") ?? false
+            if result {
+                isReflected[currentSentenceNum] = true
+            }
         }
         
         updateFeedback()
@@ -291,37 +296,38 @@ class FeedbackView: UIView, UIScrollViewDelegate {
     }
     
     func callAPI() {
-        let sentence = PostFeedbackLine(Sentence: self.feedbacks[currentSentenceNum]["Sentence"] ?? "Sentence error occured")
+//        let sentence = PostFeedbackLine(Sentence: self.feedbacks[currentSentenceNum]["Sentence"] ?? "Sentence error occured")
+        let sentence = PostFeedbackLine(Original: textTuples[currentSentenceNum]["Original"] ?? " Original sentence error occured", Translation: textTuples[currentSentenceNum]["Translation"] ?? "Translation sentence error occured")
         let newFeedbackSentenceNum = currentSentenceNum + 1
         print(sentence)
         
         let body = [
-            "Sentence": sentence.Sentence as Any
+            "Sentence": sentence.Original as Any,
+            "Translation": sentence.Translation as Any
         ] as [String: Any]
         
         APIManger.shared.callPostRequest(baseEndPoint: .feedback, addPath: "line/", parameters: body) { JSON in
             print(JSON)
-            do {
-                // Convert JSON data to Swift objects
-                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [String] {
-                    
-                    let newFeedback = ["Sentence": jsonArray[0],
-                                       "Task1": jsonArray[1],
-                                       "Task2": jsonArray[2],
-                                       "Task3": jsonArray[3]
-                                   ]
-                    
-                    print(newFeedback)
-                    self.feedbacks.insert(newFeedback, at: newFeedbackSentenceNum)
-                    self.isReflected.insert(false, at: newFeedbackSentenceNum)
-                    
-                    self.currentSentenceNum += newFeedbackSentenceNum
-                    self.updateFeedback()
-                    
-                }
-            } catch {
-                print("Error converting JSON to Swift objects: \(error)")
-            }
+            var alternative = JSON["Task2"].stringValue
+//            if alternative.hasSuffix(".") {
+//                alternative = String(alternative.dropLast())
+//            }
+            
+            let newTextTuple = ["Original": self.textTuples[self.currentSentenceNum]["Original"] ?? "",
+                                "Translation": alternative]
+            self.textTuples.insert(newTextTuple, at: newFeedbackSentenceNum)
+            
+            let newFeedback = ["Translation": JSON["Translation"].stringValue,
+                               "Task1": JSON["Task1"].stringValue,
+                               "Task2": alternative,
+                               "Task3": JSON["Task3"].stringValue
+                           ]
+            print(newFeedback)
+            self.feedbacks.insert(newFeedback, at: newFeedbackSentenceNum)
+            self.isReflected.insert(false, at: newFeedbackSentenceNum)
+            
+            self.currentSentenceNum = newFeedbackSentenceNum
+            self.updateFeedback()
         }
     }
     
@@ -480,6 +486,6 @@ class FeedbackView: UIView, UIScrollViewDelegate {
 
 
 protocol feedbackViewDelegate: AnyObject {
-    func reflecfFeedback(original: String, alternative: String)
-    func undoFeedback(alternative: String, original: String)
+    func reflecfFeedback(original: String, alternative: String) -> Bool
+    func undoFeedback(alternative: String, original: String) -> Bool
 }

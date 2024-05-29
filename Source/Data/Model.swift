@@ -20,12 +20,13 @@ struct PostTranslate: Codable {
 
 // Post : feedback line
 struct PostFeedbackLine: Codable {
-    let Sentence: String
+    let Original: String
+    let Translation: String
 }
 
 // Post : feedback writing
 struct PostFeedbackWriting: Codable {
-    let Writing: String
+    let Writing: [[String:String]]
 }
 
 // Post : my writing

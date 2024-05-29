@@ -14,7 +14,7 @@ class WritingVC: UIViewController {
     lazy var paragraphNum: Int = 0
     lazy var paragraphTitle : String = "ParagraphTitle"
     
-    lazy var placeholder = "단락의 내용을 작성해주세요"
+    lazy var placeholder = "문장 끝에 마침표(.)를 꼭 붙여주세요."
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -123,13 +123,28 @@ class WritingVC: UIViewController {
         
         APIManger.shared.callPostRequest(baseEndPoint: .translate, addPath: "", parameters: body) { JSON in
             do {
-                let translation = JSON["Text"].stringValue
+                var translation = JSON["Text"].stringValue
                 print(translation)
+                if translation.hasPrefix("[Output]: ") {
+                    translation.removeFirst("[Output]: ".count)
+                } else if translation.hasPrefix("[Text]: ") {
+                    translation.removeFirst("[Text]: ".count)
+                }
+                            
                 
                 // Convert JSON data to Swift objects
-                if let jsonArray = try JSONSerialization.jsonObject(with: JSON["Result"].rawData(), options: []) as? [[String: String]] {
+                if var jsonArray = try JSONSerialization.jsonObject(with: JSON["Result"].rawData(), options: []) as? [[String: String]] {
                     print(jsonArray)
                     // Now jsonArray is of type [[String: String]]
+                    for (index, item) in jsonArray.enumerated() {
+                        if let original = item["Original"] {
+                            if original.hasPrefix("[Output]: ") {
+                                jsonArray[index]["Original"] = String(original.dropFirst("[Output]: ".count))
+                            } else if original.hasPrefix("[Text]: ") {
+                                jsonArray[index]["Original"] = String(original.dropFirst("[Text]: ".count))
+                            }
+                        }
+                    }
                     
                     let VC = FeedbackVC()
                     VC.paragraphNum = self.paragraphNum
