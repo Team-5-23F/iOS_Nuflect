@@ -122,19 +122,27 @@ class WritingVC: UIViewController {
         ] as [String: Any]
         
         APIManger.shared.callPostRequest(baseEndPoint: .translate, addPath: "", parameters: body) { JSON in
-            let translation = JSON["Text"].stringValue
-            print(translation)
-            
-            let VC = FeedbackVC()
-            VC.paragraphNum = self.paragraphNum
-            VC.translatedRawText = translation
-//            VC.translatedText = NSMutableAttributedString(string: translation, attributes: [
-//                .font: UIFont.Nuflect.baseMedium,
-//                .foregroundColor: UIColor.Nuflect.black ?? .black])
-            if let outlineVC = self.navigationController?.viewControllers.first(where: { $0 is OutlineVC }) as? OutlineVC {
-                    VC.delegate = outlineVC
+            do {
+                let translation = JSON["Text"].stringValue
+                print(translation)
+                
+                // Convert JSON data to Swift objects
+                if let jsonArray = try JSONSerialization.jsonObject(with: JSON["Result"].rawData(), options: []) as? [[String: String]] {
+                    print(jsonArray)
+                    // Now jsonArray is of type [[String: String]]
+                    
+                    let VC = FeedbackVC()
+                    VC.paragraphNum = self.paragraphNum
+                    VC.translatedRawText = translation
+                    VC.feedbackSubView.textTuples = jsonArray
+                    if let outlineVC = self.navigationController?.viewControllers.first(where: { $0 is OutlineVC }) as? OutlineVC {
+                            VC.delegate = outlineVC
+                        }
+                    self.navigationController?.pushViewController(VC, animated: true)
                 }
-            self.navigationController?.pushViewController(VC, animated: true)
+            } catch {
+                print("Error converting JSON to Swift objects: \(error)")
+            }
         }
         
     }
