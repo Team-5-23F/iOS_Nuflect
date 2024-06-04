@@ -103,6 +103,8 @@ class FeedbackVC: UIViewController {
     
     @objc func mypageButtonTapped() {
         print("mypage tapped")
+        let VC = MypageVC()
+        self.navigationController?.pushViewController(VC, animated: true)
     }
     
     @objc func endWritingParagraghButtonTapped() {
@@ -114,12 +116,58 @@ class FeedbackVC: UIViewController {
             navigationController?.popToViewController(VC, animated: true)
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        callAPI()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
         setConstraint()
         translationTextView.textColor = UIColor.Nuflect.black
+    }
+    
+    func callAPI() {
+//        let postFeedbackWriting = PostFeedbackWriting(Writing: self.translatedRawText)
+        let postFeedbackWriting = PostFeedbackWriting(Writing: feedbackSubView.textTuples)       
+        print(postFeedbackWriting)
+        
+        let body = [
+            "Writing": postFeedbackWriting.Writing as Any
+        ] as [String: Any]
+        
+        APIManger.shared.callPostRequest(baseEndPoint: .feedback, addPath: "writing/", parameters: body) { JSON in
+            let numOfFeedbacks = JSON.count
+            print(numOfFeedbacks)
+            print(JSON)
+            print(JSON.arrayValue)
+            
+            do {
+                // Convert JSON data to Swift objects
+                if let jsonArray = try JSONSerialization.jsonObject(with: JSON.rawData(), options: []) as? [[String: String]] {
+                    print(jsonArray)
+                    // Now jsonArray is of type [[String: String]]
+                    self.feedbackSubView.feedbacks = jsonArray
+                    for _ in 0 ..< self.feedbackSubView.feedbacks.count {
+                        self.feedbackSubView.isReflected.append(false)
+                    }
+                }
+            } catch {
+                print("Error converting JSON to Swift objects: \(error)")
+            }
+            
+            self.feedbackSubView.updateFeedback()
+            self.feedbackSubView.originalSubtitleLabel.text = "< Translation >"
+            self.feedbackSubView.ambiguitySubtitleLabel.text = "< Ambiguity >"
+            self.feedbackSubView.alternativeSubtitleLabel.text = "< Alternative >"
+            self.feedbackSubView.nuanceSubtitleLabel.text = "< Nuance >"
+            self.feedbackSubView.otherFeedbackButton.isHidden = false
+            self.feedbackSubView.otherFeedbackButton.isEnabled = true
+            self.feedbackSubView.reflectFeedbackButton.isHidden = false
+            self.feedbackSubView.reflectFeedbackButton.isEnabled = true
+        }
+        
     }
     
     //MARK: - Set Ui
@@ -207,14 +255,20 @@ class FeedbackVC: UIViewController {
 
 extension FeedbackVC: feedbackViewDelegate {
     
-    func reflecfFeedback(original: String, alternative: String) {
+    func reflecfFeedback(original: String, alternative: String) -> Bool {
         print("apply feedback called")
+        
+        if alternative == "No improvements needed." {
+            self.showToast(message: "반영할 피드백이 없습니다.", duration: 1, delay: 0.5)
+            return false
+        }
         
         let range = (translatedText.string as NSString).range(of: original)
         
         guard range.location != NSNotFound else {
+            self.showToast(message: "해당 텍스트를 찾을 수 없습니다.", duration: 1, delay: 0.5)
                 print("Original string not found")
-                return
+                return false
             }
         
         translatedText.replaceCharacters(in: range, with: NSAttributedString(string: alternative, attributes: [
@@ -223,17 +277,18 @@ extension FeedbackVC: feedbackViewDelegate {
                 ]))
         
         translationTextView.attributedText = translatedText
-    
+        return true
     }
     
-    func undoFeedback(alternative: String, original: String) {
+    func undoFeedback(alternative: String, original: String) -> Bool {
         print("undo feedback called")
         
         let range = (translatedText.string as NSString).range(of: alternative)
         
         guard range.location != NSNotFound else {
+            self.showToast(message: "해당 텍스트를 찾을 수 없습니다.", duration: 1, delay: 0.5)
                 print("alternative string not found")
-                return
+                return false
             }
         
         translatedText.replaceCharacters(in: range, with: NSAttributedString(string: original, attributes: [
@@ -242,7 +297,7 @@ extension FeedbackVC: feedbackViewDelegate {
                 ]))
         
         translationTextView.attributedText = translatedText
-    
+        return true
     }
     
 }

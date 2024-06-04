@@ -14,7 +14,7 @@ class WritingVC: UIViewController {
     lazy var paragraphNum: Int = 0
     lazy var paragraphTitle : String = "ParagraphTitle"
     
-    lazy var placeholder = paragraphTitle + " 단락의 내용을 작성해주세요"
+    lazy var placeholder = "문장 끝에 마침표(.)를 꼭 붙여주세요."
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -23,7 +23,7 @@ class WritingVC: UIViewController {
     lazy var writingTitle: UILabel = {
         let label = UILabel()
         label.text = String(paragraphNum + 1) + ". " + paragraphTitle + "\n단락의 내용을 작성해주세요"
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         label.font = UIFont.Nuflect.headtitlebold
         
         return label
@@ -103,17 +103,63 @@ class WritingVC: UIViewController {
     
     @objc func mypageButtonTapped() {
         print("mypage tapped")
+        let VC = MypageVC()
+        self.navigationController?.pushViewController(VC, animated: true)
     }
     
     @objc func requestButtonTapped() {
         print("request tapped")
-        let VC = FeedbackVC()
-        VC.paragraphNum = self.paragraphNum
-        VC.translatedRawText = "If you can prioritize responses, you can deepen connections with individual customers, whether through one-off interactions or through more meaningful connections. Especially in cases where customers have posted favorable comments about a brand, product, or service. Think about how you would feel if your comment was personally acknowledged. And imagine how it would feel to be acknowledged by a brand manager. Generally, people post comments because they want their words to be acknowledged. Particularly when people post positive comments, it is an expression of gratitude. On the other hand, it is a sad fact that most brand compliments go unanswered. In such cases, missing the opportunity to understand the motivation behind the praise may lead to generating dissatisfaction, ultimately missing the chance to create loyal fans."
-        if let outlineVC = navigationController?.viewControllers.first(where: { $0 is OutlineVC }) as? OutlineVC {
-                VC.delegate = outlineVC
+        self.showToast(message: "요청 완료", duration: 1, delay: 0.5)
+        callAPI()
+    }
+    
+    func callAPI() {
+        let postTranslate = PostTranslate(Text: self.writingTextView.text)
+        print(postTranslate)
+        
+        let body = [
+            "Text": postTranslate.Text as Any
+        ] as [String: Any]
+        
+        APIManger.shared.callPostRequest(baseEndPoint: .translate, addPath: "", parameters: body) { JSON in
+            do {
+                var translation = JSON["Text"].stringValue
+                print(translation)
+                if translation.hasPrefix("[Output]: ") {
+                    translation.removeFirst("[Output]: ".count)
+                } else if translation.hasPrefix("[Text]: ") {
+                    translation.removeFirst("[Text]: ".count)
+                }
+                            
+                
+                // Convert JSON data to Swift objects
+                if var jsonArray = try JSONSerialization.jsonObject(with: JSON["Result"].rawData(), options: []) as? [[String: String]] {
+                    print(jsonArray)
+                    // Now jsonArray is of type [[String: String]]
+                    for (index, item) in jsonArray.enumerated() {
+                        if let original = item["Translation"] {
+                            if original.hasPrefix("[Output]: ") {
+                                jsonArray[index]["Translation"] = String(original.dropFirst("[Output]: ".count))
+                            } else if original.hasPrefix("[Text]: ") {
+                                jsonArray[index]["Translation"] = String(original.dropFirst("[Text]: ".count))
+                            }
+                        }
+                    }
+                    
+                    let VC = FeedbackVC()
+                    VC.paragraphNum = self.paragraphNum
+                    VC.translatedRawText = translation
+                    VC.feedbackSubView.textTuples = jsonArray
+                    if let outlineVC = self.navigationController?.viewControllers.first(where: { $0 is OutlineVC }) as? OutlineVC {
+                            VC.delegate = outlineVC
+                        }
+                    self.navigationController?.pushViewController(VC, animated: true)
+                }
+            } catch {
+                print("Error converting JSON to Swift objects: \(error)")
             }
-        navigationController?.pushViewController(VC, animated: true)
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -171,6 +217,7 @@ class WritingVC: UIViewController {
         writingTitle.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom).offset(top)
             make.leading.equalToSuperview().offset(titleLeading)
+            make.trailing.equalToSuperview().offset(-titleLeading)
         }
         
         writingIntroductionLabel.snp.makeConstraints { make in

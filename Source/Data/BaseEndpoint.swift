@@ -8,20 +8,30 @@
 import Foundation
 
 enum BaseEndpoint {
+    case user
     
-    case login
     case outline
+    
     case translate
-    case feedbackAll
-    case feedbackOne
-
+    
+    case feedback
+    
+    case myWriting
+    case myParagraph
+    
+    
     var requestURL:String {
         switch self {
-        case.login: return URL.getEndpointString("/api/login")
-        case.outline: return URL.getEndpointString("/api/outline")
-        case.translate: return URL.getEndpointString("/api/translate")
-        case.feedbackAll: return URL.getEndpointString("/api/feedback/all")
-        case.feedbackOne: return URL.getEndpointString("/api/feedback")
+        case.user: return URL.getEndpointString("/users/")
+            
+        case.outline: return URL.getEndpointString("/apis/gpt/outline/")
+            
+        case.translate: return URL.getEndpointString("/apis/gpt/translate/")
+            
+        case.feedback: return URL.getEndpointString("/apis/gpt/feedback/")
+            
+        case.myWriting: return URL.getEndpointString("/mywriting/")
+        case.myParagraph: return URL.getEndpointString("/myparagraph/")
         }
     }
 }

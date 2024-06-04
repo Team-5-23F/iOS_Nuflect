@@ -7,8 +7,11 @@
 
 import UIKit
 import SnapKit
+import KakaoSDKUser
 
 class LoginVC: UIViewController {
+    lazy var kakaoAuthVM = KakaoAuthVM()
+    
     //MARK: - UI ProPerties
     //logo
     lazy var logoImageView: UIImageView = {
@@ -44,11 +47,108 @@ class LoginVC: UIViewController {
     }
     
     @objc func kakaoLoginButtonTapped(_ sender: UIButton) {
-        print("kakao login button tapped")
-        let VC = MainVC()
-        navigationController?.pushViewController(VC, animated: true)
+        self.showToast(message: "로그인 요청", duration: 1, delay: 0.5)
+//        callAPI()
+        loginByID()
+//        let VC = MypageVC()
+//        self.navigationController?.pushViewController(VC, animated: true)
+        //kakao_3457874484
+        
     }
     
+    func callAPI() {
+        Task { [weak self] in
+            if await kakaoAuthVM.KakaoLogin() {
+                DispatchQueue.main.async {
+                    UserApi.shared.me() { (user, error) in
+                        if let error = error {
+                            print(error)
+                        }
+                        
+                        print("카카오로그인 성공")
+                        
+                        guard let userID = user?.id!
+                        else {
+                            print("ID error")
+                            return
+                        }
+                        
+                        //To do
+                        print(user?.kakaoAccount?.profile?.nickname)
+                        
+                        print(userID)
+                        
+                        let body = [
+                            "social_id": "kakao_" + String(userID),
+                            "social_type": "kakao"
+                        ] as [String: Any]
+                        
+                        print(body)
+                        APIManger.shared.callLoginPostRequest(baseEndPoint: .user, addPath: "login/", parameters: body) { JSON in
+                            
+                            if JSON.isEmpty {
+                                print("server error")
+                                return
+                            }
+                            
+                            let accessToken = JSON["access_token"].stringValue
+                            let refreshToken = JSON["refresh_token"].stringValue
+                            
+                            if accessToken.isEmpty {
+                                print("token error")
+                                return
+                            }
+                            
+                            print(accessToken)
+                            print(refreshToken)
+                            
+                            APIManger.shared.jwtToken = accessToken
+                            print(APIManger.shared.jwtToken)
+                            
+                            let VC = MainVC()
+                            self?.navigationController?.pushViewController(VC, animated: true)
+                        }
+                    }
+                }
+            } else {
+                print("Login failed.")
+            }
+        }
+    }
+    
+    func loginByID() {
+        let body = [
+            "social_id": "kakao_3457874484",
+            "social_type": "kakao"
+        ] as [String: Any]
+        
+        print(body)
+        APIManger.shared.callLoginPostRequest(baseEndPoint: .user, addPath: "login/", parameters: body) { JSON in
+            
+            if JSON.isEmpty {
+                print("server error")
+                return
+            }
+            
+            let accessToken = JSON["access_token"].stringValue
+            let refreshToken = JSON["refresh_token"].stringValue
+            
+            if accessToken.isEmpty {
+                print("token error")
+                return
+            }
+            
+            print(accessToken)
+            print(refreshToken)
+            
+            APIManger.shared.jwtToken = accessToken
+            print(APIManger.shared.jwtToken)
+            
+            let VC = MainVC()
+//            let VC = OutlineVC()
+            self.navigationController?.pushViewController(VC, animated: true)
+        }
+    }
     
     //MARK: - Set Ui
     func setView() {

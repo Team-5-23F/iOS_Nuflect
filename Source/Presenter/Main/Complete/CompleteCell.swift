@@ -8,13 +8,31 @@ import UIKit
 import SnapKit
 
 class CompleteCell: UICollectionViewCell {
+    //delegate for more button
+    weak var delegate: moreOptionDelegate?
+    
+    var bookmarkAction: UIAction!
+    var copyAction: UIAction!
+    
+    lazy var paragraphNum: Int = 0
+    
     //MARK: - UI ProPerties
-    lazy var paragraphTitle: UILabel = {
+    lazy var paragraphTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Paragraph"
-        label.font = UIFont.Nuflect.subtitleSemiBold
+        label.font = UIFont.Nuflect.baseSemiBold
         label.textColor = UIColor.Nuflect.black
-        label.numberOfLines = 2
+        label.numberOfLines = 0
+        
+        return label
+    }()
+    
+    lazy var paragraphTextLabel: UILabel = {
+        let label = UILabel()
+        label.text = "content\n\ncontent"
+        label.font = UIFont.Nuflect.baseMedium
+        label.textColor = UIColor.Nuflect.black
+        label.numberOfLines = 0
         
         return label
     }()
@@ -30,20 +48,26 @@ class CompleteCell: UICollectionViewCell {
         
         button.tintColor = UIColor.Nuflect.black
         button.setBackgroundImage(resizedMore, for: .normal)
-        button.backgroundColor = UIColor.Nuflect.white
+        button.backgroundColor = UIColor.clear
         
         let selectedMenu = {(action: UIAction) in
             print(action.title)
             //delegate func to CompleteVC
-//            self.delegate?.moreOptionTapped(paragraphNum: self.paragraphNum, selectedOption: action.title)
+            self.delegate?.moreOptionTapped(cellNum: self.paragraphNum, selectedOption: action.title)
         }
         
-        button.menu = UIMenu(children: [
-            UIAction(title: "단락 작성", state: .off, handler: selectedMenu),
-            UIAction(title: "이름 변경", state: .off, handler: selectedMenu),
-            UIAction(title: "순서 변경", state: .off, handler: selectedMenu),
-            UIAction(title: "단락 삭제", attributes: .destructive, state: .off, handler: selectedMenu),
-        ])
+        bookmarkAction = UIAction(title: "북마크 등록", state: .off) { [weak self] action in
+            print(action.title)
+            self?.delegate?.moreOptionTapped(cellNum: self?.paragraphNum ?? 0, selectedOption: action.title)
+        }
+                
+        copyAction = UIAction(title: "단락 복사", state: .off) { [weak self] action in
+            print(action.title)
+            self?.delegate?.moreOptionTapped(cellNum: self?.paragraphNum ?? 0, selectedOption: action.title)
+        }
+        
+        // Set the menu
+        button.menu = UIMenu(children: [bookmarkAction, copyAction])
         
         button.showsMenuAsPrimaryAction = true
         button.changesSelectionAsPrimaryAction = false
@@ -51,10 +75,28 @@ class CompleteCell: UICollectionViewCell {
         return button
     }()
     
+    func updateMenuItemTitle(isBookmarked: Bool) {
+        //true, is bookmarked
+        if isBookmarked {
+            bookmarkAction = UIAction(title: "북마크 해제", state: .off) { [weak self] action in
+                self?.delegate?.moreOptionTapped(cellNum: self?.paragraphNum ?? 0, selectedOption: action.title)
+            }
+        }
+        //false, is not bookmarked
+        else {
+            bookmarkAction = UIAction(title: "북마크 등록", state: .off) { [weak self] action in
+                self?.delegate?.moreOptionTapped(cellNum: self?.paragraphNum ?? 0, selectedOption: action.title)
+            }
+        }
+        
+        moreButton.menu = UIMenu(children: [bookmarkAction, copyAction])
+    }
+    
     //MARK: - Define Method
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()
+        addsubview()
         setConstraint()
     }
     
@@ -65,31 +107,37 @@ class CompleteCell: UICollectionViewCell {
     //MARK: - Set Ui
     func setView(){
         self.layer.cornerRadius = 12
-        self.backgroundColor = .Nuflect.white
-        self.layer.borderWidth = 2
-        self.layer.borderColor = UIColor.Nuflect.mainBlue?.cgColor
-        addsubview()
-        
-        
+        self.backgroundColor = .Nuflect.inputBlue
     }
     
     func addsubview() {
-        [paragraphTitle, moreButton].forEach { view in
+        [paragraphTitleLabel, paragraphTextLabel, moreButton].forEach { view in
             self.addSubview(view)
         }
     }
     
     func setConstraint(){
-        paragraphTitle.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(25)
-            make.centerY.equalToSuperview()
-            make.trailing.equalTo(moreButton).offset(-25)
+        let top = 18
+        let leading = 23
+        
+        paragraphTitleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(top)
+            make.leading.equalToSuperview().offset(leading)
+            make.trailing.equalToSuperview().offset(-leading)
+        }
+        
+        paragraphTextLabel.snp.makeConstraints { make in
+            make.top.equalTo(paragraphTitleLabel.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(leading)
+            make.trailing.equalToSuperview().offset(-leading)
+            make.bottom.equalToSuperview().offset(-top)
         }
         
         moreButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-25)
-            make.centerY.equalToSuperview()
+            make.top.equalToSuperview().offset(top)
+            make.trailing.equalToSuperview().offset(-leading / 2)
+            make.width.equalTo(24)
+            make.height.equalTo(24)
         }
-        
     }
 }

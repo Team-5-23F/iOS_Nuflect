@@ -7,13 +7,7 @@
 
 import Foundation
 
-// GetOutline
-struct GetOutline: Codable {
+// Get : login callback
+struct GetLoginCallback: Codable {
     let paragrahps: [String]
-}
-
-// GetFeedback
-struct GetFeedback: Codable {
-    let translation: String
-    let feedbacks: [[String]]
 }

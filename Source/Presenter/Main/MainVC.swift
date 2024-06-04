@@ -11,7 +11,7 @@ import SnapKit
 class MainVC: UIViewController {
     //MARK: - Properties
     lazy var placeholderFormat = "작성할 글의 형식을 입력해주세요."
-    lazy var placeholderpurpose = "작성할 글의 목적을 입력해주세요.\n구체적으로 작성할 수록\n더욱 적합한 글의 개요가 제공됩니다."
+    lazy var placeholderPurpose = "작성할 글의 목적을 입력해주세요.\n구체적으로 작성할 수록\n더욱 적합한 글의 개요가 제공됩니다."
     
     //MARK: - UI ProPerties
     lazy var navigationBar = UINavigationBar()
@@ -58,7 +58,7 @@ class MainVC: UIViewController {
     //purpose title
     lazy var purposeTitle: UILabel = {
         let label = UILabel()
-        label.text = "글쓰기에 앞서\n글의 목적을 입력해주세요"
+        label.text = "작성할 글의\n형식과 목적을 입력해주세요"
         label.numberOfLines = 2
         label.font = UIFont.Nuflect.headtitlebold
         
@@ -93,7 +93,7 @@ class MainVC: UIViewController {
     lazy var purposeTextView: UITextView = {
         let textView = UITextView()
         textView.delegate = self
-        textView.text = placeholderpurpose
+        textView.text = placeholderPurpose
         textView.font = UIFont.Nuflect.baseMedium
         textView.textColor = UIColor.Nuflect.darkGray
         textView.backgroundColor = UIColor.Nuflect.inputBlue
@@ -150,18 +150,53 @@ class MainVC: UIViewController {
     
     @objc func mypageButtonTapped() {
         print("mypage tapped")
+        let VC = MypageVC()
+        self.navigationController?.pushViewController(VC, animated: true)
     }
     
     @objc func introductionButtonTapped() {
         print("introduction tapped")
+        let VC = IntroductionVC()
+        self.navigationController?.pushViewController(VC, animated: true)
     }
     
     @objc func startButtonTapped() {
-        print("start tapped")
-        let VC = OutlineVC()
-        VC.formatText = formatTextView.text
-        VC.purposeText = purposeTextView.text
-        navigationController?.pushViewController(VC, animated: true)
+        self.showToast(message: "Outline 요청", duration: 1, delay: 0.5)
+        callPostAPI()
+    }
+    
+    func callPostAPI() {
+        let postOutline = PostOutline(Task: self.formatTextView.text, Context: self.purposeTextView.text)
+        print(postOutline)
+        
+        let body = [
+            "Task": postOutline.Task,
+            "Context": postOutline.Context
+        ] as [String: Any]
+            
+        APIManger.shared.callPostRequest(baseEndPoint: .outline, addPath: "", parameters: body) { JSON in
+            let numOfIndex = JSON["NumOfIndex"].intValue
+            print(numOfIndex)
+            var outline: [[String:String]] = []
+            for i in 1 ... numOfIndex {
+                let index = JSON["Index"]["para\(i)"].stringValue
+                print(i)
+                print(index)
+                outline.append(["index": index, "content": ""])
+            }
+            print(outline)
+            
+            let VC = OutlineVC()
+            VC.formatText = self.formatTextView.text
+            VC.purposeText = self.purposeTextView.text
+            VC.paragraphs = outline
+            self.navigationController?.pushViewController(VC, animated: true)
+            
+            self.formatTextView.text = ""
+            self.purposeTextView.text = ""
+            self.textViewDidEndEditing(self.purposeTextView)
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -302,7 +337,7 @@ extension MainVC: UITextViewDelegate {
             self.formatTextView.text = nil
         }
         
-        if textView.text == placeholderpurpose {
+        if textView.text == placeholderPurpose {
             self.purposeTextView.textColor = .Nuflect.black
             self.purposeTextView.text = nil
         }
@@ -317,11 +352,11 @@ extension MainVC: UITextViewDelegate {
         
         if purposeTextView.text.isEmpty {
             self.purposeTextView.textColor = UIColor.Nuflect.darkGray
-            self.purposeTextView.text = placeholderpurpose
+            self.purposeTextView.text = placeholderPurpose
         }
         
         //get inputs in textview, activate the button
-        if purposeTextView.text.isEmpty || textView.text == placeholderFormat || textView.text == placeholderpurpose {
+        if formatTextView.text == placeholderFormat || purposeTextView.text == placeholderPurpose {
             startButton.backgroundColor = .Nuflect.lightGray
             startButton.setTitleColor(.Nuflect.darkGray, for: .normal)
             startButton.isEnabled = false

@@ -8,9 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		090B28DA2BB8039800493044 /* AddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090B28D92BB8039800493044 /* AddCell.swift */; };
-		093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D52BA83FE300CFA054 /* BaseVC.swift */; };
+		090DFDBB2BEA536300D63CBA /* MypageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DFDBA2BEA536300D63CBA /* MypageCell.swift */; };
+		092558312BECB866007C1589 /* BookmarkParagraphVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092558302BECB866007C1589 /* BookmarkParagraphVC.swift */; };
+		092558332BECB872007C1589 /* WritingHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092558322BECB872007C1589 /* WritingHistoryVC.swift */; };
+		0929E8642BF4B04E00DBE104 /* BookmarkParagraphCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0929E8632BF4B04E00DBE104 /* BookmarkParagraphCell.swift */; };
+		0929E8662BF4B0A400DBE104 /* WritingHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0929E8652BF4B0A400DBE104 /* WritingHistoryCell.swift */; };
 		093535D82BA8404600CFA054 /* SetFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D72BA8404600CFA054 /* SetFont.swift */; };
-		093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535D92BA8439300CFA054 /* BaseScrollVC.swift */; };
 		093535DE2BA8469300CFA054 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535DD2BA8469300CFA054 /* LoginVC.swift */; };
 		093535E12BA85DD600CFA054 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535E02BA85DD600CFA054 /* MainVC.swift */; };
 		093535E32BA9342200CFA054 /* ColorToImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093535E22BA9342200CFA054 /* ColorToImage.swift */; };
@@ -23,11 +26,18 @@
 		093F1F612BBD82C400760270 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093F1F602BBD82C400760270 /* FeedbackView.swift */; };
 		096A3CC62BC2587E005CF1A9 /* CompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096A3CC52BC2587E005CF1A9 /* CompleteCell.swift */; };
 		098ED6242BAAC476006A6628 /* OutlineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098ED6232BAAC476006A6628 /* OutlineCell.swift */; };
+		09BDCFC22BDF61AA00D11376 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BDCFC12BDF61AA00D11376 /* PaddingLabel.swift */; };
+		09BF8A6C2BFC438D00C98FC1 /* IntroductionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BF8A6B2BFC438D00C98FC1 /* IntroductionVC.swift */; };
+		09CC6EB22BF1078A005ED96A /* ShowToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CC6EB12BF1078A005ED96A /* ShowToast.swift */; };
+		09CF09552C077B6A00F29C98 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 09CF09542C077B6A00F29C98 /* KakaoSDK */; };
 		09EADC242BDB94E200A75F61 /* Extension URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC232BDB94E200A75F61 /* Extension URL.swift */; };
 		09EADC262BDB954E00A75F61 /* BaseEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC252BDB954E00A75F61 /* BaseEndpoint.swift */; };
 		09EADC282BDB965C00A75F61 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC272BDB965C00A75F61 /* APIManager.swift */; };
-		09EADC2A2BDB96A900A75F61 /* GetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC292BDB96A900A75F61 /* GetModel.swift */; };
-		09EADC2C2BDB96B000A75F61 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC2B2BDB96B000A75F61 /* PostModel.swift */; };
+		09EADC2C2BDB96B000A75F61 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC2B2BDB96B000A75F61 /* Model.swift */; };
+		09EADC2F2BDE402100A75F61 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09EADC2E2BDE402100A75F61 /* KakaoSDKAuth */; };
+		09EADC312BDE402100A75F61 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 09EADC302BDE402100A75F61 /* KakaoSDKCommon */; };
+		09EADC332BDE402100A75F61 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 09EADC322BDE402100A75F61 /* KakaoSDKUser */; };
+		09EADC352BDE410200A75F61 /* KakaoAuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EADC342BDE410200A75F61 /* KakaoAuthVM.swift */; };
 		09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F022BA3FC0700F1440C /* AppDelegate.swift */; };
 		09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F042BA3FC0700F1440C /* SceneDelegate.swift */; };
 		09F75F072BA3FC0700F1440C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F062BA3FC0700F1440C /* ViewController.swift */; };
@@ -41,9 +51,7 @@
 		09F75F522BA3FCDB00F1440C /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F512BA3FCDB00F1440C /* IQKeyboardManagerSwift */; };
 		09F75F552BA3FCF200F1440C /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F542BA3FCF200F1440C /* SwiftyJSON */; };
 		09F75F582BA3FD0400F1440C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F572BA3FD0400F1440C /* SnapKit */; };
-		09F75F5A2BA3FD0400F1440C /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F592BA3FD0400F1440C /* SnapKit-Dynamic */; };
 		09F75F5D2BA3FD1800F1440C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F5C2BA3FD1800F1440C /* Alamofire */; };
-		09F75F5F2BA3FD1800F1440C /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 09F75F5E2BA3FD1800F1440C /* AlamofireDynamic */; };
 		09F75F652BA40B3D00F1440C /* SetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F75F642BA40B3D00F1440C /* SetColor.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,11 +72,27 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		09CF09522C077B0F00F29C98 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		090B28D92BB8039800493044 /* AddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCell.swift; sourceTree = "<group>"; };
-		093535D52BA83FE300CFA054 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
+		090DFDBA2BEA536300D63CBA /* MypageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageCell.swift; sourceTree = "<group>"; };
+		092558302BECB866007C1589 /* BookmarkParagraphVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkParagraphVC.swift; sourceTree = "<group>"; };
+		092558322BECB872007C1589 /* WritingHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingHistoryVC.swift; sourceTree = "<group>"; };
+		0929E8632BF4B04E00DBE104 /* BookmarkParagraphCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkParagraphCell.swift; sourceTree = "<group>"; };
+		0929E8652BF4B0A400DBE104 /* WritingHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingHistoryCell.swift; sourceTree = "<group>"; };
 		093535D72BA8404600CFA054 /* SetFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFont.swift; sourceTree = "<group>"; };
-		093535D92BA8439300CFA054 /* BaseScrollVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollVC.swift; sourceTree = "<group>"; };
 		093535DD2BA8469300CFA054 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		093535E02BA85DD600CFA054 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		093535E22BA9342200CFA054 /* ColorToImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorToImage.swift; sourceTree = "<group>"; };
@@ -81,11 +105,14 @@
 		093F1F602BBD82C400760270 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		096A3CC52BC2587E005CF1A9 /* CompleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteCell.swift; sourceTree = "<group>"; };
 		098ED6232BAAC476006A6628 /* OutlineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineCell.swift; sourceTree = "<group>"; };
+		09BDCFC12BDF61AA00D11376 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		09BF8A6B2BFC438D00C98FC1 /* IntroductionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionVC.swift; sourceTree = "<group>"; };
+		09CC6EB12BF1078A005ED96A /* ShowToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowToast.swift; sourceTree = "<group>"; };
 		09EADC232BDB94E200A75F61 /* Extension URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension URL.swift"; sourceTree = "<group>"; };
 		09EADC252BDB954E00A75F61 /* BaseEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEndpoint.swift; sourceTree = "<group>"; };
 		09EADC272BDB965C00A75F61 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		09EADC292BDB96A900A75F61 /* GetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetModel.swift; sourceTree = "<group>"; };
-		09EADC2B2BDB96B000A75F61 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
+		09EADC2B2BDB96B000A75F61 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		09EADC342BDE410200A75F61 /* KakaoAuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAuthVM.swift; sourceTree = "<group>"; };
 		09F75EFF2BA3FC0700F1440C /* iOS_Nuflect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Nuflect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F75F022BA3FC0700F1440C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09F75F042BA3FC0700F1440C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -108,12 +135,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09EADC312BDE402100A75F61 /* KakaoSDKCommon in Frameworks */,
+				09CF09552C077B6A00F29C98 /* KakaoSDK in Frameworks */,
+				09EADC2F2BDE402100A75F61 /* KakaoSDKAuth in Frameworks */,
 				09F75F5D2BA3FD1800F1440C /* Alamofire in Frameworks */,
-				09F75F5F2BA3FD1800F1440C /* AlamofireDynamic in Frameworks */,
 				09F75F582BA3FD0400F1440C /* SnapKit in Frameworks */,
 				09F75F552BA3FCF200F1440C /* SwiftyJSON in Frameworks */,
 				09F75F522BA3FCDB00F1440C /* IQKeyboardManagerSwift in Frameworks */,
-				09F75F5A2BA3FD0400F1440C /* SnapKit-Dynamic in Frameworks */,
+				09EADC332BDE402100A75F61 /* KakaoSDKUser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +163,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		090DFDB92BEA50CD00D63CBA /* History */ = {
+			isa = PBXGroup;
+			children = (
+				092558302BECB866007C1589 /* BookmarkParagraphVC.swift */,
+				0929E8632BF4B04E00DBE104 /* BookmarkParagraphCell.swift */,
+				092558322BECB872007C1589 /* WritingHistoryVC.swift */,
+				0929E8652BF4B0A400DBE104 /* WritingHistoryCell.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		09CF095C2C07829700F29C98 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		09F75EF62BA3FC0700F1440C = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +189,7 @@
 				09F75F1B2BA3FC0900F1440C /* iOS_NuflectTests */,
 				09F75F252BA3FC0900F1440C /* iOS_NuflectUITests */,
 				09F75F002BA3FC0700F1440C /* Products */,
+				09CF095C2C07829700F29C98 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -188,18 +236,10 @@
 			path = iOS_NuflectUITests;
 			sourceTree = "<group>";
 		};
-		09F75F382BA3FC2300F1440C /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				093535D52BA83FE300CFA054 /* BaseVC.swift */,
-				093535D92BA8439300CFA054 /* BaseScrollVC.swift */,
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
 		09F75F392BA3FC2300F1440C /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				09BDCFC12BDF61AA00D11376 /* PaddingLabel.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -210,6 +250,7 @@
 				09F75F642BA40B3D00F1440C /* SetColor.swift */,
 				093535D72BA8404600CFA054 /* SetFont.swift */,
 				093535E22BA9342200CFA054 /* ColorToImage.swift */,
+				09CC6EB12BF1078A005ED96A /* ShowToast.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -217,7 +258,6 @@
 		09F75F3B2BA3FC2300F1440C /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				09F75F382BA3FC2300F1440C /* Base */,
 				09F75F392BA3FC2300F1440C /* Custom */,
 				09F75F3A2BA3FC2300F1440C /* Extension */,
 			);
@@ -268,6 +308,7 @@
 				09F75F412BA3FC2300F1440C /* Outline */,
 				09F75F442BA3FC2300F1440C /* Paragraph */,
 				09F75F3F2BA3FC2300F1440C /* Complete */,
+				09BF8A6B2BFC438D00C98FC1 /* IntroductionVC.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -275,7 +316,9 @@
 		09F75F472BA3FC2300F1440C /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				090DFDB92BEA50CD00D63CBA /* History */,
 				093535F02BA9812B00CFA054 /* MypageVC.swift */,
+				090DFDBA2BEA536300D63CBA /* MypageCell.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -294,38 +337,23 @@
 		09F75F492BA3FC2300F1440C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				09F75F612BA3FE2D00F1440C /* Data */,
+				09F75F622BA3FE3D00F1440C /* Network */,
 				09F75F482BA3FC2300F1440C /* Presenter */,
 			);
 			path = Source;
 			sourceTree = "<group>";
 		};
-		09F75F612BA3FE2D00F1440C /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				09F75F632BA3FE4500F1440C /* Model */,
-				09F75F622BA3FE3D00F1440C /* Network */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
 		09F75F622BA3FE3D00F1440C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				09EADC2B2BDB96B000A75F61 /* Model.swift */,
 				09EADC232BDB94E200A75F61 /* Extension URL.swift */,
 				09EADC252BDB954E00A75F61 /* BaseEndpoint.swift */,
 				09EADC272BDB965C00A75F61 /* APIManager.swift */,
+				09EADC342BDE410200A75F61 /* KakaoAuthVM.swift */,
 			);
 			name = Network;
-			sourceTree = "<group>";
-		};
-		09F75F632BA3FE4500F1440C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				09EADC292BDB96A900A75F61 /* GetModel.swift */,
-				09EADC2B2BDB96B000A75F61 /* PostModel.swift */,
-			);
-			name = Model;
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -338,6 +366,7 @@
 				09F75EFB2BA3FC0700F1440C /* Sources */,
 				09F75EFC2BA3FC0700F1440C /* Frameworks */,
 				09F75EFD2BA3FC0700F1440C /* Resources */,
+				09CF09522C077B0F00F29C98 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -348,9 +377,11 @@
 				09F75F512BA3FCDB00F1440C /* IQKeyboardManagerSwift */,
 				09F75F542BA3FCF200F1440C /* SwiftyJSON */,
 				09F75F572BA3FD0400F1440C /* SnapKit */,
-				09F75F592BA3FD0400F1440C /* SnapKit-Dynamic */,
 				09F75F5C2BA3FD1800F1440C /* Alamofire */,
-				09F75F5E2BA3FD1800F1440C /* AlamofireDynamic */,
+				09EADC2E2BDE402100A75F61 /* KakaoSDKAuth */,
+				09EADC302BDE402100A75F61 /* KakaoSDKCommon */,
+				09EADC322BDE402100A75F61 /* KakaoSDKUser */,
+				09CF09542C077B6A00F29C98 /* KakaoSDK */,
 			);
 			productName = iOS_Nuflect;
 			productReference = 09F75EFF2BA3FC0700F1440C /* iOS_Nuflect.app */;
@@ -429,6 +460,7 @@
 				09F75F532BA3FCF200F1440C /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				09F75F562BA3FD0400F1440C /* XCRemoteSwiftPackageReference "SnapKit" */,
 				09F75F5B2BA3FD1800F1440C /* XCRemoteSwiftPackageReference "Alamofire" */,
+				09EADC2D2BDE402100A75F61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = 09F75F002BA3FC0700F1440C /* Products */;
 			projectDirPath = "";
@@ -483,20 +515,26 @@
 				093535E92BA97A4E00CFA054 /* OutlineVC.swift in Sources */,
 				09EADC262BDB954E00A75F61 /* BaseEndpoint.swift in Sources */,
 				09F75F652BA40B3D00F1440C /* SetColor.swift in Sources */,
+				0929E8662BF4B0A400DBE104 /* WritingHistoryCell.swift in Sources */,
 				09F75F032BA3FC0700F1440C /* AppDelegate.swift in Sources */,
-				09EADC2A2BDB96A900A75F61 /* GetModel.swift in Sources */,
+				09BDCFC22BDF61AA00D11376 /* PaddingLabel.swift in Sources */,
 				09F75F052BA3FC0700F1440C /* SceneDelegate.swift in Sources */,
 				093535D82BA8404600CFA054 /* SetFont.swift in Sources */,
-				093535D62BA83FE300CFA054 /* BaseVC.swift in Sources */,
 				09EADC242BDB94E200A75F61 /* Extension URL.swift in Sources */,
-				093535DA2BA8439300CFA054 /* BaseScrollVC.swift in Sources */,
+				090DFDBB2BEA536300D63CBA /* MypageCell.swift in Sources */,
+				09EADC352BDE410200A75F61 /* KakaoAuthVM.swift in Sources */,
+				09CC6EB22BF1078A005ED96A /* ShowToast.swift in Sources */,
+				0929E8642BF4B04E00DBE104 /* BookmarkParagraphCell.swift in Sources */,
 				098ED6242BAAC476006A6628 /* OutlineCell.swift in Sources */,
 				093F1F612BBD82C400760270 /* FeedbackView.swift in Sources */,
 				093535ED2BA9810B00CFA054 /* FeedbackVC.swift in Sources */,
+				09BF8A6C2BFC438D00C98FC1 /* IntroductionVC.swift in Sources */,
+				092558332BECB872007C1589 /* WritingHistoryVC.swift in Sources */,
 				090B28DA2BB8039800493044 /* AddCell.swift in Sources */,
 				093535E32BA9342200CFA054 /* ColorToImage.swift in Sources */,
-				09EADC2C2BDB96B000A75F61 /* PostModel.swift in Sources */,
+				09EADC2C2BDB96B000A75F61 /* Model.swift in Sources */,
 				09EADC282BDB965C00A75F61 /* APIManager.swift in Sources */,
+				092558312BECB866007C1589 /* BookmarkParagraphVC.swift in Sources */,
 				096A3CC62BC2587E005CF1A9 /* CompleteCell.swift in Sources */,
 				09F75F0D2BA3FC0700F1440C /* iOS_Nuflect.xcdatamodeld in Sources */,
 			);
@@ -847,6 +885,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		09EADC2D2BDE402100A75F61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.22.1;
+			};
+		};
 		09F75F502BA3FCDB00F1440C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
@@ -882,6 +928,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		09CF09542C077B6A00F29C98 /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09EADC2D2BDE402100A75F61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
+		};
+		09EADC2E2BDE402100A75F61 /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09EADC2D2BDE402100A75F61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		09EADC302BDE402100A75F61 /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09EADC2D2BDE402100A75F61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+		09EADC322BDE402100A75F61 /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09EADC2D2BDE402100A75F61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
+		};
 		09F75F512BA3FCDB00F1440C /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 09F75F502BA3FCDB00F1440C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
@@ -897,20 +963,10 @@
 			package = 09F75F562BA3FD0400F1440C /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		09F75F592BA3FD0400F1440C /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 09F75F562BA3FD0400F1440C /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
-		};
 		09F75F5C2BA3FD1800F1440C /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 09F75F5B2BA3FD1800F1440C /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
-		};
-		09F75F5E2BA3FD1800F1440C /* AlamofireDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 09F75F5B2BA3FD1800F1440C /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = AlamofireDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 
