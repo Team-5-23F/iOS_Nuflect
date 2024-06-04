@@ -145,7 +145,7 @@ class LoginVC: UIViewController {
             print(APIManger.shared.jwtToken)
             
             let VC = MainVC()
-//            let VC = OutlineVC()
+//            let VC = WritingVC()
             self.navigationController?.pushViewController(VC, animated: true)
         }
     }

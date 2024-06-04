@@ -134,8 +134,33 @@ class MainVC: UIViewController {
         return button
     }()
     
+    //sample data button
+    lazy var sampleDataButton: UIButton = {
+        let button = UIButton()
+        
+//        button.backgroundColor = UIColor.Nuflect.white
+        button.layer.cornerRadius = 11
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.Nuflect.darkGray?.cgColor
+        
+        button.setTitle(" 샘플 데이터 입력 ", for: .normal)
+        button.titleLabel?.font = UIFont.Nuflect.smallMedium
+        button.setTitleColor(UIColor.Nuflect.darkGray, for: .normal)
+        
+        button.addTarget(self, action: #selector(sampleDataButtonTapped), for: .touchUpInside)
+        
+        return button
+    }()
     
     //MARK: - Define Method
+    @objc func sampleDataButtonTapped() {
+        formatTextView.text = "정보 전달 글"
+        formatTextView.textColor = .black
+        purposeTextView.text = "졸업프로젝트 서비스 소개 글"
+        purposeTextView.textColor = .black
+        textViewDidEndEditing(purposeTextView)
+    }
+    
     @objc func formatDoneButtonTapped() {
         formatTextView.resignFirstResponder()
     }
@@ -253,7 +278,7 @@ class MainVC: UIViewController {
     }
     
     func addSubView() {
-        [navigationBar, introductionButton, purposeTitle, formatTextView, purposeTextView, startButton].forEach { view in
+        [navigationBar, introductionButton, purposeTitle, formatTextView, purposeTextView, startButton, sampleDataButton].forEach { view in
             self.view.addSubview(view)
         }
         
@@ -321,6 +346,11 @@ class MainVC: UIViewController {
             make.trailing.equalToSuperview().offset(-leading)
             make.height.equalTo(53)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-top)
+        }
+        
+        sampleDataButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-leading)
+            make.top.equalTo(purposeTitle.snp.top)
         }
     }
   
